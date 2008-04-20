@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "UNIDADES_PRODUCAO")
+@Table(name = "`UNIDADES_PRODUCAO`")
 public class Laboratorio implements Serializable{
 
 	/**
@@ -23,28 +23,28 @@ public class Laboratorio implements Serializable{
 	private int key;
 	private String tipo;
 	
-	@Column(name="UNP_SIGLA")
+	@Column(name="`UNP_SIGLA`")
 	public String getSigla() {
 		return sigla;
 	}
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
 	}
-	@Column(name="UNP_ATIVO")
+	@Column(name="`UNP_ATIVO`")
 	public String getAtivo() {
 		return ativo;
 	}
 	public void setAtivo(String ativo) {
 		this.ativo = ativo;
 	}
-	@Column(name="DIV_KEY")
+	@Column(name="`DIV_KEY`")
 	public int getKey() {
 		return key;
 	}
 	public void setKey(int key) {
 		this.key = key;
 	}
-	@Column(name="UNP_TIPO")
+	@Column(name="`UNP_TIPO`")
 	public String getTipo() {
 		return tipo;
 	}
@@ -52,7 +52,7 @@ public class Laboratorio implements Serializable{
 		this.tipo = tipo;
 	}
 	@Id
-	@Column(name = "UNP_KEY")
+	@Column(name = "`UNP_KEY`")
 	public int getId() {
 		return id;
 	}
@@ -60,7 +60,7 @@ public class Laboratorio implements Serializable{
 		this.id = id;
 	}
 	
-	@Column(name="UNP_NOME")
+	@Column(name="`UNP_NOME`")
 	public String getNome() {
 		return nome;
 	}

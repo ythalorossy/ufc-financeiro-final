@@ -24,11 +24,11 @@ public class ItensPedidoDespesaBO implements BO<ItensPedidoDespesa> {
 	}
 
 	public double findSumCotado(PedidoDespesa pedidoDespesa) {
-		return ((ItensPedidoDespesaDAO)itensPedidoDespesaDAO).findsumCotado(pedidoDespesa.getId());
+		return ((ItensPedidoDespesaDAO)itensPedidoDespesaDAO).findsumCotado(pedidoDespesa);
 	}
 
 	public double findSumPrevisto(PedidoDespesa pedidoDespesa) {
-		return ((ItensPedidoDespesaDAO)itensPedidoDespesaDAO).findsumPrevisto(pedidoDespesa.getId());
+		return ((ItensPedidoDespesaDAO)itensPedidoDespesaDAO).findsumPrevisto(pedidoDespesa);
 	}
 	
 	public boolean delete(List<ItensPedidoDespesa> list) {

@@ -33,6 +33,13 @@ public class Parcela implements Serializable{
 	private double valor;
 	private int status;
 	
+	
+	public Parcela(double valor) {
+		this.valor = valor;
+	}
+	public Parcela() {
+	}
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="PAR_ID")

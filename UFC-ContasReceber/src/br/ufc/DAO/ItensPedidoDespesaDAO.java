@@ -2,6 +2,8 @@ package br.ufc.DAO;
 
 import java.util.List;
 
+import org.hibernate.Query;
+
 import br.com.ItensPedidoDespesa;
 import br.com.PedidoDespesa;
 
@@ -106,20 +108,48 @@ public class ItensPedidoDespesaDAO implements DAO<ItensPedidoDespesa> {
 		return list;
 	}
 
-	public double findsumCotado(int id) {
+	public double findsumCotado(PedidoDespesa id) {
+		double soma = 0;
 		startTransaction();
-		final double soma = (Double) hh.getSession().createSQLQuery("Select sum(ipd_valor_total_cotado) from financeiro.itens_pedido_despesa where ipd_id_pedido_despesa = "+id).uniqueResult();
-		commitTransaction();
-		closeSession();
-		return soma;
+		try {
+			Query query = hh.getSession().createQuery("Select new ItensPedidoDespesa(sum(valorTotal), sum(valorTotalCotado)) " +
+			"from ItensPedidoDespesa where idPedidoDespesa = ?");
+			query.setParameter(0, id);
+			List<ItensPedidoDespesa> itens = query.list();
+			for (ItensPedidoDespesa i:itens){
+				soma += i.getValorTotalCotado();
+			}
+
+			commitTransaction();
+		} catch (Exception e) {
+			rollBackTransaction();
+		} finally{
+			closeSession();
+		}
+
+			return soma;
 	}
 
-	public double findsumPrevisto(int id) {
+	public double findsumPrevisto(PedidoDespesa id) {
+		double soma = 0;
 		startTransaction();
-		final double soma = (Double) hh.getSession().createSQLQuery("Select sum(ipd_valor_total) from financeiro.itens_pedido_despesa where ipd_id_pedido_despesa = "+id).uniqueResult();
-		commitTransaction();
-		closeSession();
-		return soma;
+		try {
+			Query query = hh.getSession().createQuery("Select new ItensPedidoDespesa(sum(valorTotal), sum(valorTotalCotado)) " +
+			"from ItensPedidoDespesa where idPedidoDespesa = ?");
+			query.setParameter(0, id);
+			List<ItensPedidoDespesa> itens = query.list();
+			for (ItensPedidoDespesa i:itens){
+				soma += i.getValorTotal();
+			}
+
+			commitTransaction();
+		} catch (Exception e) {
+			rollBackTransaction();
+		} finally{
+			closeSession();
+		}
+
+			return soma;
 	}
 
 	

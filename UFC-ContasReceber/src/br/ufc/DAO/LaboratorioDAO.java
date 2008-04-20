@@ -3,6 +3,8 @@ package br.ufc.DAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
+
 import com.Auxiliar.Clientes;
 import com.Auxiliar.Laboratorio;
 import com.hibernate.HibernateHelperGlobal;
@@ -10,6 +12,7 @@ import com.hibernate.HibernateHelperGlobal;
 public class LaboratorioDAO {
 	
 	private HibernateHelperGlobal hg = HibernateHelperGlobal.getInstance();
+	private Laboratorio laboratorio = new Laboratorio(); 
 	private List<Laboratorio> listLaboratorio = new ArrayList<Laboratorio>();
 
 	private boolean result = false;
@@ -29,7 +32,7 @@ public class LaboratorioDAO {
 
 	public Laboratorio findById(int id) {
 		startTransaction();
-		Laboratorio laboratorio = (Laboratorio) hg.getSession().createSQLQuery("Select * From global.UNIDADES_PRODUCAO Where \"UNP_KEY\"="+ id).addEntity(Laboratorio.class).uniqueResult();
+		laboratorio = (Laboratorio) hg.getSession().get(Laboratorio.class, id);
 		commitTransaction();
 		closeSession();
 		return laboratorio;
@@ -43,7 +46,7 @@ public class LaboratorioDAO {
 	@SuppressWarnings("unchecked")
 	public List<Laboratorio> findAll() {
 		startTransaction();
-		listLaboratorio = (List<Laboratorio>) hg.getSession().createSQLQuery("select * from global.UNIDADES_PRODUCAO").addEntity(Laboratorio.class).list();
+		listLaboratorio = (List<Laboratorio>) hg.getSession().createQuery("From Laboratorio").list();
 		commitTransaction();
 		closeSession();
 		return listLaboratorio;
@@ -75,7 +78,9 @@ public class LaboratorioDAO {
 	@SuppressWarnings("unchecked")
 	public Laboratorio findByName(String nomeLaboratorio) {
 		startTransaction();
-		listLaboratorio = (List<Laboratorio>) hg.getSession().createSQLQuery("select * From global.unidades_producao where \"UNP_NOME\" = "+nomeLaboratorio).addEntity(Laboratorio.class).list();
+		Query query = hg.getSession().createQuery("From Laboratorio where nome = ?");
+		query.setParameter(0, nomeLaboratorio);
+		listLaboratorio = query.list();
 		commitTransaction();
 		closeSession();
 		return listLaboratorio.get(0);

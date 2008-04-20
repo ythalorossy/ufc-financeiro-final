@@ -40,6 +40,14 @@ public class ItensNotaFiscal implements Serializable{
 	private double valorTotal;
 	private GregorianCalendar data;
 	private int status;
+	
+	
+	public ItensNotaFiscal(double valorTotal) {
+		this.valorTotal = valorTotal;
+	}
+	
+	public ItensNotaFiscal() {
+	}
 
 	@Column(name="INF_STATUS")
 	public int getStatus() {

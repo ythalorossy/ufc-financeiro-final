@@ -3,6 +3,8 @@ package br.ufc.DAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
+
 import com.Auxiliar.Divisao;
 import com.hibernate.HibernateHelperGlobal;
 
@@ -25,9 +27,7 @@ public class DivisaoDAO {
 	
 	public Divisao findById(int id){
 		startTransaction();
-
-		Divisao divisao = (Divisao) hg.getSession().createSQLQuery("Select * From global.DIVISOES Where \"DIV_KEY\"="+ id).addEntity(Divisao.class).uniqueResult();
-		
+		Divisao divisao = (Divisao) hg.getSession().get(Divisao.class, id);
 		commitTransaction();
 		closeSession();
 		return divisao;
@@ -35,14 +35,16 @@ public class DivisaoDAO {
 	
 	public List<Divisao> findAll(){
 		startTransaction();
-		listDivisao = (List<Divisao>) hg.getSession().createSQLQuery("Select * from global.DIVISOES").addEntity(Divisao.class).list();
+		listDivisao = (List<Divisao>) hg.getSession().createQuery("From Divisao").list();
 		commitTransaction();
 		closeSession();
 		return listDivisao;
 	}
 	public Divisao findByName(String nomeDivisao) {
 		startTransaction();
-		divisao = (Divisao) hg.getSession().createSQLQuery("Select * from global.DIVISOES where \"DIV_NOME\" ='"+nomeDivisao+"'").addEntity(Divisao.class).uniqueResult();
+		Query query = hg.getSession().createQuery("From Divisao where nome = ?");
+		query.setParameter(0, nomeDivisao);
+		divisao = (Divisao) query.uniqueResult();
 		commitTransaction();
 		closeSession();
 		return divisao;
