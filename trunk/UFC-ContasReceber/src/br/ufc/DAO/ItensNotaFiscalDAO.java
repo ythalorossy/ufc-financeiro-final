@@ -3,6 +3,8 @@ package br.ufc.DAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
+
 import br.com.ItensNotaFiscal;
 import br.com.NotaFiscal;
 
@@ -82,13 +84,25 @@ public class ItensNotaFiscalDAO implements DAO<ItensNotaFiscal> {
 		return itensNotaFiscalList;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public double findSum(NotaFiscal notaFiscal) {
+		double soma = 0;
 		startTransaction();
-		final double soma = (Double) hh.getSession().createSQLQuery(
-				"Select sum(INF_ID_VALOR_TOTAL_ITEM) from financeiro.ITEMS_NOTA_FISCAL where INF_NOTA_FISCAL = "
-				+notaFiscal.getId()).uniqueResult();
-		commitTransaction();
-		closeSession();
+		try {
+			Query query = hh.getSession().createQuery("Select new ItensNotaFiscal(sum(valorTotal)) from ItensNotaFiscal where idNotaFiscal = ?");
+			query.setParameter(0, notaFiscal);
+			List<ItensNotaFiscal> itens = query.list();
+			for (ItensNotaFiscal i:itens){
+				soma += i.getValorTotal();
+			}
+			
+			commitTransaction();
+		} catch (Exception e) {
+			rollBackTransaction();
+		} finally{
+			closeSession();
+		}
+		
 		return soma;
 	}
 	public boolean delete(List<ItensNotaFiscal> list) {

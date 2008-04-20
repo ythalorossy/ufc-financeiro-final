@@ -36,6 +36,15 @@ public class ItensPedidoDespesa implements Serializable{
 	private double valorTotalCotado;
 	private int status;
 	
+	public ItensPedidoDespesa(double valorTotal, double valorTotalCotado) {
+		this.valorTotal = valorTotal;
+		this.valorTotalCotado = valorTotalCotado;
+	}
+	
+
+	public ItensPedidoDespesa() {
+	}
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="IPD_ID")

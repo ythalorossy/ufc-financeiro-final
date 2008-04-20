@@ -45,7 +45,7 @@ public class NotaFiscalDAO implements DAO<NotaFiscal> {
 	
 	public List<NotaFiscal> findAll() {
 		startTransaction();
-		Query query = hh.getSession().createQuery("From NotaFiscal order by nfs_data_saida");
+		Query query = hh.getSession().createQuery("From NotaFiscal order by dataSaida");
 		list = query.list();
 		commitTransaction();
 		closeSession();

@@ -2,7 +2,10 @@ package br.ufc.DAO;
 
 import java.util.List;
 
+import org.hibernate.Query;
+
 import br.com.ContasReceber;
+import br.com.NotaFiscal;
 import br.com.Parcela;
 
 import com.hibernate.HibernateHelper;
@@ -104,16 +107,25 @@ public class ParcelaDAO implements DAO<Parcela> {
 		return parcela;
 	}
 
-	public double findSumParcelasByNF(int idNotaFiscal) {
-		startTransaction();
+	public double findSumParcelasByNF(NotaFiscal idNotaFiscal) {
 		double soma = 0;
+		startTransaction();
 		try {
-			soma = (Double) hh.getSession().createSQLQuery("select sum(PAR_VALOR) from financeiro.PARCELA where par_id_nota_fiscal= "+ idNotaFiscal).uniqueResult();
+			Query query = hh.getSession().createQuery("Select new Parcela(sum(valor)) " +
+					"from Parcela where idNotaFiscal = ?");
+			query.setParameter(0, idNotaFiscal);
+			List<Parcela> itens = query.list();
+			for (Parcela i:itens){
+				soma += i.getValor();
+			}
+			
+			commitTransaction();
 		} catch (Exception e) {
-			soma = 0;
+			rollBackTransaction();
+		} finally{
+			closeSession();
 		}
-		commitTransaction();
-		closeSession();
+		
 		return soma;
 	}
 

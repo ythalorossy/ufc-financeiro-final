@@ -47,7 +47,7 @@ public class ParcelaAction extends DispatchAction implements Serializable {
 		String valorUtilizado;
 		double valorParcelas;
 		try {
-			valorParcelas = ((ParcelaBO)ParcelaBO.getInstance()).findSum(notaFiscal.getId());
+			valorParcelas = ((ParcelaBO)ParcelaBO.getInstance()).findSum(notaFiscal);
 			valorUtilizado = ConverteNumero.converteNumero(valorParcelas);
 		} catch (Exception e) {
 						// Caso a conversão dispare um erro significa que o retorno do metodo findSum foi nulo e não foi possivel
@@ -232,7 +232,7 @@ public class ParcelaAction extends DispatchAction implements Serializable {
 		final ActionMessages errors = new ActionMessages();
 		final int idNotaFiscal = Integer.parseInt(request.getParameter("idNotaFiscal"));
 		final NotaFiscal notaFiscal = NotaFiscalBO.getInstance().findById(idNotaFiscal);
-		final double somaParcela = ((ParcelaBO)ParcelaBO.getInstance()).findSum(notaFiscal.getId());
+		final double somaParcela = ((ParcelaBO)ParcelaBO.getInstance()).findSum(notaFiscal);
 		if((notaFiscal.getValorNota()-somaParcela) !=0){
 			errors.add("valorNaoUtilizado", new ActionMessage("valor.somatorio.diferente"));
 		}else {

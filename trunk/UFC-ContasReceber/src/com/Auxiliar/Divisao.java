@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="DIVISOES")
+@Table(name="`DIVISOES`")
 public class Divisao {
 	
 	private int id;
@@ -15,7 +15,7 @@ public class Divisao {
 	private int ativo;
 	private int dirKey;
 	
-	@Column(name="DIV_SIGLA")
+	@Column(name="`DIV_SIGLA`")
 	public String getSigla() {
 		return sigla;
 	}
@@ -23,14 +23,14 @@ public class Divisao {
 		this.sigla = sigla;
 	}
 	
-	@Column(name="DIV_ATIVO")
+	@Column(name="`DIV_ATIVO`")
 	public int getAtivo() {
 		return ativo;
 	}
 	public void setAtivo(int ativo) {
 		this.ativo = ativo;
 	}
-	@Column(name="DIR_KEY")
+	@Column(name="`DIR_KEY`")
 	public int getDirKey() {
 		return dirKey;
 	}
@@ -38,14 +38,14 @@ public class Divisao {
 		this.dirKey = dirKey;
 	}
 	@Id
-	@Column(name="DIV_KEY")
+	@Column(name="`DIV_KEY`")
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	@Column(name="DIV_NOME")
+	@Column(name="`DIV_NOME`")
 	public String getNome() {
 		return nome;
 	}

@@ -40,7 +40,7 @@ public class ParcelaBO implements BO<Parcela> {
 		}
 		double soma = 0;
 		try{
-			soma = findSum(notaFiscal.getId());
+			soma = findSum(notaFiscal);
 		} catch (Exception ex) {
 			soma = 0;
 		}
@@ -79,7 +79,7 @@ public class ParcelaBO implements BO<Parcela> {
 		return new ParcelaBO();
 	}
 
-	public double findSum(int idNotaFiscal) {
+	public double findSum(NotaFiscal idNotaFiscal) {
 		// recuperado o valor do somatorio de uma dada parcela a partir de um id de nota fiscal
 		final double soma = ((ParcelaDAO)dao).findSumParcelasByNF(idNotaFiscal);
 		return soma;
@@ -93,7 +93,7 @@ public class ParcelaBO implements BO<Parcela> {
 				// Resgatando o valor do somatório das parcelas até este momento
 				double somatorio = 0;
 				try {
-					somatorio = findSum(parcela.getIdNotaFiscal().getId());
+					somatorio = findSum(parcela.getIdNotaFiscal());
 				} catch (Exception e) {
 					// somatorio = a nulo
 				}
