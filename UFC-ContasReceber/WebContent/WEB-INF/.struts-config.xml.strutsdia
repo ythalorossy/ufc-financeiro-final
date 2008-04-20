@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#formasPagamento"
+  NAME="action0" PATH="/formasPagamento" SHAPE="112,32,169,57"
+  TITLE="formasPagamentoForm" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput"
+   ID="prepareUpdate" NAME="forward0"
+   PATH="/WEB-INF/pages/formasPagamento/formasPagamentoPrepareUpdate.jsp"
+   SHAPE="280,56,328,56,328,152,927,152" TARGET="page0"
+   TITLE="prepareUpdate" TYPE="forward"/>
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="list"
+   NAME="forward1"
+   PATH="/WEB-INF/pages/formasPagamento/formasPagamento.jsp"
+   SHAPE="280,72,360,72,360,56,927,56" TARGET="page1" TITLE="list" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#itensNotaFiscal"
+  NAME="action1" PATH="/itensNotaFiscal" SHAPE="104,192,150,57"
+  TITLE="itensNotaFiscalForm" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput"
+   ID="parcelaNotaFiscal" NAME="forward0"
+   PATH="/parcela.do?operacao=prepareSave"
+   SHAPE="253,216,256,216,256,256,208,256,208,304,295,304"
+   TARGET="action3" TITLE="parcelaNotaFiscal" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#notaFiscal"
+  NAME="action2" PATH="/notaFiscal" SHAPE="488,192,122,73"
+  TITLE="notaFiscalForm" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput"
+   ID="itensNotaFiscal" NAME="forward0"
+   PATH="/itensNotaFiscal.do?operacao=prepareSave"
+   SHAPE="609,216,617,216,617,352,89,352,89,200,103,200"
+   TARGET="action1" TITLE="itensNotaFiscal" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#parcela" NAME="action3"
+  PATH="/parcela" SHAPE="296,296,107,41" TITLE="parcelaForm" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput"
+   ID="listNotaFiscal" NAME="forward1"
+   PATH="/notaFiscal.do?operacao=listAll" TARGET="action2"
+   TITLE="listNotaFiscal" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page0"
+  PATH="/WEB-INF/pages/formasPagamento/formasPagamentoPrepareUpdate.jsp"
+  SHAPE="928,144,50,40" SUBTYPE="jsp"
+  TITLE="formasPagamentoPrepareUpdate.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/formasPagamento.do" SUBTYPE="confirmed" TARGET="action0"
+   TITLE="/formasPagamento.do" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/WEB-INF/pages/formasPagamento/formasPagamento.jsp"
+  SHAPE="928,48,50,40" SUBTYPE="jsp" TITLE="formasPagamento.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/formasPagamento.do" SUBTYPE="confirmed" TARGET="action0"
+   TITLE="/formasPagamento.do" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#caixaEntradaSaida"
+  NAME="action4" PATH="/caixaEntradaSaida" SHAPE="56,512,164,41"
+  TITLE="caixaEntradaSaidaForm" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" ID="prepareSave"
+   NAME="forward0"
+   PATH="/WEB-INF/pages/caixaEntradaSaida/formEntradaSaida.jsp"
+   TARGET="page6" TITLE="prepareSave" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page6"
+  PATH="/WEB-INF/pages/caixaEntradaSaida/formEntradaSaida.jsp"
+  SHAPE="80,640,50,40" SUBTYPE="jsp" TITLE="formEntradaSaida.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/caixaEntradaSaida.do" SUBTYPE="confirmed" TARGET="action4"
+   TITLE="/caixaEntradaSaida.do" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page5"
+  PATH="/WEB-INF/pages/notaFiscal/notaFiscal.jsp" SHAPE="928,432,50,40"
+  SUBTYPE="jsp" TITLE="notaFiscal.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/notaFiscal.do"
+   SHAPE="977,456,1073,456,1073,328,481,328,481,200,487,200"
+   SUBTYPE="confirmed" TARGET="action2" TITLE="/notaFiscal.do" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page7"
+  PATH="/WEB-INF/pages/notaFiscal/listNotaFiscal.jsp"
+  SHAPE="928,264,50,40" SUBTYPE="jsp" TITLE="listNotaFiscal.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/notaFiscal.do" SUBTYPE="confirmed" TARGET="action2"
+   TITLE="/notaFiscal.do" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page3"
+  PATH="/WEB-INF/pages/itensNotaFiscal/itensNotaFiscal.jsp"
+  SHAPE="128,424,50,40" SUBTYPE="jsp" TITLE="itensNotaFiscal.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/itensNotaFiscal.do"
+   SHAPE="177,448,193,448,193,480,73,480,73,200,103,200"
+   SUBTYPE="confirmed" TARGET="action1" TITLE="/itensNotaFiscal.do" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#caixa" NAME="action5"
+  PATH="/caixa" SHAPE="392,456,177,41" TITLE="caixaForm" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/WEB-INF/pages/caixa/caixa.jsp" SHAPE="664,472,50,25"
+  SUBTYPE="jsp" TITLE="caixa.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/caixa.do" SUBTYPE="confirmed" TARGET="action5"
+   TITLE="/caixa.do" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#caixaContasReceber"
+  NAME="action6" PATH="/caixaContasReceber" SHAPE="392,536,179,41"
+  TITLE="caixaContasReceberForm" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput"
+   ID="caixaContasReceber" NAME="forward0"
+   PATH="/WEB-INF/pages/caixaContasReceber/caixaContasReceber.jsp"
+   TARGET="page8" TITLE="caixaContasReceber" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page8"
+  PATH="/WEB-INF/pages/caixaContasReceber/caixaContasReceber.jsp"
+  SHAPE="664,552,50,25" SUBTYPE="jsp" TITLE="caixaContasReceber.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/caixaContasReceber.do" SUBTYPE="confirmed" TARGET="action6"
+   TITLE="/caixaContasReceber.do" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page9"
+  PATH="/WEB-INF/pages/notaFiscal/reabrirNota.jsp" SHAPE="696,192,0,0"
+  SUBTYPE="jsp" TITLE="reabrirNota.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/notaFiscal.do" SUBTYPE="confirmed" TARGET="action2"
+   TITLE="/notaFiscal.do" TYPE="link"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="index" NAME="forward0"
+  PATH="/WEB-INF/index.jsp" SHAPE="32,737,0,0" TARGET="page10"
+  TITLE="index" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page10"
+  PATH="/WEB-INF/index.jsp" SHAPE="240,754,0,0" SUBTYPE="jsp"
+  TITLE="index.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#caixaContasPagar"
+  NAME="action7" PATH="/caixaContasPagar" SHAPE="240,977,0,0"
+  TITLE="caixaContasPagarForm" TYPE="action">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput"
+   ID="caixaContasPagar" NAME="forward0"
+   PATH="/WEB-INF/pages/caixaContasPagar/caixaContasPagar.jsp"
+   TARGET="page11" TITLE="caixaContasPagar" TYPE="forward"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page11"
+  PATH="/WEB-INF/pages/caixaContasPagar/caixaContasPagar.jsp"
+  SHAPE="32,962,0,0" SUBTYPE="jsp" TITLE="caixaContasPagar.jsp" TYPE="page">
+  <PROCESS-ITEM-OUTPUT ENTITY="StrutsProcessItemOutput" NAME="link0"
+   PATH="/caixaContasPagar.do" SUBTYPE="confirmed" TARGET="action7"
+   TITLE="/caixaContasPagar.do" TYPE="link"/>
+ </PROCESS-ITEM>
+</PROCESS>
