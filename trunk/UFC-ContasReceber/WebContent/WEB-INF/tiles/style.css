@@ -1,0 +1,139 @@
+<style>
+
+* {
+	padding: 0;
+	margin: 0;
+	font-family: sans-serif;
+	font-size: 12;
+	font-family: sans-serif;
+}
+
+body {
+	background-color: #E7EEF4;
+}
+
+a {
+	text-decoration: none;
+	color: #000;
+	font-size: 12px;
+	font-weight: bold;
+
+}
+
+#menuContextoGeral {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	font: 14px Verdana, sans-serif;
+}
+
+#menuContextoGeral ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#menuContextoGeral li {
+	list-style: none;
+	border-bottom: 1px solid #fff;
+	margin: 0;
+}
+
+#menuContextoGeral li a {
+	display: block;
+	padding: 5px 5px 5px 0.5em;
+	font-weight: bold;
+	border-left: 10px solid #046380;
+	border-right: 4px solid #C1C1C1;
+	background-color: #E7EEF4;
+	color: #000;
+	text-decoration: none;
+}
+
+#menuContextoGeral li a:hover {
+	border-left: 10px solid #000;
+	background-color: #C1C1C1;
+	color: #FFF;
+}
+
+* html #menuContextoGeral ul li {
+	float: left;
+	height: 1%;
+}
+
+* html #menuContextoGeral ul li a {
+	height: 1%;
+}
+
+.tituloInterno {
+	font-family: Verdana;
+	font-size: 20px;
+	font-weight: bold;
+	display: block;
+	width: 100%;
+	color: #333;
+	border: 0px solid #000000;
+	padding: 5px;
+}
+
+.labelForm {
+	color: gray;
+	font-weight: bold;
+	padding-left: 2px;
+}
+
+.show {
+	display: block;
+}
+
+.hide {
+	display: none;
+}
+
+.borderEscura {
+	border: 1px;
+	border-color: black;
+}
+
+#geral {
+	background-color: #FFFFFF;
+	border: 1px solid #000000;
+	width: 100%;
+	min-height: 600px;
+	height: 600px;
+}
+
+#topo {
+	display: block;
+	clear: both;
+	width: 100%;
+	height: 150px;
+	background-color: #E7EEF4;
+	min-height: 150px;
+	color: black;
+	border: 1px solid #000000;
+	padding: 0;
+}
+
+#menu {
+	display: block;
+	float: left;
+	clear: right;
+	background-color: #E7EEF4;
+	width: 19%;
+	height: 400px;
+	min-height: 600px;
+	height: 600px;
+	border: none;
+}
+
+#conteudo {
+	display: block;
+	padding: 2px;
+	margin: 0;
+	float: left;
+	width: 79%;
+	border-left: 1px solid #c1c1c1;
+	min-height: 600px;
+}
+</style>
