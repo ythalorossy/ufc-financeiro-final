@@ -8,17 +8,6 @@
 
 <font color=red><html:errors /></font>
 
-<table width="99%" border="0" >
-	<tr>
-		<td>
-		<html:form action="/formasPagamento">
-			<html:text property="theItem.formaPagamento" size="20" />
-			<html:hidden property="operacao" value="save" />
-			<html:image src="./imagens/add.png" style="cursor: pointer" alt="Adicionar" border="0" title="Adicionar" />
-		</html:form></td>
-	</tr>
-</table>
-
 	<html:form action="/formasPagamento" styleId="formaPagamento">
 	
 	<html:hidden property="theItem.id"/>
@@ -51,7 +40,20 @@
 			</td>
 		</tr>
 	</table>
-			
 	</html:form>
+
+	<table>
+		<tr>
+			<td width="98%">
+			<html:form action="/formasPagamento">
+				<html:text property="theItem.formaPagamento" size="100%" />
+				<html:hidden property="operacao" value="save" />
+				<html:image src="./imagens/add.png" style="cursor: pointer" alt="Adicionar" border="0" title="Adicionar" />
+			</html:form>
+			</td>
+			<td width="2%"></td>
+		</tr>
+	</table>
+
 
 

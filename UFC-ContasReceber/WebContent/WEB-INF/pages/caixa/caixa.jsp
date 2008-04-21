@@ -6,14 +6,14 @@
 
 <span class="tituloInterno">Caixa</span>
 
-<fieldset>
 <html:form action="/caixa">
 	<table width="99%">
 		<tr>
 		<td>
 			<html:hidden property="operacao" value="montarCaixa" />
+			Data:
 			<input type="text" name="dataToList" value="" onkeyup="javascript:formatFieldData(this)" />
-			<html:submit value="listar"/>
+			<html:image src="./imagens/control_play_blue.png"></html:image>
 		</td>
 		<td align="right"><span style="font-size: 18px; font-weight: b">${dataAtual}</span></td>
 		</tr>
@@ -58,6 +58,8 @@
 	</c:forEach>
 
 </table>
+<br/>
+<br/>
 
 <h3>Resumo do Caixa</h3>
 
