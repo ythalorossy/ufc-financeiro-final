@@ -52,7 +52,6 @@ public class ValidaLoginFilter implements Filter {
 				httpResponse.sendRedirect(httpRequest.getContextPath() + "/logon.do?operacao=login");	
 			
 			} else {
-				
 				httpResponse.sendRedirect(httpRequest.getContextPath() + "/index.jsp");
 			}
 			
