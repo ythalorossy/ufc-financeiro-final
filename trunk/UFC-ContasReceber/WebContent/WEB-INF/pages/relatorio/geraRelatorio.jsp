@@ -58,18 +58,25 @@
 	<tr bgcolor="#f1f1f1" height="40">
 		<td width="1%">&nbsp;</td>
 		<td width="11%"><span class="labelForm">Por Unidade de Produção</span></td>
-		<td>
-		<html:form action="relatorio">
-			<input type="hidden" name="operacao" value="relatorioLaboratorio">
-			<select name="idLaboratorio" style="width: 200px;">
-				<c:forEach var="laboratorio" items="${laboratorio}" >
-					<option value="${laboratorio.id}">${laboratorio.nome}</option>
-				</c:forEach>
-			</select>
-			<input type="submit" value="Gerar">
-			<html:errors prefix="image.error"/>
+			<html:form action="relatorio">
+			<td>
+				<input type="hidden" name="operacao" value="relatorioLaboratorio">
+				<select name="idLaboratorio" style="width: 200px;">
+					<c:forEach var="laboratorio" items="${laboratorio}" >
+						<option value="${laboratorio.id}">${laboratorio.nome}</option>
+					</c:forEach>
+				</select>
+			</td>
+			<td>Data Inicial <br />
+				<input type="text" name="dataInicial" onkeyup="javascript:formatFieldData(this)">
+			</td>
+			<td>Data Final <br />
+				<input type="text" name="dataFinal" onkeyup="javascript:formatFieldData(this)">
+			</td>
+			<td>
+				<input type="submit" value="Gerar"><html:errors prefix="image.error" />
+			</td>
 		</html:form>
-		</td>
 	</tr>
 </table>
 </fieldset>

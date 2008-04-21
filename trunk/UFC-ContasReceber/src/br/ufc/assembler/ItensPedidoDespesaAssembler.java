@@ -72,29 +72,28 @@ public class ItensPedidoDespesaAssembler {
 		}
 		
 		entity.setUnidade(to.getUnidade());
+		
 		try {
 			entity.setValorTotal(ConverteNumero.converteNumero(to.getValorTotal()));
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+		
 		try {
 			entity.setValorTotalCotado(ConverteNumero.converteNumero(to.getValorTotalCotado()));
 			
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
+		
 		try {
 			entity.setValorUnitario(ConverteNumero.converteNumero(to.getValorUnitario()));
 			
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
+
 		try {
 			entity.setValorUnitarioCotado(ConverteNumero.converteNumero(to.getValorUnitarioCotado()));
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 
 		return entity;

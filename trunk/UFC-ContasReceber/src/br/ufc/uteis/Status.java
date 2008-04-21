@@ -1,7 +1,7 @@
 package br.ufc.uteis;
 
 public class Status {
-	// Status nota fiscal, parcela, contas receber, caixa, itens da nota fiscal
+	// Status nota fiscal, parcela, contas receber, caixa, itens da nota fiscal, pedido de desespesa
 	public static final int ABERTO = 0;
 	public static final int PAGO = 1;
 	public static final int CANCELADO = 2;
@@ -9,6 +9,7 @@ public class Status {
 	public static final int AGUARDANDO = 4;
 	public static final int FATURADO = 5;
 	public static final int CONFIRMADO = 6;
+	public static final int COTADO = 7;
 	
 
 	// Tipos de nota fiscal
@@ -51,6 +52,9 @@ public class Status {
 			break;
 		case 6:
 			retorno = "Confirmado";
+			break;
+		case 7:
+			retorno = "Cotado";
 			break;
 		case 50:
 			retorno = "Contabilizada";
@@ -104,6 +108,9 @@ public class Status {
 		}
 		if (status.equals("Confirmado")) {
 			retorno = CONFIRMADO;
+		}
+		if (status.equals("Cotado")) {
+			retorno = COTADO;
 		}
 		if (status.equals("Contabilizada")) {
 			retorno = NOTA_CONTABILIZADA;

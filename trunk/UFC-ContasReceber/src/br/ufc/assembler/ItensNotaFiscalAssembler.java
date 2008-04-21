@@ -86,8 +86,6 @@ public class ItensNotaFiscalAssembler implements
 			entity.setValor(ConverteNumero.converteNumero(to.getValor()));
 			entity.setValorTotal(ConverteNumero.converteNumero(to.getValorTotal()));
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 		
 		try {

@@ -7,6 +7,7 @@ import br.com.PedidoDespesa;
 import br.ufc.DAO.DAO;
 import br.ufc.DAO.ItensPedidoDespesaDAO;
 import br.ufc.DAO.PedidoDespesaDAO;
+import br.ufc.uteis.Status;
 
 public class ItensPedidoDespesaBO implements BO<ItensPedidoDespesa> {
 	
@@ -91,6 +92,23 @@ public class ItensPedidoDespesaBO implements BO<ItensPedidoDespesa> {
 	public boolean update(ItensPedidoDespesa e) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public boolean cotarPD(List<ItensPedidoDespesa> itensPD, PedidoDespesa pedidoDespesa) {
+		final PedidoDespesa pd = pedidoDespesa;
+		pd.setStatus(Status.COTADO);
+		double totalPD = 0;
+		for (ItensPedidoDespesa i : itensPD){
+			final double valorUnitarioCotado = i.getValorUnitarioCotado();
+			final int quantidade = i.getQuantidade();
+			final double valorCotado = valorUnitarioCotado*quantidade;
+			totalPD += valorCotado;
+			i.setStatus(Status.COTADO);
+			i.setValorTotalCotado(valorCotado);
+		}
+		pd.setValorCotado(totalPD);
+		
+		return ((ItensPedidoDespesaDAO)itensPedidoDespesaDAO).cotar(itensPD, pedidoDespesa);
 	}
 
 

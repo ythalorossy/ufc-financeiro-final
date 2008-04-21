@@ -170,5 +170,31 @@ public class ItensPedidoDespesaDAO implements DAO<ItensPedidoDespesa> {
 		}
 		return retorno;
 	}
+	
+	/**
+	 * Método que realizar a cotação do produto
+	 * @param itensPD
+	 * @param pedidoDespesa
+	 * @return
+	 */
+	public boolean cotar(List<ItensPedidoDespesa> itensPD, PedidoDespesa pedidoDespesa) {
+		startTransaction();
+		try {
+			hh.getSession().update(pedidoDespesa);
+			if (!itensPD.isEmpty()){
+				for (ItensPedidoDespesa i : itensPD){
+					hh.getSession().update(i);
+				}
+			}
+			commitTransaction();
+			retorno = true;
+		} catch (Exception e) {
+			rollBackTransaction();
+		} finally{
+			closeSession();
+		}
+		
+		return retorno;
+	}
 
 }

@@ -115,6 +115,7 @@ public class ItensNotaFiscalAction extends DispatchAction implements Serializabl
 		if (validate(itensForm, request).isEmpty()){
 						// convertido o objeto itensNotaFiscalForm em um objeto ItensNotaFiscal
 			final ItensNotaFiscal itens = itensAssembler.entityTO2Entity(itensForm.getTheItem());
+			itens.setData(notaFiscal.getDataSaida());
 			ItensNotaFiscalBO.getInstance().save(itens);
 		}
 						// setado no request o objeto NotaFiscal para ser reutilizado no metodo prepareSave

@@ -128,4 +128,8 @@ public class PedidoDespesaBO implements BO<PedidoDespesa> {
 		return contasPagar;
 	}
 
+	public List<PedidoDespesa> findAllAguardando() {
+		return ((PedidoDespesaDAO)pedidoDespesaDao).findAllAguardando();
+	}
+
 }

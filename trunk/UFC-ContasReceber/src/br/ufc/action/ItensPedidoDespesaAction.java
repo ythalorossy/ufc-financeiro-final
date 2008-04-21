@@ -36,6 +36,8 @@ public class ItensPedidoDespesaAction extends DispatchAction{
 	
 	private final String LOAD_PAGE = "loadPage";
 	private final String PREPARE_SAVE = "/WEB-INF/pages/itensPedidoDespesa/itensPedidoDespesa.jsp";
+	private final String COTAR = "/WEB-INF/pages/itensPedidoDespesa/cotarPedidoDespesa.jsp";
+	
 	
 	
 	public ActionForward prepareSave(ActionMapping mapping, ActionForm form,
@@ -185,7 +187,7 @@ public class ItensPedidoDespesaAction extends DispatchAction{
 				errors.add("quantidadeInvalido", new ActionMessage("quantidadeInvalido.vazio.error"));
 			}
 		} else {
-			quantidade = "0";
+			errors.add("quantidadeVazio", new ActionMessage("quantidade.vazio.error"));
 		}
 		
 		if (!GenericValidator.isBlankOrNull(valorUnitario)){
@@ -214,7 +216,89 @@ public class ItensPedidoDespesaAction extends DispatchAction{
 		saveErrors(request, errors);
 		return errors;
 	}
+	
+	
 
+	public ActionForward prepareCotarPedidoDespesa(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		final String idPedidoDespesa = (String) request.getParameter("idPedidoDespesa");
+		final PedidoDespesa pedidoDespesa = PedidoDespesaBO.getInstance().findById(Integer.parseInt(idPedidoDespesa));
+		final PedidoDespesaTO pdTO = new PedidoDespesaAssembler().entity2EntityTO(pedidoDespesa);
+		final Divisao divisao = new DivisaoDAO().findById(pedidoDespesa.getIdDivisao());
+		final Laboratorio lab = new LaboratorioDAO().findById(pedidoDespesa.getIdLaboratorio());
+		
+		final List<ItensPedidoDespesa> listIPD = ItensPedidoDespesaBO.getInstance().findAllItensByNumeroPD(pedidoDespesa);
+		final List<ItensPedidoDespesaTO> listIPDTo = new ItensPedidoDespesaAssembler().entity2EntityTO(listIPD);
 
+		ItensPedidoDespesaForm itensForm = (ItensPedidoDespesaForm) form;
+		itensForm.setItems(listIPDTo);
+		
+		request.setAttribute("idPedidoDespesa", idPedidoDespesa);
+		request.setAttribute("numeroPD", pedidoDespesa.getNumeroPD());
+		request.setAttribute("projeto", pdTO.getProjeto());
+		request.setAttribute("divisao", divisao.getNome());
+		request.setAttribute("idDivisao", divisao.getId());
+		request.setAttribute("laboratorio", lab.getNome());
+		request.setAttribute("idLaboratorio", lab.getId());
+		request.setAttribute("tipoServico", pedidoDespesa.getTipoServico());
+		request.setAttribute("justificativa", pedidoDespesa.getJustificativa());
+						// É setado o objeto no request para poder ser recuperado no metodo Save para ser reutilizado
+		request.setAttribute("pedidoDespesa", pedidoDespesa);
+		request.setAttribute("dataPD", ConverteData.retornaData(pedidoDespesa.getDataPD()));
+		request.setAttribute("totalPedidoDespesa", ConverteNumero.converteNumero(pedidoDespesa.getValorPrevisto()));
+		request.setAttribute("operacao", "cotarPedidoDespesa");
+		
+		request.setAttribute(LOAD_PAGE, COTAR);
+		return mapping.findForward("index");
+	}
+	
+	public ActionForward cotarPedidoDespesa(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		
+		
+		final ItensPedidoDespesaForm itensForm = (ItensPedidoDespesaForm) form;
+		final ActionMessages errors = validaCotacao(itensForm, request);
+		
+		if (errors.isEmpty()){
+			final List<ItensPedidoDespesa> itensPD = new ItensPedidoDespesaAssembler().entityTO2Entity(itensForm.getItems());
+			final PedidoDespesa pedidoDespesa = itensPD.get(0).getIdPedidoDespesa();
+			if (((ItensPedidoDespesaBO)ItensPedidoDespesaBO.getInstance()).cotarPD(itensPD, pedidoDespesa)){
+				return mapping.findForward("pedidoDespesa");
+			}
+		}
+		saveErrors(request, errors);
+		return prepareCotarPedidoDespesa(mapping, form, request, response);
+	}
+	
+	public ActionMessages validaCotacao(ItensPedidoDespesaForm form, HttpServletRequest request){
+		final ActionMessages errors = new ActionMessages();
+		final List<ItensPedidoDespesaTO> listTO = form.getItems();
+		
+		for (ItensPedidoDespesaTO ipd : listTO){
+			if (GenericValidator.isBlankOrNull(ipd.getValorUnitarioCotado())){
+				errors.add("valorUnitarioCotado", new ActionMessage("valor.unitario.branco"));
+				break;
+			}
+			
+			if (errors.isEmpty()){
+				try {
+					ConverteNumero.converteNumero(ipd.getValorUnitarioCotado());
+				} catch (Exception e) {
+					errors.add("valorUnitarioInvalido", new ActionMessage("valor.unitario.invalido"));
+				}
+				
+			}
+			
+		}
+		saveErrors(request, errors);
+		return errors;
+		
+	}
+	
+	
+	
+	
 
 }
