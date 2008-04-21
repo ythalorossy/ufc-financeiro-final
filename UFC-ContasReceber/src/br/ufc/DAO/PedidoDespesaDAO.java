@@ -132,9 +132,10 @@ public class PedidoDespesaDAO implements DAO<PedidoDespesa> {
 	
 	public List<PedidoDespesa> findPedido30(GregorianCalendar calendar) {
 		startTransaction();
-		final Query query = hh.getSession().createQuery("From PedidoDespesa where dataPD  >= ? and status = ?");
+		final Query query = hh.getSession().createQuery("From PedidoDespesa where dataPD  >= ? and status = ? or status = ?");
 		query.setParameter(0, calendar);
 		query.setParameter(1, Status.AGUARDANDO);
+		query.setParameter(2, Status.COTADO);
 		final List<PedidoDespesa> list = query.list();
 		commitTransaction();
 		closeSession();
@@ -146,6 +147,15 @@ public class PedidoDespesaDAO implements DAO<PedidoDespesa> {
 		final Query query = hh.getSession().createQuery("From PedidoDespesa where dataPD between ? and ? order by dataPD" );
 		query.setParameter(0, dataInicial);
 		query.setParameter(1, dataFinal);
+		final List<PedidoDespesa> list = query.list();
+		commitTransaction();
+		closeSession();
+		return list;
+	}
+	public List<PedidoDespesa> findAllAguardando() {
+		startTransaction();
+		final Query query = hh.getSession().createQuery("From PedidoDespesa where status = ?" );
+		query.setParameter(0, Status.AGUARDANDO);
 		final List<PedidoDespesa> list = query.list();
 		commitTransaction();
 		closeSession();

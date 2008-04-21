@@ -65,7 +65,7 @@
 			<a href="#" onclick="javascrit:doSubmit('formListPedidoDespesa', 'delete')"><html:image src="./imagens/delete.png" border="0"/></a>
 			</th>
 			<th>
-				Aprovar
+				Aprovar 			
 			</th>
 		</tr>
 		
@@ -100,11 +100,20 @@
 					<span>${item.dataPD}</span>
 				</td>
 				
+				
 				<td align="left">
+				<c:if test="${item.valorCotado !='0,00'}">
+					<label for="item[${status.index}].checked"></label>
+					<html:hidden property="item[${status.index}].valorCotado" />
+					<span>${item.valorCotado}</span>
+				</c:if>
+				<c:if test="${item.valorCotado =='0,00'}">
 					<label for="item[${status.index}].checked"></label>
 					<html:hidden property="item[${status.index}].valorPrevisto" />
 					<span>${item.valorPrevisto}</span>
+				</c:if>
 				</td>
+				
 				
 				<td align="left">
 					<label for="item[${status.index}].checked"></label>
@@ -128,8 +137,10 @@
 				</c:if>
 				</td>
 				<td align="center">
-				<c:if test="${item.status =='Aguardando'}">
-					<a href="#"	onClick="javascript:doSubmit1('formListPedidoDespesa', 'confirmaPD', ${item.id})"><img src="./imagens/accept.png" border="0"/></a>
+				<c:if test="${item.status =='Cotado'}">
+					<a href="#"	onClick="javascript:doSubmit1('formListPedidoDespesa', 'confirmaPD', ${item.id})">
+						<html:image src="./imagens/accept.png" style="cursor: pointer" alt="Aprovar" border="0" title="Aprovar PD" />
+					</a>
 				</c:if>
 				</td>
 				

@@ -2,6 +2,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 
 <ul id="menuContextoGeral">
+
+	<li><a href="principal.do?operacao=montarPaginaInicial">Home</a></li>
 	<li><a href="caixa.do?operacao=montarCaixa">Caixa</a></li>
 	<li><a href="caixaContasReceber.do?operacao=montarCaixa">Contas	Receber</a></li>
 	<li><a href="caixaContasPagar.do?operacao=montarCaixa">Contas Pagar</a></li>

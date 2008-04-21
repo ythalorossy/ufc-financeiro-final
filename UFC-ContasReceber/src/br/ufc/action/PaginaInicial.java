@@ -27,6 +27,36 @@ public class PaginaInicial extends DispatchAction{
 	
 	private GregorianCalendar calendar = new GregorianCalendar();
 	
+	public ActionForward montarPaginaInicial(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		List<ContasReceber> vencimentosDia = new ArrayList<ContasReceber>();
+		List<ContasReceber> inadimplentes = new ArrayList<ContasReceber>(); 
+		
+		try{
+			vencimentosDia = ((ContasReceberBO)ContasReceberBO.getInstance()).findAll(calendar);
+			inadimplentes = ((ContasReceberBO)ContasReceberBO.getInstance()).findAllInadimplentes(calendar);
+
+			final List<ContasReceberTO> vencimentosDiaTO = ContasReceberAssembler.getInstance().entity2EntityTO(vencimentosDia);
+			final List<ContasReceberTO> inadimplentesTO = ContasReceberAssembler.getInstance().entity2EntityTO(inadimplentes);
+
+			for (int i = 0; i < inadimplentesTO.size(); i++) {
+				final GregorianCalendar dataInadimplente = ConverteData.retornaData(inadimplentesTO.get(i).getDataPrevista());
+				final long diasAtraso = ((calendar.getTimeInMillis()/(24*60*60*1000)) - (dataInadimplente.getTimeInMillis()/(24*60*60*1000)));
+
+				inadimplentesTO.get(i).setDiasAtraso(String.valueOf(diasAtraso));
+			}
+
+			request.setAttribute("vencimentosDia", vencimentosDiaTO);
+			request.setAttribute("inadimplentes", inadimplentesTO);
+		} catch (Exception e) {
+			System.out.println("Nenhum registro encontrado!!");
+		}
+		request.setAttribute("loadPage", "/WEB-INF/pages/home.jsp");
+		
+		return mapping.findForward("index");
+	}
+	
 	public ActionForward paginaInicial(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {

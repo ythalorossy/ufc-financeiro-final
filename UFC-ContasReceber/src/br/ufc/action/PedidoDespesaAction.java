@@ -39,6 +39,7 @@ public class PedidoDespesaAction extends DispatchAction implements Serializable 
 	private final String PREPARE_SAVE = "/WEB-INF/pages/pedidoDespesa/pedidoDespesa.jsp";
 	private final String LIST_ALL = "/WEB-INF/pages/pedidoDespesa/listPedidoDespesa.jsp";
 	private final String HOME = "/WEB-INF/pages/pedidoDespesa/home.jsp";
+	private final String LIST_COTAR = "/WEB-INF/pages/pedidoDespesa/listCotarPedidoDespesa.jsp";
 	
 	/**
 	 * HOME
@@ -321,21 +322,44 @@ public class PedidoDespesaAction extends DispatchAction implements Serializable 
 	public ActionForward confirmaPD(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)	throws Exception {
 		
+		final ActionMessages errors = new ActionMessages();
 		final PedidoDespesaForm pedidoDespesaForm = (PedidoDespesaForm) form;
 		final String idPD = pedidoDespesaForm.getTheItem().getId();
 		final int idPedidoDespesa = Integer.parseInt(idPD);
 		
 		final PedidoDespesa pedidoDespesa = PedidoDespesaBO.getInstance().findById(idPedidoDespesa);
-		pedidoDespesa.setStatus(Status.CONFIRMADO);
-		
-		final List<ItensPedidoDespesa> itensPedidoDespesa = ItensPedidoDespesaBO.getInstance().findAllItensByNumeroPD(pedidoDespesa);
-		
-		for (ItensPedidoDespesa itensPD : itensPedidoDespesa) {
-			itensPD.setStatus(Status.CONFIRMADO);
+		if (pedidoDespesa.getStatus() !=Status.COTADO){
+			errors.add("valorNaoCotado", new ActionMessage("valor.nao.cotado"));
 		}
-		
-		((PedidoDespesaBO)PedidoDespesaBO.getInstance()).aprovaPD(pedidoDespesa, itensPedidoDespesa);
-		
+		if (errors.isEmpty()){
+			pedidoDespesa.setStatus(Status.CONFIRMADO);
+
+			final List<ItensPedidoDespesa> itensPedidoDespesa = ItensPedidoDespesaBO.getInstance().findAllItensByNumeroPD(pedidoDespesa);
+
+			for (ItensPedidoDespesa itensPD : itensPedidoDespesa) {
+				itensPD.setStatus(Status.CONFIRMADO);
+			}
+
+			((PedidoDespesaBO)PedidoDespesaBO.getInstance()).aprovaPD(pedidoDespesa, itensPedidoDespesa);
+		}
 		return listAll(mapping, form, request, response);
 	}
+	
+	public ActionForward prepareListCotacao(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		final ActionMessages errors = new ActionMessages();
+		final List<PedidoDespesa> listPD = ((PedidoDespesaBO)PedidoDespesaBO.getInstance()).findAllAguardando();
+		if (!listPD.isEmpty()){
+			final List<PedidoDespesaTO> listPDTo = new PedidoDespesaAssembler().entity2EntityTO(listPD);
+			request.setAttribute("listPedido", listPDTo);
+			request.setAttribute(LOAD_PAGE, LIST_COTAR);
+			return mapping.findForward("index");
+		} 
+		errors.add("listaVazia", new ActionMessage("lista.pd.vazia"));
+		saveErrors(request, errors);
+		request.setAttribute(LOAD_PAGE, HOME);
+		return mapping.findForward("index");
+	}	
+	
 }
