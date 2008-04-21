@@ -53,7 +53,7 @@
 	<table width="100%">
 		
 		<tr bgcolor="#c1c1c1">
-			<th>Numero do Pedido</th>
+			<th>Pedido</th>
 			<th>Divisão</th>
 			<th>Tipo de Serviço</th>
 			<th>Data</th>
@@ -77,31 +77,31 @@
 				<html:hidden property="item[${status.index}].orcamento" />
 				<html:hidden property="item[${status.index}].fonteRecurso" />
 				
-				<td align="left">
+				<td align="center" width="5%">
 					<a href="#"	onClick="javascript:doSubmit1('formListPedidoDespesa', 'prepareUpdate', ${item.id})">
 					<html:hidden property="item[${status.index}].numeroPD" />${item.numeroPD}</a>
 				</td>
 				
-				<td align="left">
+				<td align="center">
 					<label for="item[${status.index}].checked"></label>
 					<html:hidden property="item[${status.index}].nomeDivisao" />
 					<span>${item.nomeDivisao}</span>
 				</td>
 				
-				<td align="left">
+				<td align="center">
 					<label for="item[${status.index}].checked"></label>
 					<html:hidden property="item[${status.index}].tipoServico" />
 					<span>${item.tipoServico}</span>
 				</td>
 				
-				<td align="left">
+				<td align="center">
 					<label for="item[${status.index}].checked"></label>
 					<html:hidden property="item[${status.index}].dataPD" />
 					<span>${item.dataPD}</span>
 				</td>
 				
 				
-				<td align="left">
+				<td align="right">
 				<c:if test="${item.valorCotado !='0,00'}">
 					<label for="item[${status.index}].checked"></label>
 					<html:hidden property="item[${status.index}].valorCotado" />
@@ -121,7 +121,7 @@
 					<span>${item.justificativa}</span>
 				</td>
 				
-				<td align="left">
+				<td align="center">
 					<label for="item[${status.index}].checked"></label>
 					<html:hidden property="item[${status.index}].status" />
 					<span>${item.status}</span>

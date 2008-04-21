@@ -30,10 +30,10 @@
 
 	<c:forEach items="${listAllContasPagar}" var="contasPagar" varStatus="status">
 		<tr>
-			<td>${contasPagar.observacao}</td>
+			<td align="center">${contasPagar.observacao}</td>
 			<td>${contasPagar.nomeDivisao}</td>
-			<td>${contasPagar.dataPrevista}</td>
-			<td>${contasPagar.valorPrevista}</td>
+			<td align="center">${contasPagar.dataPrevista}</td>
+			<td width="10%" align="right">${contasPagar.valorPrevista}</td>
 			<td width="2%" align="center">
 			<html:image src="./imagens/accept.png" onclick="javascript:showHide('div-${status.index}')" style="cursor: pointer" alt="Efetuar Baixa" border="0" title="Efetuar Baixa" />
 			</td>
