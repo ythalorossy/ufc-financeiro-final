@@ -59,7 +59,7 @@
 			<td>Valor da Nota</td>
 			<td>Status da Nota Fiscal</td>
 			<td align="center">
-			<a href="" onClick="javascript:doSubmit('formListNotaFiscal','delete')"><img src="./imagens/delete.png" border="0" /></a>
+			<a href="#" onClick="javascript:doSubmit('formListNotaFiscal','delete')"><img src="./imagens/delete.png" border="0" /></a>
 			</td>
 
 		</tr>
