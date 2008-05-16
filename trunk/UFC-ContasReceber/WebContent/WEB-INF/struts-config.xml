@@ -66,7 +66,9 @@
 			<forward name="caixaContasPagar" path="/WEB-INF/pages/caixaContasPagar/caixaContasPagar.jsp" />
 		</action>
 		
-		<action path="/relatorio" name="relatorioForm" type="br.ufc.action.RelatorioAction" parameter="operacao"></action>
+		<action path="/relatorio" name="relatorioForm" type="br.ufc.action.RelatorioAction" parameter="operacao">
+			<forward name="relatorio" path="/WEB-INF/pages/relatorio/relatorio.jsp"></forward>
+		</action>
 		
 		<action path="/pedidoDespesa" name="pedidoDespesaForm" type="br.ufc.action.PedidoDespesaAction" parameter="operacao">
 			<forward name="itensPedidoDespesa" path="/itensPedidoDespesa.do?operacao=prepareSave"></forward>

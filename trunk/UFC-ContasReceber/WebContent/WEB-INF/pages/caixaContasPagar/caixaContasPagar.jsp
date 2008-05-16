@@ -18,7 +18,7 @@
 		</td>
 	</tr>
 </table>
-
+<span style="color: red;"><html:errors property="caixaBatido"/><html:errors property="dataBaixaMaior"/></span>
 <table width="99%" border="0">
 	<tr bgcolor="#c1c1c1">
 		<th>Documento</th>

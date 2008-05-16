@@ -18,11 +18,13 @@ import br.com.PedidoDespesa;
 import br.ufc.BO.AcompanhamentoPDBO;
 import br.ufc.BO.PedidoDespesaBO;
 import br.ufc.DAO.DivisaoDAO;
+import br.ufc.DAO.LaboratorioDAO;
 import br.ufc.TO.AcompanhamentoPDTO;
 import br.ufc.assembler.AcompanhamentoPDAssembler;
 import br.ufc.form.AcompanhamentoPDForm;
 
 import com.Auxiliar.Divisao;
+import com.Auxiliar.Laboratorio;
 
 public class AcompanhamentoPDAction extends DispatchAction{
 	
@@ -35,7 +37,8 @@ public class AcompanhamentoPDAction extends DispatchAction{
 		
 		final String idPD = request.getParameter("idPD");
 		
-		final List<Divisao> listDivisao = new DivisaoDAO().findAll();
+		final List<Laboratorio> upd = new LaboratorioDAO().findAll();
+		final List<Divisao> divisao = new DivisaoDAO().findAll();
 		final PedidoDespesa pedidoDespesa = PedidoDespesaBO.getInstance().findById(Integer.parseInt(idPD));
 		final List<AcompanhamentoPD> listAPD = AcompanhamentoPDBO.getInstance().findByPD(pedidoDespesa);
 		final List<AcompanhamentoPDTO> listAPDTO = AcompanhamentoPDAssembler.getInstance().entity2EntityTO(listAPD);
@@ -45,7 +48,8 @@ public class AcompanhamentoPDAction extends DispatchAction{
 		final AcompanhamentoPDForm acompanhamentoPDForm = (AcompanhamentoPDForm) form;
 		
 		acompanhamentoPDForm.setTheItem(apdTO);
-		request.setAttribute("listDivisao", listDivisao);
+		request.setAttribute("listUPD", upd);
+		request.setAttribute("listDivisao", divisao);
 		request.setAttribute("listAPD", listAPDTO);
 		request.setAttribute(LOAD_PAGE, PREPARE_SAVE);
 		
@@ -71,7 +75,7 @@ public class AcompanhamentoPDAction extends DispatchAction{
 	private ActionMessages validate(AcompanhamentoPDForm apdForm,
 			HttpServletRequest request) {
 		final ActionMessages errors = new ActionMessages();
-		final String divisao = apdForm.getTheItem().getDivisao();
+		final String divisao = apdForm.getTheItem().getLaboratorio();
 		final String observacao = apdForm.getTheItem().getObservacao();
 		
 		if (GenericValidator.isBlankOrNull(divisao)){

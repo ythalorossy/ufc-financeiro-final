@@ -19,6 +19,7 @@
 			<td>Data Recebimento</td>
 			<td>Data Envio</td>
 			<td>Divisão</td>
+			<td>Unidade de Produção</td>
 		</tr>
 		<tr bgcolor="#f1f1f1" height="25">
 			<td>
@@ -29,10 +30,19 @@
 				<html:hidden property="theItem.dataEnvio" value="${acompanhamentoPDForm.theItem.dataEnvio}" />
 				${acompanhamentoPDForm.theItem.dataEnvio}
 			</td>
+			
 			<td>
 				<html:select property="theItem.divisao">
 					<c:forEach items="${listDivisao}" var="divisao">
 						<html:option value="${divisao.id}">${divisao.nome}</html:option>
+					</c:forEach>
+				</html:select>
+			</td>
+			
+			<td>
+				<html:select property="theItem.laboratorio">
+					<c:forEach items="${listUPD}" var="upd">
+						<html:option value="${upd.id}">${upd.nome}</html:option>
 					</c:forEach>
 				</html:select>
 			</td>
@@ -59,6 +69,7 @@
 	<th>Data Envio</th>
 	<th>Data Recebimento</th>
 	<th>Divisão</th>
+	<th>Unidade de Produção</th>
 	<th>Observação</th>
 </tr>
 
@@ -67,6 +78,7 @@
 	<td width="10%">${apd.dataEnvio}</td>
 	<td width="10%">${apd.dataRecebimento}</td>
 	<td width="10%">${apd.nomeDivisao}</td>
+	<td width="10%">${apd.nomeLaboratorio}</td>
 	<td width="70%">${apd.observacao}</td>
 </tr>
 </c:forEach>

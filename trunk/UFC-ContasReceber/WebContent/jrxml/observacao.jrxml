@@ -30,7 +30,7 @@
      observacao."ob_observacao" AS observacao,
      observacao."ctr_observacao" AS ctr_observacao
 FROM
-     "ufc"."observacao" observacao
+     "financeiro"."observacao" observacao
 
 WHERE
      observacao."ctr_observacao" = $P{idCTR}]]></queryString>

@@ -71,6 +71,13 @@
 		form.submit();
 	}
 	
+	function doDelete(idForm, operation){
+	
+		var form = document.getElementById(idForm);
+		form.operacao.value = operation;
+		form.submit();
+	}
+	
 
 
 	/*

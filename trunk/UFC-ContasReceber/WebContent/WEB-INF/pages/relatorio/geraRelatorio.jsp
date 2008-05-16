@@ -11,7 +11,7 @@
 		<td width="1%">&nbsp;</td>
 		<td width="11%"><span class="labelForm">Por Número</span></td>
 		<td>
-		<html:form action="relatorio">
+		<html:form action="relatorio" target="_blank">
 			<input type="hidden" name="operacao" value="relatorioNotaFiscalUnica">
 			<select name="idNotaFiscal" style="width: 200px;">
 				<c:forEach var="notaFiscal" items="${notaFiscalTO}" >
@@ -27,7 +27,7 @@
 		<td width="1%">&nbsp;</td>
 		<td width="11%"><span class="labelForm">Por Cliente</span></td>
 		<td>
-			<html:form action="relatorio">
+			<html:form action="relatorio" target="_blank">
 				<input type="hidden" name="operacao" value="relatorioNotaFiscalAnaliticaCliente">
 				<select name="idCliente" style="width: 200px;">
 					<c:forEach var="clientes" items="${clientes}" >
@@ -43,7 +43,7 @@
 		<td width="1%">&nbsp;</td>
 		<td width="11%"><span class="labelForm">Sintético</span></td>
 		<td>
-			<html:form action="relatorio">
+			<html:form action="relatorio" target="_blank">
 				<input type="hidden" name="operacao" value="relatorioNotaFiscalSinteticoCliente">
 				<select name="idCliente" style="width: 200px;">
 					<c:forEach var="clientes" items="${clientes}" >
@@ -58,7 +58,7 @@
 	<tr bgcolor="#f1f1f1" height="40">
 		<td width="1%">&nbsp;</td>
 		<td width="11%"><span class="labelForm">Por Unidade de Produção</span></td>
-			<html:form action="relatorio">
+			<html:form action="relatorio" target="_blank">
 			<td>
 				<input type="hidden" name="operacao" value="relatorioLaboratorio">
 				<select name="idLaboratorio" style="width: 200px;">
@@ -91,7 +91,7 @@
 		<td width="1%">&nbsp;</td>
 		<td width="11%"><span class="labelForm">Inadimplentes</span></td>
 		<td>
-		<html:form action="relatorio">
+		<html:form action="relatorio" target="_blank">
 			<input type="hidden" name="operacao" value="relatorioContasReceberInadimplentes">
 			Data Prevista de Pagamento<br/>
 			<input type="text" name="dataPrevista" onkeyup="javascript:formatFieldData(this)">
@@ -113,7 +113,7 @@
 		<td width="1%">&nbsp;</td>
 		<td width="11%"><span class="labelForm">Contas a Receber</span></td>
 		<td>
-			<html:form action="relatorio">
+			<html:form action="relatorio" target="_blank">
 				<input type="hidden" name="operacao" value="relatorioContasReceberAnalitico">
 				<table>
 					<tr>
@@ -148,7 +148,7 @@
 		<td width="1%">&nbsp;</td>
 		<td width="11%"><span class="labelForm">Contas a Receber</span></td>
 		<td>
-			<html:form action="relatorio">
+			<html:form action="relatorio" target="_blank">
 				<input type="hidden" name="operacao" value="relatorioContasReceberSintetico">
 				<table>
 					<tr>
@@ -182,7 +182,7 @@
 		<td width="1%">&nbsp;</td>
 		<td width="11%"><span class="labelForm">Cliente</span></td>
 		<td>
-		<html:form action="relatorio">
+		<html:form action="relatorio" target="_blank">
 			<select name="idCliente" style="width: 200px;">
 				<c:forEach var="clientes" items="${clientes}" >
 					<option value="${clientes.id}">${clientes.nome}</option>
@@ -211,7 +211,7 @@
 		<td width="1%">&nbsp;</td>
 		<td width="14%"><span class="labelForm">Intervalo de Datas Analítico</span></td>
 		<td>
-			<html:form action="relatorio">
+			<html:form action="relatorio" target="_blank">
 				<input type="hidden" name="operacao" value="relatorioContasPagarAnalitico">
 				<table>
 					<tr>
@@ -239,7 +239,7 @@
 		<td width="1%">&nbsp;</td>
 		<td width="14%"><span class="labelForm">Intervalo de Datas Sintético</span></td>
 		<td>
-			<html:form action="relatorio">
+			<html:form action="relatorio" target="_blank">
 				<input type="hidden" name="operacao" value="relatorioContasPagarSintetico">
 				<table>
 					<tr>
@@ -267,7 +267,7 @@
 		<td width="1%">&nbsp;</td>
 		<td width="11%"><span class="labelForm">Divisão</span></td>
 		<td>
-		<html:form action="relatorio">
+		<html:form action="relatorio" target="_blank">
 			<select name="idDivisao" style="width: 200px;">
 				<c:forEach var="divisao" items="${divisao}" >
 					<option value="${divisao.id}">${divisao.nome}</option>
@@ -292,7 +292,7 @@
 		<td width="1%">&nbsp;</td>
 		<td width="11%"><span class="labelForm">Intervalo de Data</span></td>
 		<td>
-			<html:form action="relatorio">
+			<html:form action="relatorio" target="_blank">
 				<input type="hidden" name="operacao" value="relatorioCaixa">
 				<table>
 					<tr>

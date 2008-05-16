@@ -34,7 +34,7 @@
      nota_fiscal."nfs_tipo" AS tipoNota,
      nota_fiscal."nfs_valor_total" AS valorNota
 FROM
-     "ufc"."nota_fiscal" nota_fiscal]]></queryString>
+     "financeiro"."nota_fiscal" nota_fiscal]]></queryString>
 
 	<field name="dataSaida" class="java.lang.String"/>
 	<field name="idCliente" class="java.lang.String"/>

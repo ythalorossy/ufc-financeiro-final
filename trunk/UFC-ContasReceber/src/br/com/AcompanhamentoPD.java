@@ -30,6 +30,7 @@ public class AcompanhamentoPD implements Serializable{
 	private PedidoDespesa pd;
 	private GregorianCalendar dataEnvio;
 	private GregorianCalendar dataRecebimento;
+	private int laboratorio;
 	private int divisao;
 	private int status;
 	private String observacao;
@@ -73,12 +74,12 @@ public class AcompanhamentoPD implements Serializable{
 		this.dataRecebimento = dataRecebimento;
 	}
 	
-	@Column(name="APD_ID_DIVISAO")
-	public int getDivisao() {
-		return divisao;
+	@Column(name="APD_ID_UPRODUCAO")
+	public int getLaboratorio() {
+		return laboratorio;
 	}
-	public void setDivisao(int divisao) {
-		this.divisao = divisao;
+	public void setLaboratorio(int divisao) {
+		this.laboratorio = divisao;
 	}
 	
 	@Column(name="APD_OBSERVACAO")
@@ -95,5 +96,13 @@ public class AcompanhamentoPD implements Serializable{
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	
+	@Column(name="APD_ID_DIVISAO")
+	public int getDivisao() {
+		return divisao;
+	}
+	public void setDivisao(int divisao) {
+		this.divisao = divisao;
 	}
 }

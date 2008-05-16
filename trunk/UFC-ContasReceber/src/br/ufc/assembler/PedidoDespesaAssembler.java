@@ -36,6 +36,7 @@ public class PedidoDespesaAssembler implements
 		 to.setValorPrevisto(ConverteNumero.converteNumero(entity.getValorPrevisto()));
 		 to.setNomeLaboratorio(new LaboratorioDAO().findById(entity.getIdLaboratorio()).getNome());
 		 to.setProjeto(Status.retornaTipo(entity.getProjeto()));
+		 to.setAnexo(Status.retornaTipo(entity.getAnexos()));
 		return to;
 	}
 
@@ -85,6 +86,7 @@ public class PedidoDespesaAssembler implements
 		entity.setNumeroPD(to.getNumeroPD());
 		entity.setOrcamento(to.getOrcamento());
 		entity.setProjeto(Status.retornaTipo(to.getProjeto()));
+		entity.setAnexos(Status.retornaTipo(to.getAnexo()));
 		
 		try {
 			entity.setStatus(Status.retornaTipo(to.getStatus()));

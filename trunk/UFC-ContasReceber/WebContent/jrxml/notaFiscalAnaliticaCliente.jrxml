@@ -33,9 +33,7 @@
 	<parameter name="SUBREPORT_DIR" isForPrompting="true" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["H:\\UFC - JRXML\\"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="itensConexao" isForPrompting="false" class="java.sql.Connection">
-		<defaultValueExpression ><![CDATA[java.sql.DriverManager.getConnection("jdbc:postgresql://localhost:5432/UFCFinanceiro","postgres", "1234")]]></defaultValueExpression>
-	</parameter>
+	<parameter name="subConnection" isForPrompting="false" class="java.sql.Connection"/>
 	<parameter name="total" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="imagem1" isForPrompting="false" class="java.lang.Object"/>
 	<queryString><![CDATA[SELECT
@@ -48,7 +46,7 @@
      nota_fiscal."nfs_valor_total" AS valorNota,
      nota_fiscal."nfs_status" AS status
 FROM
-     "ufc"."nota_fiscal" nota_fiscal]]></queryString>
+     "financeiro"."nota_fiscal" nota_fiscal]]></queryString>
 
 	<field name="id" class="java.lang.String"/>
 	<field name="dataSaida" class="java.lang.String"/>
@@ -339,7 +337,7 @@ FROM
 					<subreportParameter  name="idNotaFiscal">
 						<subreportParameterExpression><![CDATA[new Integer($F{id})]]></subreportParameterExpression>
 					</subreportParameter>
-					<connectionExpression><![CDATA[$P{itensConexao}]]></connectionExpression>
+					<connectionExpression><![CDATA[$P{subConnection}]]></connectionExpression>
 					<subreportExpression  class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "itensNotaFiscal.jasper"]]></subreportExpression>
 				</subreport>
 			</band>

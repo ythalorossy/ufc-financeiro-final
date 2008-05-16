@@ -53,18 +53,27 @@ public class ContasReceberAction extends DispatchAction implements Serializable 
 		final GregorianCalendar calendar = ConverteData.retornaData(dataPagamento);
 		// buscando todos os caixas por este calendario 
 		final List<Caixa> caixaList = ((CaixaBO)CaixaBO.getInstance()).findAllByDia(calendar);
-		boolean resultado = false;
+		boolean resultado = true;
+		
+		if (GregorianCalendar.getInstance().before(calendar)){
+			errors.add("dataBaixaMaior", new ActionMessage("data.baixa.maior"));
+			resultado = false;
+		}
+
 		// testando se existe alguma tupla do caixa com o status de batido, se houver alguma tupla é setado um valor true para a variavel buleana
+		if (resultado)
 		for (Caixa caixa : caixaList) {
 			if (caixa.getStatus() == Status.BATIDO){
-				resultado = true;
+				resultado = false;
+				errors.add("caixaBatido", new ActionMessage("CAIXA.BATIDO"));
 				break;
 			}
 		}
 		
+		
 		// Se o resultado for falso a conta poderá ser baixa pois, por medida de segurança não se pode baixar uma conta com o caixa tendo o status
 		// Batido
-		if (!resultado){
+		if (resultado){
 			ContasReceberForm contasReceberForm = (ContasReceberForm) form;
 			ContasReceberTO contasReceberTO = contasReceberForm.getTheItem();
 			ContasReceber contasReceber = ContasReceberAssembler.getInstance().entityTO2Entity(contasReceberTO);
@@ -72,8 +81,6 @@ public class ContasReceberAction extends DispatchAction implements Serializable 
 			if (!((ContasReceberBO)ContasReceberBO.getInstance()).baixarContasReceber(contasReceber, jurosDesconto, calendar)){
 				errors.add("erroSalvar", new ActionMessage("erro.salvar"));
 			}
-		} else {
-			errors.add("caixaBatido", new ActionMessage("CAIXA.BATIDO"));
 		}
 
 		saveErrors(request, errors);

@@ -33,7 +33,9 @@ public class PedidoDespesa implements Serializable {
 	private double valorCotado;
 	private int status;
 	private int projeto;
+	private int anexos;
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "PD_ID")
@@ -154,5 +156,15 @@ public class PedidoDespesa implements Serializable {
 	public void setProjeto(int projeto) {
 		this.projeto = projeto;
 	}
+	
+	@Column(name="PD_ANEXO")
+	public int getAnexos() {
+		return anexos;
+	}
+
+	public void setAnexos(int anexos) {
+		this.anexos = anexos;
+	}
+
 
 }

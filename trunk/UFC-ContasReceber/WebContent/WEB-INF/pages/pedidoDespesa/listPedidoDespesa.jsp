@@ -60,6 +60,7 @@
 			<th>Valor Total</th>
 			<th>Justificativa</th>
 			<th>Status</th>
+			<th>Anexos</th>
 			<th>Acompanhamento</th>
 			<th width="2%">
 			<a href="#" onclick="javascrit:doSubmit('formListPedidoDespesa', 'delete')"><html:image src="./imagens/delete.png" border="0"/></a>
@@ -115,7 +116,7 @@
 				</td>
 				
 				
-				<td align="left">
+				<td align="center">
 					<label for="item[${status.index}].checked"></label>
 					<html:hidden property="item[${status.index}].justificativa" />
 					<span>${item.justificativa}</span>
@@ -125,6 +126,12 @@
 					<label for="item[${status.index}].checked"></label>
 					<html:hidden property="item[${status.index}].status" />
 					<span>${item.status}</span>
+				</td>
+				
+				<td align="center">
+					<label for="item[${status.index}].checked"></label>
+					<html:hidden property="item[${status.index}].anexo" />
+					<span>${item.anexo}</span>
 				</td>
 				
 				<td align="center"><html:link href="acompanhamentoPD.do?operacao=prepareSave&idPD=${item.id}">adicionar | ver</html:link> </td>

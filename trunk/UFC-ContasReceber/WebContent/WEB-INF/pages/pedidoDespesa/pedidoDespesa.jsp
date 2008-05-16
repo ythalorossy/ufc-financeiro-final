@@ -55,6 +55,7 @@
 		<td width="1%">&nbsp;</td>
 		<td><span class="labelForm">Tipo de Serviço</span></td>
 		<td>
+			<html:radio property="theItem.tipoServico" value="CONSIGNACAO">Consignação</html:radio>
 			<html:radio property="theItem.tipoServico" value="MATERIAL">Material</html:radio>
 			<html:radio property="theItem.tipoServico" value="SERVICO">Serviço</html:radio>
 			<html:radio property="theItem.tipoServico" value="DIARIA">Diária</html:radio>
@@ -76,6 +77,15 @@
 		<td><span class="labelForm">Justificativa</span></td>
 		<td>
 		<html:textarea property="theItem.justificativa" cols="40" rows="5"/>
+		</td>
+	</tr>
+	<tr bgcolor="#f1f1f1">
+		<td width="1%">&nbsp;</td>
+		<td><span class="labelForm">Tem Anexos?</span></td>
+		<td> 
+			<html:radio property="theItem.anexo" value="Sim"/>Sim
+			<html:radio property="theItem.anexo" value="Não"/>Não
+			<html:errors property="numeroPD"/>
 		</td>
 	</tr>
 	<tr>

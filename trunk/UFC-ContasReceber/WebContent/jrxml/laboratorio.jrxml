@@ -34,7 +34,7 @@
      items_nota_fiscal."inf_servico" AS items_nota_fiscal_inf_servico,
      items_nota_fiscal."inf_id_valor_total_item" AS items_nota_fiscal_inf_id_valor_total_item
 FROM
-     "ufc"."items_nota_fiscal" items_nota_fiscal]]></queryString>
+     "financeiro"."items_nota_fiscal" items_nota_fiscal]]></queryString>
 
 	<field name="nomeDivisao" class="java.lang.String"/>
 	<field name="nomeLaboratorio" class="java.lang.String"/>
