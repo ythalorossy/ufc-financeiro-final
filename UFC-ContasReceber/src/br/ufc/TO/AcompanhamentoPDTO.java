@@ -14,6 +14,8 @@ public class AcompanhamentoPDTO implements Serializable{
 	private String numeroPD;
 	private String dataEnvio;
 	private String dataRecebimento;
+	private String laboratorio;
+	private String nomeLaboratorio;
 	private String divisao;
 	private String nomeDivisao;
 	private String observacao;
@@ -41,17 +43,17 @@ public class AcompanhamentoPDTO implements Serializable{
 	public void setDataRecebimento(String dataRecebimento) {
 		this.dataRecebimento = dataRecebimento;
 	}
-	public String getDivisao() {
-		return divisao;
+	public String getLaboratorio() {
+		return laboratorio;
 	}
-	public void setDivisao(String divisao) {
-		this.divisao = divisao;
+	public void setLaboratorio(String divisao) {
+		this.laboratorio = divisao;
 	}
-	public String getNomeDivisao() {
-		return nomeDivisao;
+	public String getNomeLaboratorio() {
+		return nomeLaboratorio;
 	}
-	public void setNomeDivisao(String nomeDivisao) {
-		this.nomeDivisao = nomeDivisao;
+	public void setNomeLaboratorio(String nomeDivisao) {
+		this.nomeLaboratorio = nomeDivisao;
 	}
 	public String getObservacao() {
 		return observacao;
@@ -64,6 +66,18 @@ public class AcompanhamentoPDTO implements Serializable{
 	}
 	public void setNumeroPD(String numeroPD) {
 		this.numeroPD = numeroPD;
+	}
+	public String getNomeDivisao() {
+		return nomeDivisao;
+	}
+	public void setNomeDivisao(String nomeDivisao) {
+		this.nomeDivisao = nomeDivisao;
+	}
+	public String getDivisao() {
+		return divisao;
+	}
+	public void setDivisao(String divisao) {
+		this.divisao = divisao;
 	}
 	
 	

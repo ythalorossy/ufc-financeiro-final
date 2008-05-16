@@ -3,12 +3,13 @@ package br.ufc.assembler;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.converte.ConverteData;
-
 import br.com.AcompanhamentoPD;
 import br.ufc.BO.PedidoDespesaBO;
 import br.ufc.DAO.DivisaoDAO;
+import br.ufc.DAO.LaboratorioDAO;
 import br.ufc.TO.AcompanhamentoPDTO;
+
+import com.converte.ConverteData;
 
 public class AcompanhamentoPDAssembler implements ASSEMBLER<AcompanhamentoPD, AcompanhamentoPDTO> {
 	
@@ -16,8 +17,14 @@ public class AcompanhamentoPDAssembler implements ASSEMBLER<AcompanhamentoPD, Ac
 		final AcompanhamentoPDTO to = new AcompanhamentoPDTO();
 		to.setDataEnvio(ConverteData.retornaData(entity.getDataEnvio()));
 		to.setDataRecebimento(ConverteData.retornaData(entity.getDataRecebimento()));
+		to.setLaboratorio(String.valueOf(entity.getLaboratorio()));
 		to.setDivisao(String.valueOf(entity.getDivisao()));
 		to.setId(String.valueOf(entity.getId()));
+		try {
+			to.setNomeLaboratorio(new LaboratorioDAO().findById(entity.getLaboratorio()).getNome());
+		} catch (Exception e) {
+			to.setNomeLaboratorio("");
+		}
 		try {
 			to.setNomeDivisao(new DivisaoDAO().findById(entity.getDivisao()).getNome());
 		} catch (Exception e) {
@@ -50,10 +57,16 @@ public class AcompanhamentoPDAssembler implements ASSEMBLER<AcompanhamentoPD, Ac
 			e1.printStackTrace();
 		}
 		try {
+			entity.setLaboratorio(Integer.parseInt(to.getLaboratorio()));
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		try {
 			entity.setDivisao(Integer.parseInt(to.getDivisao()));
 		} catch (Exception e) {
 			e.getMessage();
 		}
+		
 		try {
 			entity.setId(Integer.parseInt(to.getId()));
 		} catch (Exception e) {

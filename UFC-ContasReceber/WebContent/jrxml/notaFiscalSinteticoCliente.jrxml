@@ -48,7 +48,7 @@
      nota_fiscal."nfs_valor_total" AS valorNota,
      nota_fiscal."nfs_status" AS status
 FROM
-     "ufc"."nota_fiscal" nota_fiscal]]></queryString>
+     "financeiro"."nota_fiscal" nota_fiscal]]></queryString>
 
 	<field name="id" class="java.lang.String"/>
 	<field name="dataSaida" class="java.lang.String"/>

@@ -102,7 +102,8 @@
 			<th width="10%">Valor Unitário</th>
 			<th width="10%">Valor Total</th>
 			<th width="2%" valign="bottom">
-			<html:image src="./imagens/delete.png" onclick="doSubmit('formInsertItemNotaFiscal', 'delete')" style="cursor: pointer;" alt="Deletar" border="0" title="Deletar" />
+			<a href="#" onclick="doDelete('formInsertItemNotaFiscal', 'delete')"><img src="./imagens/delete.png" border="0" style="vertical-align: middle"></a>
+			
 		</tr>
 		<c:forEach var="item" items="${itensNotaFiscalForm.items}" varStatus="status">
 			<tr bgcolor='${(status.index % 2) == 0 ? "#F1F1F1" : "#FFFFFF"}'>

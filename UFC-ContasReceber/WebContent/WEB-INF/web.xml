@@ -14,18 +14,18 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-
+	
 	<!-- Filtros -->
 	<filter>
 		<filter-name>ValidaLogin</filter-name>
 		<filter-class>br.ufc.filters.ValidaLoginFilter</filter-class>
 	</filter>
 	<filter-mapping>
-	<filter-name>ValidaLogin</filter-name>
-	<url-pattern>*.do</url-pattern>
+		<filter-name>ValidaLogin</filter-name>
+		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
-	
-	
+
+
 	<!-- Action Servlet Mapping -->
 	<servlet-mapping>
 		<servlet-name>action</servlet-name>

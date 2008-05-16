@@ -25,6 +25,7 @@ public class PedidoDespesaTO implements Serializable{
 	private String status;
 	private boolean checked;
 	private String projeto;
+	private String anexo;
 	
 
 	public String getProjeto() {
@@ -153,6 +154,14 @@ public class PedidoDespesaTO implements Serializable{
 
 	public void setNomeLaboratorio(String nomeLaboratorio) {
 		this.nomeLaboratorio = nomeLaboratorio;
+	}
+
+	public String getAnexo() {
+		return anexo;
+	}
+
+	public void setAnexo(String anexo) {
+		this.anexo = anexo;
 	}
 
 }

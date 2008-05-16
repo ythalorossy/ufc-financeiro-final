@@ -32,7 +32,7 @@
      items_nota_fiscal."inf_nota_fiscal" AS idNotaFiscal,
      items_nota_fiscal."inf_nome_divisao" AS idDivisao
 FROM
-     "ufc"."items_nota_fiscal" items_nota_fiscal
+     "financeiro"."items_nota_fiscal" items_nota_fiscal
 WHERE
      items_nota_fiscal."inf_nota_fiscal" = $P{idNotaFiscal}]]></queryString>
 

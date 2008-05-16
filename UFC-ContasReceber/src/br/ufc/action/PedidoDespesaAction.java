@@ -76,6 +76,7 @@ public class PedidoDespesaAction extends DispatchAction implements Serializable 
 		final PedidoDespesaForm pdForm = (PedidoDespesaForm) form;
 		pdForm.getTheItem().setTipoServico("MATERIAL");
 		pdForm.getTheItem().setProjeto("Não");
+		pdForm.getTheItem().setAnexo("Não");
 		request.setAttribute("listAllDivisao", listAllDivisao);
 		request.setAttribute("listAllLaboratorio", listAllLaboratorios);
 		request.setAttribute("operacao", "save");
@@ -135,9 +136,11 @@ public class PedidoDespesaAction extends DispatchAction implements Serializable 
 
 		if(pd.getStatus()!= Status.CONFIRMADO){
 				final List<Divisao> listAllDivisao = divisaoDao.findAll();
+				final List<Laboratorio> listAllLaboratorios = new LaboratorioDAO().findAll();
 				final PedidoDespesaTO pdTO =  pedidoDespesaAssembler.entity2EntityTO(pd);
 				pedidoDespesaForm.setTheItem(pdTO);
 				request.setAttribute("listAllDivisao", listAllDivisao);
+				request.setAttribute("listAllLaboratorio", listAllLaboratorios);
 				request.setAttribute("operacao", "update");
 				request.setAttribute(LOAD_PAGE, PREPARE_SAVE);
 				return mapping.findForward("index");

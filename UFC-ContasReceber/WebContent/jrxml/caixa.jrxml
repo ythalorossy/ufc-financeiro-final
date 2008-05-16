@@ -34,7 +34,7 @@
      caixa."cx_descricao_servico" AS descricaoServico,
      caixa."cx_data_pagamento" AS dataPagamento
 FROM
-     "ufc"."caixa" caixa]]></queryString>
+     "financeiro"."caixa" caixa]]></queryString>
 
 	<field name="doc" class="java.lang.String"/>
 	<field name="valor" class="java.lang.String"/>

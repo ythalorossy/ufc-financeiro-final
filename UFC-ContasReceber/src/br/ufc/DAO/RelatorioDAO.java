@@ -55,7 +55,7 @@ public class RelatorioDAO {
 		closeSession();
 		return list;
 	}
-	public List<NotaFiscal> relatorioNotaFiscalUnicaCliente(int busca) {
+	public List<NotaFiscal> relatorioNotaFiscalUnicaCliente(String busca) {
 		startTransaction();
 		Query query = hh.getSession().createQuery("From NotaFiscal where idCliente= ?");
 		query.setParameter(0, busca);

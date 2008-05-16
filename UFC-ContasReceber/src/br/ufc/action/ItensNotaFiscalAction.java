@@ -173,6 +173,7 @@ public class ItensNotaFiscalAction extends DispatchAction implements Serializabl
 			} else {
 				final NotaFiscal notaFiscal = itensNotaFiscal2Delete.get(0).getIdNotaFiscal();
 				request.setAttribute("notaFiscal", notaFiscal);
+				return prepareSave(mapping, form, request, response);
 			}
 		}
 		

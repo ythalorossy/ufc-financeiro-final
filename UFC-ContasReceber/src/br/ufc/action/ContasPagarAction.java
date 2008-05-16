@@ -51,19 +51,30 @@ public class ContasPagarAction extends DispatchAction implements Serializable {
 		ContasPagarTO contasPagarTO = contasReceberForm.getTheItem();
 		ContasPagar contasPagar = ContasPagarAssembler.getInstance().entityTO2Entity(contasPagarTO);
 		final List<Caixa> listCaixa = ((CaixaBO)CaixaBO.getInstance()).findAllByDia(ConverteData.retornaData(dataPagamento));
+		
+		final GregorianCalendar calendar = ConverteData.retornaData(dataPagamento);
+		
+		if (GregorianCalendar.getInstance().before(calendar)){
+			errors.add("dataBaixaMaior", new ActionMessage("data.baixa.maior"));
+			result = false;
+		}
+		
+		if (result)
 		for (Caixa caixa : listCaixa) {
 			if (caixa.getStatus() == Status.BATIDO){
 				result = false;
+				errors.add("caixaBatido", new ActionMessage("CAIXA.BATIDO"));
 				break;
 			}
 		}
+		
 		if(result){
-			if (((ContasPagarBO)ContasPagarBO.getInstance()).baixarContasPagar(contasPagar, jurosDesconto, ConverteData.retornaData(dataPagamento))){
+			if (((ContasPagarBO)ContasPagarBO.getInstance()).baixarContasPagar(contasPagar, jurosDesconto, calendar)){
 				System.out.println("Baixada com sucesso!");
 			}
-		} else {
-			errors.add("caixaBatido", new ActionMessage("CAIXA.BATIDO"));
-		}
+		} 
+		
+		
 		saveErrors(request, errors);
 		return montarCaixa(mapping, form, request, response);
 	}

@@ -42,7 +42,7 @@
      contas_pagar."ctp_valor_previsto" AS valorPrevista,
      contas_pagar."ctp_id_forma_pagamento" AS idFormasPagamento
 FROM
-     "ufc"."contas_pagar" contas_pagar]]></queryString>
+     "financeiro"."contas_pagar" contas_pagar]]></queryString>
 
 	<field name="id" class="java.lang.String"/>
 	<field name="dataEfetiva" class="java.lang.String"/>

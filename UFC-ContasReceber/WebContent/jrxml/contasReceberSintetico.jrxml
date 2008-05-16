@@ -41,7 +41,7 @@
      contas_receber."ctr_id_forma_pagamento" AS idFormasPagamento,
      contas_receber."ctr_id_cliente" AS idCliente
 FROM
-     "ufc"."contas_receber" contas_receber]]></queryString>
+     "financeiro"."contas_receber" contas_receber]]></queryString>
 
 	<field name="idParcela" class="java.lang.String"/>
 	<field name="observacao" class="java.lang.String"/>

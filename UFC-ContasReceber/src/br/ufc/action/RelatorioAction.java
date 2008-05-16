@@ -1,5 +1,6 @@
 package br.ufc.action;
 
+import java.sql.Connection;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -78,9 +79,8 @@ public class RelatorioAction extends DispatchAction{
 	 * de base para a criação de informações sobre saldo atual, saldo anterior e saldo do dia.
 	 * 
 	 */
-	
 	private static final String LOAD_PAGINA = "loadPage";
-	private static final Object FORWARD_PADRAO = "/WEB-INF/pages/relatorio/relatorio.jsp";
+	private static final String RELATORIO = "relatorio";
 	
 	private String imagemNutec(){
 		final String imagem = getServlet().getServletContext().getRealPath("/imagens/Nutec.jpg");
@@ -94,6 +94,17 @@ public class RelatorioAction extends DispatchAction{
 	private String subDir(){
 		final String subDir = getServlet().getServletContext().getRealPath("/jasper/");
 		return subDir+"/";
+	}
+	
+	private Connection getSubConnection(){
+		Connection connection = null;
+		try {
+			connection = java.sql.DriverManager.getConnection("jdbc:postgresql://localhost:5432/nutec","postgres", "1234");
+		} catch (Exception e) {
+			
+		}
+		
+		return connection;
 	}
 
 	/**
@@ -126,7 +137,6 @@ public class RelatorioAction extends DispatchAction{
 		
 		final List<Laboratorio> laboratorioList = new LaboratorioDAO().findAll();
 		request.setAttribute("laboratorio", laboratorioList);
-		
 		request.setAttribute(LOAD_PAGINA, "/WEB-INF/pages/relatorio/geraRelatorio.jsp");
 		return mapping.findForward("index");
 	}
@@ -159,7 +169,9 @@ public class RelatorioAction extends DispatchAction{
 			
 		}
 		// criação dos parametros
-		final Map<String, String> map = new HashMap<String, String>();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("subConnection", getSubConnection());
 		map.put("imagem", imagemNutec());
 		map.put("imagem1", imagemGoverno());
 		map.put("SUBREPORT_DIR",  subDir());
@@ -173,8 +185,7 @@ public class RelatorioAction extends DispatchAction{
 		}
 		saida = request.getContextPath()+("/relatorio/notaFiscalUnica.pdf");
 		request.setAttribute("saida", saida);
-		request.setAttribute(LOAD_PAGINA, FORWARD_PADRAO);
-		return mapping.findForward("index");
+		return mapping.findForward(RELATORIO);
 	}
 
 	/**
@@ -199,7 +210,7 @@ public class RelatorioAction extends DispatchAction{
 		double valorTotal = 0.0;
 
 		// Criação do Objeto nota fiscal baseado em um cliente
-		final List<NotaFiscal> nf = RelatorioDAO.getInstance().relatorioNotaFiscalUnicaCliente(Integer.parseInt(idCliente));
+		final List<NotaFiscal> nf = RelatorioDAO.getInstance().relatorioNotaFiscalUnicaCliente(idCliente);
 		for (NotaFiscal notaFiscal : nf) {
 			// Criação do valor total das notas fiscais por um cliente
 			valorTotal += notaFiscal.getValorNota();
@@ -216,7 +227,8 @@ public class RelatorioAction extends DispatchAction{
 		
 		// Criação dos parametros
 		
-		final Map<String, String> map = new HashMap<String, String>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("subConnection", getSubConnection());
 		map.put("imagem", imagemNutec());
 		map.put("imagem1", imagemGoverno());
 		map.put("total", ConverteNumero.converteNumero(valorTotal));
@@ -232,8 +244,7 @@ public class RelatorioAction extends DispatchAction{
 		
 		saida = request.getContextPath()+("/relatorio/notaFiscalUnica.pdf");
 		request.setAttribute("saida", saida);
-		request.setAttribute(LOAD_PAGINA, FORWARD_PADRAO);
-		return mapping.findForward("index");
+		return mapping.findForward(RELATORIO);
 	}
 	
 	/**
@@ -258,7 +269,7 @@ public class RelatorioAction extends DispatchAction{
 		double valorTotal = 0.0;
 
 		// Criação do Objeto nota fiscal baseado em um cliente
-		final List<NotaFiscal> nf = RelatorioDAO.getInstance().relatorioNotaFiscalUnicaCliente(Integer.parseInt(idCliente));
+		final List<NotaFiscal> nf = RelatorioDAO.getInstance().relatorioNotaFiscalUnicaCliente(idCliente);
 		for (NotaFiscal notaFiscal : nf) {
 			// Criação do valor total das notas fiscais por um cliente
 			valorTotal += notaFiscal.getValorNota();
@@ -290,8 +301,7 @@ public class RelatorioAction extends DispatchAction{
 		
 		saida = request.getContextPath()+("/relatorio/notaFiscalUnica.pdf");
 		request.setAttribute("saida", saida);
-		request.setAttribute(LOAD_PAGINA, FORWARD_PADRAO);
-		return mapping.findForward("index");
+		return mapping.findForward(RELATORIO);
 	}
 	
 	public ActionForward relatorioNotaFiscal(ActionMapping mapping, ActionForm form,
@@ -308,7 +318,8 @@ public class RelatorioAction extends DispatchAction{
 			notaFiscalTO.setTipoNota(Status.retornaTipo(Integer.parseInt(notaFiscalTO.getTipoNota())));
 		}
 
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("subConnection", getSubConnection());
 		map.put("imagem", imagemNutec());
 		map.put("imagem1", imagemGoverno());
 		map.put("SUBREPORT_DIR", subDir());
@@ -322,8 +333,7 @@ public class RelatorioAction extends DispatchAction{
 		
 		saida = request.getContextPath()+("/relatorio/notaFiscal.pdf");
 		request.setAttribute("saida", saida);
-		request.setAttribute(LOAD_PAGINA, FORWARD_PADRAO);		
-		return mapping.findForward("index");
+		return mapping.findForward(RELATORIO);
 	}
 	
 	public ActionForward relatorioContasReceberAnalitico(ActionMapping mapping, ActionForm form,
@@ -361,7 +371,8 @@ public class RelatorioAction extends DispatchAction{
 					contasReceberTO.setDataEfetiva("");
 				}
 			}
-			Map<String, String> map = new HashMap<String, String>();
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("subConnection", getSubConnection());
 			map.put("imagem", imagemNutec());
 			map.put("imagem1", imagemGoverno());
 			map.put("SUBREPORT_DIR", subDir());
@@ -376,8 +387,7 @@ public class RelatorioAction extends DispatchAction{
 			}
 			saida = request.getContextPath()+("/relatorio/contasReceber.pdf");
 			request.setAttribute("saida", saida);
-			request.setAttribute(LOAD_PAGINA, FORWARD_PADRAO);
-			return mapping.findForward("index");
+			return mapping.findForward(RELATORIO);
 		} else { 
 			request.setAttribute(LOAD_PAGINA, "/WEB-INF/pages/relatorio/geraRelatorio.jsp");
 		}
@@ -444,8 +454,7 @@ public class RelatorioAction extends DispatchAction{
 			}
 			saida = request.getContextPath()+("/relatorio/contasReceber.pdf");
 			request.setAttribute("saida", saida);
-			request.setAttribute(LOAD_PAGINA, FORWARD_PADRAO);
-			return mapping.findForward("index");
+			return mapping.findForward(RELATORIO);
 		} else { 
 			request.setAttribute(LOAD_PAGINA, "/WEB-INF/pages/relatorio/geraRelatorio.jsp");
 		}
@@ -503,8 +512,7 @@ public class RelatorioAction extends DispatchAction{
 		}
 		saida = request.getContextPath()+("/relatorio/contasReceber.pdf");
 		request.setAttribute("saida", saida);
-		request.setAttribute(LOAD_PAGINA, FORWARD_PADRAO);
-		return mapping.findForward("index");
+		return mapping.findForward(RELATORIO);
 
 	}
 
@@ -558,8 +566,7 @@ public class RelatorioAction extends DispatchAction{
 		}
 		saida = request.getContextPath()+("/relatorio/inadimplentes.pdf");
 		request.setAttribute("saida", saida);
-		request.setAttribute(LOAD_PAGINA, FORWARD_PADRAO);
-		return mapping.findForward("index");
+		return mapping.findForward(RELATORIO);
 	}
 
 	public ActionForward relatorioCaixa(ActionMapping mapping, ActionForm form,
@@ -649,8 +656,7 @@ public class RelatorioAction extends DispatchAction{
 			}
 			saida = request.getContextPath()+("/relatorio/caixa.pdf");
 			request.setAttribute("saida", saida);
-			request.setAttribute(LOAD_PAGINA, FORWARD_PADRAO);
-			return mapping.findForward("index");
+			return mapping.findForward(RELATORIO);
 		} else { 
 			request.setAttribute(LOAD_PAGINA, "/WEB-INF/pages/relatorio/geraRelatorio.jsp");
 		}
@@ -713,8 +719,7 @@ public class RelatorioAction extends DispatchAction{
 			}
 			saida = request.getContextPath()+("/relatorio/contasPagar.pdf");
 			request.setAttribute("saida", saida);
-			request.setAttribute(LOAD_PAGINA, FORWARD_PADRAO);
-			return mapping.findForward("index");
+			return mapping.findForward(RELATORIO);
 		} else { 
 			request.setAttribute(LOAD_PAGINA, "/WEB-INF/pages/relatorio/geraRelatorio.jsp");
 		}
@@ -787,8 +792,7 @@ public class RelatorioAction extends DispatchAction{
 			}
 			saida = request.getContextPath()+("/relatorio/contasPagar.pdf");
 			request.setAttribute("saida", saida);
-			request.setAttribute(LOAD_PAGINA, FORWARD_PADRAO);
-			return mapping.findForward("index");
+			return mapping.findForward(RELATORIO);
 		} else { 
 			request.setAttribute(LOAD_PAGINA, "/WEB-INF/pages/relatorio/geraRelatorio.jsp");
 		}
@@ -854,8 +858,7 @@ public class RelatorioAction extends DispatchAction{
 			}
 			saida = request.getContextPath()+("/relatorio/contasPagar.pdf");
 			request.setAttribute("saida", saida);
-			request.setAttribute(LOAD_PAGINA, FORWARD_PADRAO);
-			return mapping.findForward("index");
+			return mapping.findForward(RELATORIO);
 		} else { 
 			request.setAttribute(LOAD_PAGINA, "/WEB-INF/pages/relatorio/geraRelatorio.jsp");
 		}
@@ -906,7 +909,6 @@ public class RelatorioAction extends DispatchAction{
 			}
 			saida = request.getContextPath()+("/relatorio/laboratorio.pdf");
 			request.setAttribute("saida", saida);
-			request.setAttribute(LOAD_PAGINA, FORWARD_PADRAO);
 			
 		} catch (Exception e) {
 			errors.add("dataInvalida", new ActionMessage("data.invalida.erro"));
@@ -915,7 +917,7 @@ public class RelatorioAction extends DispatchAction{
 		}
 		
 		
-		return mapping.findForward("index");
+		return mapping.findForward(RELATORIO);
 	}
 
 }
