@@ -15,11 +15,11 @@
 			Pedido de Despesa
 		</td>
 		<td>
+		<select name="idPedidoDespesa">
 			<c:forEach var="pd" items="${listPedido}">
-				<select name="idPedidoDespesa">
 					<option value="${pd.id}">Pedido: ${pd.numeroPD} &nbsp;&nbsp;, Divisão: ${pd.nomeDivisao}</option>
-				</select>
 			</c:forEach>
+		</select>
 		</td>
 		<td><html:image src="./imagens/add.png" style="cursor: pointer" alt="Adicionar" border="0" title="Adicionar" /></td>
 	</tr>
