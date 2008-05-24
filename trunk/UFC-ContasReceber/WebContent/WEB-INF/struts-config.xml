@@ -39,6 +39,8 @@
 
 		<action name="itensNotaFiscalForm" parameter="operacao" path="/itensNotaFiscal" type="br.ufc.action.ItensNotaFiscalAction">
 			<forward name="parcelaNotaFiscal" path="/parcela.do?operacao=prepareSave" />
+			<forward name="listNotaFiscal" path="/notaFiscal.do?operacao=listAll" />
+			
 		</action>
 
 		<action name="parcelaForm" parameter="operacao" path="/parcela"	type="br.ufc.action.ParcelaAction">

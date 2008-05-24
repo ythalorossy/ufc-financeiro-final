@@ -30,6 +30,8 @@ public class NotaFiscal implements Serializable{
 	private double valorNota;
 	private int tipoNota; //nota contabilizada ou não contabilizada
 	private int status; //Nota ativa ou cancelada
+	private String cancelamento;
+	private Double desconto;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -100,5 +102,22 @@ public class NotaFiscal implements Serializable{
 	public void setNumeroContrato(String numeroContrato) {
 		this.numeroContrato = numeroContrato;
 	}
+	
+	@Column(name="NFS_CANCELAMENTO")
+	public String getCancelamento() {
+		return cancelamento;
+	}
+	public void setCancelamento(String cancelamento) {
+		this.cancelamento = cancelamento;
+	}
+	
+	@Column(name="NFS_DESCONTO")
+	public Double getDesconto() {
+		return desconto;
+	}
+	public void setDesconto(Double desconto) {
+		this.desconto = desconto;
+	}
+	
 	
 }

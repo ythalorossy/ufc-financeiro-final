@@ -26,6 +26,7 @@ import br.ufc.DAO.LaboratorioDAO;
 import br.ufc.TO.ItensNotaFiscalTO;
 import br.ufc.assembler.ItensNotaFiscalAssembler;
 import br.ufc.form.ItensNotaFiscalForm;
+import br.ufc.uteis.Status;
 
 import com.Auxiliar.Clientes;
 import com.Auxiliar.Divisao;
@@ -90,6 +91,8 @@ public class ItensNotaFiscalAction extends DispatchAction implements Serializabl
 		request.setAttribute("nf", notaFiscal.getNotaFiscal());
 		request.setAttribute("divisao", divisao);
 		request.setAttribute("laboratorios", listLaboratorio);
+		request.setAttribute("desconto", ConverteNumero.converteNumero(notaFiscal.getDesconto()));
+		request.setAttribute("tipoNota", Status.retornaTipo(notaFiscal.getTipoNota()));
 		
 						// É setado o objeto notaFiscal no request para poder ser recuperado no metodo Save para ser reutilizado
 		request.setAttribute("notaFiscal", notaFiscal);
@@ -139,6 +142,13 @@ public class ItensNotaFiscalAction extends DispatchAction implements Serializabl
 			saveErrors(request, errors);
 			return prepareSave(mapping, form, request, response);
 		}
+		if(notaFiscal.getTipoNota()==Status.NOTA_NAO_CONTABILIZADA){
+			notaFiscal.setStatus(Status.NOTA_NAO_CONTABILIZADA);
+			NotaFiscalBO.getInstance().update(notaFiscal);
+			return mapping.findForward("listNotaFiscal");
+		}
+			
+		
 		
 		
 		return mapping.findForward("parcelaNotaFiscal");

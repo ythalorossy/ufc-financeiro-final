@@ -16,14 +16,10 @@ public class NotaFiscalTO implements Serializable {
 	private String tipoNota; // nota contabilizada ou não contabilizada
 	private String status; // Nota ativa ou cancelada
 	private boolean checked;
+	private String desconto;
+	private String cancelamento;
 
-	public boolean isChecked() {
-		return checked;
-	}
-
-	public void setChecked(boolean checked) {
-		this.checked = checked;
-	}
+	
 
 	public String getId() {
 		return id;
@@ -103,6 +99,30 @@ public class NotaFiscalTO implements Serializable {
 
 	public void setNumeroContrato(String numeroContrato) {
 		this.numeroContrato = numeroContrato;
+	}
+	
+	public String getDesconto() {
+		return desconto;
+	}
+
+	public void setDesconto(String desconto) {
+		this.desconto = desconto;
+	}
+
+	public String getCancelamento() {
+		return cancelamento;
+	}
+
+	public void setCancelamento(String cancelamento) {
+		this.cancelamento = cancelamento;
+	}
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
 	}
 
 }
