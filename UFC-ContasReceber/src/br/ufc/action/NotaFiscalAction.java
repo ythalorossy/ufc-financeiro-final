@@ -37,6 +37,7 @@ import br.ufc.uteis.Status;
 
 import com.Auxiliar.Clientes;
 import com.converte.ConverteData;
+import com.fdr.ConverteNumero.ConverteNumero;
 
 
 public class NotaFiscalAction extends DispatchAction implements Serializable {
@@ -266,15 +267,11 @@ public class NotaFiscalAction extends DispatchAction implements Serializable {
 						// Criação da lista de deleção
 		final List<NotaFiscal> notaFiscal2Delete = new ArrayList<NotaFiscal>();
 						// Criação do objeto transiente
-		final List<NotaFiscalTO> notaFiscalTO = notaFiscalForm.getItems();
+		final NotaFiscalTO notaFiscalTO = notaFiscalForm.getTheItem();
+		
+		final NotaFiscal notaFiscal = NotaFiscalBO.getInstance().findById(Integer.parseInt(notaFiscalTO.getId()));
 						// Iteração sobre a lista de objetos
-		for(int i = 0; i < notaFiscalTO.size(); i++){
-						// Verificando se o objeto veio checked
-			if (notaFiscalTO.get(i).isChecked()){
-						// Caso sim o objeto é convertido e adicionado na listagem para deleção
-				notaFiscal2Delete.add(new NotaFiscalAssembler().entityTO2Entity(notaFiscalTO.get(i)));
-			}
-		}
+		notaFiscal2Delete.add(notaFiscal);
 						// Verificação se a lista de objetos para deleção está preenchida
 		if (!notaFiscal2Delete.isEmpty()){
 						// Chamada do metodo delete do objeto de negocio, passando a listagem para deleção
@@ -436,6 +433,8 @@ public class NotaFiscalAction extends DispatchAction implements Serializable {
 			// Recuperando o numero do processo
 		final String processo = notaFiscalForm.getTheItem().getNumeroProcesso();
 		
+		final String desconto = notaFiscalForm.getTheItem().getDesconto();
+		
 			// testando se a data não veio em branco
 		if (!GenericValidator.isBlankOrNull(dataSaida)){
 				
@@ -460,6 +459,15 @@ public class NotaFiscalAction extends DispatchAction implements Serializable {
 		}
 		if (GenericValidator.isBlankOrNull(processo)){
 			errors.add("numeroProcesso",new ActionMessage("image.error"));
+		}
+		
+		try {
+			
+			if(!GenericValidator.isBlankOrNull(desconto)){
+				ConverteNumero.converteNumero(desconto);
+			}
+		} catch (Exception e) {
+			errors.add("desconto",new ActionMessage("desconto.invalido"));
 		}
 		
 			// Salvando no a lista de erros no request

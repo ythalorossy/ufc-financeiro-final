@@ -21,10 +21,19 @@ public class ItensNotaFiscalBO implements BO<ItensNotaFiscal> {
 	}
 
 	public boolean save(ItensNotaFiscal e) {
+		final NotaFiscal nf = e.getIdNotaFiscal();
+		
 		// setando o valor total do item
 		final double valor = e.getValor();
 		final int quantidade = e.getQuantidade();
-		final double valorTotalItem = valor * quantidade;
+		 double valorTotalItem = valor * quantidade;
+		
+		// calculado se existe desconto
+		if(nf.getDesconto()!=0){
+			double valorDesconto = (valorTotalItem * nf.getDesconto())/100;
+			valorTotalItem -= valorDesconto;
+		}
+		
 		e.setValorTotal(valorTotalItem);
 		e.setStatus(Status.ABERTO);
 		return dao.save(e);

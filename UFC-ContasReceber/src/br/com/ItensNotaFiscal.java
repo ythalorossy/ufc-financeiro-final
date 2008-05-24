@@ -42,6 +42,7 @@ public class ItensNotaFiscal implements Serializable{
 	private int status;
 	
 	
+	
 	public ItensNotaFiscal(double valorTotal) {
 		this.valorTotal = valorTotal;
 	}
@@ -158,4 +159,5 @@ public class ItensNotaFiscal implements Serializable{
 	public void setData(GregorianCalendar data) {
 		this.data = data;
 	}
+	
 }

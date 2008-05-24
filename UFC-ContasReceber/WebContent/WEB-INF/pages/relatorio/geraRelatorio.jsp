@@ -78,6 +78,32 @@
 			</td>
 		</html:form>
 	</tr>
+	<tr bgcolor="#f1f1f1" height="40">
+		<td width="1%">&nbsp;</td>
+		<td width="11%"><span class="labelForm">Por Período</span></td>
+		<td>
+			
+			<html:form action="relatorio" target="_blank">
+			<input type="hidden" name="operacao" value="relatorioNotaFiscalSinteticoPeriodo">
+				<table>
+					<tr>
+						<td>
+							Data Inicial <br/>
+							<input type="text" name="dataInicial" onkeyup="javascript:formatFieldData(this)">
+						</td>
+						<td>
+							Data Final <br/>
+							<input type="text" name="dataFinal" onkeyup="javascript:formatFieldData(this)">
+						</td>
+						<td>
+							<input type="submit" value="Gerar">
+							<html:errors property="dataInvalida" prefix="image.error"/>
+						</td>
+					</tr>
+				</table>
+			</html:form>
+		</td>
+	</tr>
 </table>
 </fieldset>
 
@@ -311,6 +337,27 @@
 					</tr>
 				</table>
 			</html:form>
+		</td>
+	</tr>
+</table>
+</fieldset>
+<fieldset>
+<legend>Pedido de Despesa</legend>
+<table width="99%" border="0" cellspacing="2" cellpadding="5">
+	<tr bgcolor="#f1f1f1" height="40">
+		<td width="1%">&nbsp;</td>
+		<td width="11%"><span class="labelForm">Por Número</span></td>
+		<td>
+		<html:form action="relatorio" target="_blank">
+			<input type="hidden" name="operacao" value="relatorioPedidoDespesaAnalitico">
+			<select name="idPD" style="width: 200px;">
+				<c:forEach var="pd" items="${pd}" >
+					<option value="${pd.id}">${pd.numeroPD}</option>
+				</c:forEach>
+			</select>
+			<input type="submit" value="Gerar">
+			<html:errors prefix="image.error"/>
+		</html:form>
 		</td>
 	</tr>
 </table>

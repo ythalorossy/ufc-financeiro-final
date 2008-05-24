@@ -33,7 +33,7 @@ public class PedidoDespesa implements Serializable {
 	private double valorCotado;
 	private int status;
 	private int projeto;
-	private int anexos;
+	private Integer anexos;
 
 	
 	@Id
@@ -158,11 +158,11 @@ public class PedidoDespesa implements Serializable {
 	}
 	
 	@Column(name="PD_ANEXO")
-	public int getAnexos() {
+	public Integer getAnexos() {
 		return anexos;
 	}
 
-	public void setAnexos(int anexos) {
+	public void setAnexos(Integer anexos) {
 		this.anexos = anexos;
 	}
 

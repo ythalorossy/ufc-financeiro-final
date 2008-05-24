@@ -59,12 +59,11 @@
 			<td>Valor da Nota</td>
 			<td>Status da Nota Fiscal</td>
 			<td align="center">
-			<a href="#" onClick="javascript:doSubmit('formListNotaFiscal','delete')"><img src="./imagens/delete.png" border="0" /></a>
+			
 			</td>
 
 		</tr>
-		<c:forEach var="item" items="${notaFiscalForm.items}"
-			varStatus="status">
+		<c:forEach var="item" items="${notaFiscalForm.items}" varStatus="status">
 			<tr bgcolor='${(status.index % 2) == 0 ? "#F1F1F1" : "#FFFFFF"}'>
 				<html:hidden property="item[${status.index}].id" />
 
@@ -90,10 +89,10 @@
 				<td align="left"><label for="item[${status.index}].checked"></label>
 				<html:hidden property="item[${status.index}].status" /><span>${item.status}</span>
 				</td>
-				<td align="center"><input type="checkbox"
-					id="item[${status.index}].checked"
-					name="item[${status.index}].checked"
-					${item.checked ? "checked='checked' " : ""} /></td>
+				<td align="center">
+				<a href="#"	onClick="javascript:doDeletePergunta('formListNotaFiscal', 'delete', ${item.id})">
+					<img src="./imagens/delete.png" border="0" /></a>
+				</td>
 
 			</tr>
 			<html:hidden property="item[${status.index}].tipoNota" />
@@ -101,6 +100,7 @@
 
 	</table>
 	<html:hidden property="theItem.id" />
+	<html:hidden property="theItem.cancelamento" />
 
 	<input type="hidden" name="operacao" />
 </html:form>

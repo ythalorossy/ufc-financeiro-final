@@ -10,8 +10,7 @@
 	function formatFieldData(field) {
 		field.maxLength = 10;
 		
-		var valorAtual = field.value
-		
+		var valorAtual = field.value;
 		
 		if (valorAtual.length == 2) {
 			valorAtual += "/";
@@ -70,6 +69,23 @@
 		form.operacao.value = operation;
 		form.submit();
 	}
+	
+	/*
+	* DOSUBMIT()
+	* Questiona o usuario por um motivo de cancelamento, deixando em branco nada acontece.
+	*/
+	function doDeletePergunta(idForm, operation, id) {
+		
+		var form = document.getElementById(idForm);
+		var motivoCancelamento = prompt("Digite o motivo do Cancelamento","");
+		
+		if (motivoCancelamento) {
+			form['theItem.cancelamento'].value = motivoCancelamento;
+			form['theItem.id'].value = id;
+			form.operacao.value = operation;
+			form.submit();
+		}
+	}	
 	
 	function doDelete(idForm, operation){
 	

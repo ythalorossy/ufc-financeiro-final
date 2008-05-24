@@ -65,6 +65,15 @@
 			<input type="radio" name="theItem.tipoNota" value="51">Não Contabilizada
 		</td>
 	</tr>
+	
+	<tr bgcolor="#f1f1f1">
+		<td>Desconto</td>
+	<tr/>
+	<tr bgcolor="#f1f1f1">	
+		<td>
+			<input type="text" name="theItem.desconto" size="3" maxlength="5">%
+		</td>
+	</tr>
 	<html:hidden property="theItem.id"/>
 	<tr>
 		<td colspan="2">

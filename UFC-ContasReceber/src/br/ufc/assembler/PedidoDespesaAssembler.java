@@ -36,7 +36,11 @@ public class PedidoDespesaAssembler implements
 		 to.setValorPrevisto(ConverteNumero.converteNumero(entity.getValorPrevisto()));
 		 to.setNomeLaboratorio(new LaboratorioDAO().findById(entity.getIdLaboratorio()).getNome());
 		 to.setProjeto(Status.retornaTipo(entity.getProjeto()));
-		 to.setAnexo(Status.retornaTipo(entity.getAnexos()));
+		 try {
+			 to.setAnexo(Status.retornaTipo(entity.getAnexos()));
+		 } catch (Exception e) {
+			 to.setAnexo("");
+		 }
 		return to;
 	}
 

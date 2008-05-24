@@ -10,6 +10,7 @@ import br.com.ContasPagar;
 import br.com.ContasReceber;
 import br.com.ItensNotaFiscal;
 import br.com.NotaFiscal;
+import br.com.PedidoDespesa;
 import br.ufc.uteis.Status;
 
 import com.hibernate.HibernateHelper;
@@ -64,6 +65,18 @@ public class RelatorioDAO {
 		closeSession();
 		return list;
 	}
+	
+	public List<NotaFiscal> relatorioNotaFiscalUnicaPeriodo(GregorianCalendar dataInicial, GregorianCalendar dataFinal) {
+		startTransaction();
+		Query query = hh.getSession().createQuery("From NotaFiscal where dataSaida between ? and ? order by dataSaida");
+		query.setParameter(0, dataInicial);
+		query.setParameter(1, dataFinal);
+		final List<NotaFiscal> list = query.list();
+		commitTransaction();
+		closeSession();
+		return list;
+	}
+	
 	public List<ContasReceber> relatorioContasReceber(GregorianCalendar dataInicial, GregorianCalendar dataFinal) {
 		startTransaction();
 		Query query = hh.getSession().createQuery("From ContasReceber where dataPrevista between ? and ? order by dataPrevista");
@@ -96,7 +109,7 @@ public class RelatorioDAO {
 		closeSession();
 		return list;
 	}
-	public List<ContasReceber> relatorioContasReceberCliente(int idCliente) {
+	public List<ContasReceber> relatorioContasReceberCliente(String idCliente) {
 		startTransaction();
 		Query query = hh.getSession().createQuery("From ContasReceber where idCliente = ? order by dataPrevista");
 		query.setParameter(0, idCliente);
@@ -135,6 +148,16 @@ public class RelatorioDAO {
 		commitTransaction();
 		closeSession();
 		return list;	
+	}
+	
+	public List<PedidoDespesa> relatorioPedidoDespesa(int idPD) {
+		startTransaction();
+		Query query = hh.getSession().createQuery("From PedidoDespesa where id = ?");
+		query.setParameter(0, idPD);
+		final List<PedidoDespesa> list = query.list();
+		commitTransaction();
+		closeSession();
+		return list;
 	}
 
 }

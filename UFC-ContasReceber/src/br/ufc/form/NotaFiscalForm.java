@@ -72,6 +72,8 @@ public class NotaFiscalForm extends ActionForm{
 		theItem.setNumeroProcesso("");
 		theItem.setNomeCliente("");
 		theItem.setNumeroContrato("");
+		theItem.setCancelamento("");
+		theItem.setDesconto("");
 
 		for (NotaFiscalTO theItem : this.items) {
 			theItem.setChecked(false);
@@ -85,6 +87,8 @@ public class NotaFiscalForm extends ActionForm{
 			theItem.setNumeroProcesso("");
 			theItem.setNomeCliente("");
 			theItem.setNumeroContrato("");
+			theItem.setCancelamento("");
+			theItem.setDesconto("");
 		}
 	}
 

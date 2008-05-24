@@ -11,8 +11,6 @@
 		<th align="left" width="20%"><label>Nota Fiscal</label></th>
 		<th align="left" width="20%"><label>Número do Processo</label></th>
 		<th align="left" width="20%"><label>Número do Contrato</label></th>
-		<th align="left" width="30%"><label>Cliente</label></th>
-		<th align="left" width="20%"><label>Data da Saida</label></th>
 	</tr>
 	<tr>
 		<td> 
@@ -24,10 +22,21 @@
 		<td> 
 			${requestScope.numeroContrato}
 		</td>
+	</tr>
+	<tr>	
+		<th align="left" width="30%"><label>Cliente</label></th>
+		<th align="left" width=""><label>Desconto</label></th>
+		<th align="left" width="20%"><label>Data da Saida</label></th>
+	</tr>
+	<tr>	
 		<td>
 			${requestScope.cliente}
 		</td>
-		
+		<td>
+		<c:if test="${requestScope.desconto != 0}">
+			${requestScope.desconto}%
+		</c:if>
+		</td>
 		<td>
 			${requestScope.data}
 		</td>
@@ -42,24 +51,20 @@
 	<html:hidden property="theItem.idCliente" value="${idCliente}" />
 	
 	<input type="hidden" name="operacao" value="${requestScope.operacao}" />
-	<table border=0>
-		<tr>
-			<td width="10%">Divisao</td>
-			<td width="50%">Laboratório <html:errors property="servico"/></td>
-			<td width="50%">Serviço <html:errors property="servico"/></td>
-			<td width="10%">Quantidade <html:errors property="quantidade"/></td>
-			<td width="25%">Valor <html:errors property="valorVazio"/></td>
-			<td></td>
+	<table border=0 width="98%">
+		<tr bgcolor="#f1f1f1">
+			<td width="30%">Divisao</td>
+			<td width="30%" colspan="2">UPD <html:errors property="servico"/></td>
 		</tr>
-		<tr>
-			<td bgcolor="#f1f1f1">
+		<tr bgcolor="#f1f1f1">
+			<td>
 				<html:select property="theItem.idDivisao">
 					<c:forEach var="divisao" items="${divisao}">
 						<html:option value="${divisao.id}">${divisao.nome}</html:option>
 					</c:forEach>
 				</html:select>
 			</td>
-			<td bgcolor="#f1f1f1">
+			<td bgcolor="#f1f1f1" colspan="2">
 				<html:select property="theItem.idLaboratorio">
 					<html:option value=""></html:option>
 					<c:forEach var="laboratorio" items="${laboratorios}">
@@ -67,6 +72,13 @@
 					</c:forEach>
 				</html:select>
 			</td>
+		</tr>	
+		<tr bgcolor="#f1f1f1">	
+			<td>Serviço <html:errors property="servico"/></td>
+			<td>Quantidade <html:errors property="quantidade"/></td>
+			<td>Valor <html:errors property="valorVazio"/></td>
+		</tr>
+		<tr bgcolor="#f1f1f1">
 			<td>
 				<html:text property="theItem.servico" value="" size="35" />
 			</td>
@@ -76,14 +88,11 @@
 
 			<td>
 				<html:text property="theItem.valor" value="" size="10"/>
-			</td>
-
-			<td align="right">
 				<html:image src="./imagens/add.png" style="cursor: pointer;" alt="Adicionar Item" border="0" title="Adicionar Item" />
 			</td>
 		</tr>
 	</table>
-			<html:hidden property="theItem.idNotaFiscal" value="${requestScope.idNotaFiscal}" />
+		<html:hidden property="theItem.idNotaFiscal" value="${requestScope.idNotaFiscal}" />
 		<input type="hidden" name="operacao" value="${operacao}"/>
 	
 </html:form>
@@ -151,8 +160,7 @@
 <html:form action="itensNotaFiscal">
 	<table width="80%">
 		<tr>
-			<td><input type="submit" value="Gerar Parcelas"></td>
-			
+			<td><input type="submit" value="${tipoNota eq 'Não Contabilizada' ? 'Finalizar' : 'Gerar Parcelas'}"></td>
 			<td></td>
 			<td></td>
 			<td><c:out value="${requestScope.totalNotaFiscal}"></c:out></td>
