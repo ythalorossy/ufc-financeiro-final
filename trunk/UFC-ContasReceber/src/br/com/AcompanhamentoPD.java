@@ -83,6 +83,7 @@ public class AcompanhamentoPD implements Serializable{
 	}
 	
 	@Column(name="APD_OBSERVACAO")
+	
 	public String getObservacao() {
 		return observacao;
 	}

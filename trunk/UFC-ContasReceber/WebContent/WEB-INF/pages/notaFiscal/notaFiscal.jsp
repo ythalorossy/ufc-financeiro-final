@@ -13,10 +13,18 @@
 	</tr>
 	<tr bgcolor="#f1f1f1" height="25">
 		<td>
-		<html:select property="theItem.idCliente">
-			<c:forEach items="${clientes}" var="cliente">
-				<option value="${cliente.id}">${cliente.nome}</option>
-			</c:forEach>
+		
+		<script>
+			window.onload = function() {
+				alert('teste');
+				makeRequest('/ajax','prefix','${notaFiscalForm.theItem.idCliente}', 'cliente','clientes');
+			}
+		</script>
+		
+		CGCPF:
+		<input id="cgcpf" type="text" value="${notaFiscalForm.theItem.idCliente}" onkeyup="javascript:makeRequest('/ajax','prefix',this.value, 'cliente','clientes')"/>
+		<html:select styleId="clientes" property="theItem.idCliente" style="width: 50%;">
+			<html:option value=""></html:option>
 		</html:select>
 		</td>
 	</tr>

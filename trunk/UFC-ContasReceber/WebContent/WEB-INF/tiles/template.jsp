@@ -10,6 +10,15 @@
 <title><tiles:getAsString name="titulo" /></title>
 
 <jsp:include page="/WEB-INF/tiles/style.css" />
+
+<script type="text/javascript" language="javascript">
+    /*
+    * Variavel usada para controle do Ajax, armazena do valor
+    * absoluto da url do sistema.
+    */
+    var urlSistema = "<%=request.getContextPath()%>";
+</script>
+
 <jsp:include page="/WEB-INF/tiles/script.js" />
 
 </head>

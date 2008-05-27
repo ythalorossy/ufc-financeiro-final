@@ -16,7 +16,9 @@
 		<td width="1%">&nbsp;</td>
 		<td width="15%"> <span class="labelForm">Divisão</span> </td>
 		<td>
-		<html:select property="theItem.idDivisao">
+		<html:select property="theItem.idDivisao" 
+		onchange="javascript:makeRequest('/ajax','idDivisao',this.options[this.selectedIndex].value, 'laboratorio','laboratorios')">
+			<option value=""></option>
 			<c:forEach items="${listAllDivisao}" var="divisao">
 				<html:option value="${divisao.id}">${divisao.nome}</html:option>
 			</c:forEach>
@@ -27,11 +29,9 @@
 		<td width="1%">&nbsp;</td>
 		<td width="15%"> <span class="labelForm">Laboratório</span> </td>
 		<td>
-		<html:select property="theItem.idLaboratorio">
-			<c:forEach items="${listAllLaboratorio}" var="lab">
-				<html:option value="${lab.id}">${lab.nome}</html:option>
-			</c:forEach>
-		</html:select>
+			<html:select styleId="laboratorios" property="theItem.idLaboratorio">
+				<html:option value=""></html:option>
+			</html:select>
 		</td>
 	</tr>
 	<tr bgcolor="#f1f1f1">

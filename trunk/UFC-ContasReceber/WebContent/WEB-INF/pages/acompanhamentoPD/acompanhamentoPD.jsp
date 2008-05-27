@@ -12,16 +12,15 @@
 
 	<table width="98%" cellpadding="2" cellspacing="2">
 		<tr>
-			<td><h3>Número:	${acompanhamentoPDForm.theItem.numeroPD}</h3></td>
+			<td colspan="4"><h3>Número:	${acompanhamentoPDForm.theItem.numeroPD}</h3></td>
 		</tr>
-		
 		<tr bgcolor="#c1c1c1">
-			<td>Data Recebimento</td>
-			<td>Data Envio</td>
-			<td>Divisão</td>
-			<td>Unidade de Produção</td>
+			<th>Data Recebimento</th>
+			<th>Data Envio</th>
+			<th>Divisão</th>
+			<th>UPD</th>
 		</tr>
-		<tr bgcolor="#f1f1f1" height="25">
+		<tr bgcolor="#f1f1f1">
 			<td>
 				<html:hidden property="theItem.dataRecebimento" value="${acompanhamentoPDForm.theItem.dataRecebimento}" />
 				${acompanhamentoPDForm.theItem.dataRecebimento}
@@ -32,30 +31,31 @@
 			</td>
 			
 			<td>
-				<html:select property="theItem.divisao">
-					<c:forEach items="${listDivisao}" var="divisao">
+				<html:select property="theItem.divisao"
+					onchange="javascript:makeRequest('/ajax','idDivisao',this.options[this.selectedIndex].value, 'laboratorio','laboratorios')">
+					<html:option value=""></html:option>
+					<c:forEach var="divisao" items="${listDivisao}">
 						<html:option value="${divisao.id}">${divisao.nome}</html:option>
 					</c:forEach>
 				</html:select>
 			</td>
 			
 			<td>
-				<html:select property="theItem.laboratorio">
-					<c:forEach items="${listUPD}" var="upd">
-						<html:option value="${upd.id}">${upd.nome}</html:option>
-					</c:forEach>
+				<html:select styleId="laboratorios" property="theItem.laboratorio">
+					<html:option value=""></html:option>
 				</html:select>
 			</td>
 		</tr>
 		<tr bgcolor="#c1c1c1">
-			<td colspan="3">Observação</td>
+			<td colspan="4">Observação</td>
 		</tr>
 		<tr bgcolor="#f1f1f1">
-			<td colspan="3">
-			<html:textarea property="theItem.observacao" rows="5" cols="100"   /></td>
+			<td colspan="4">
+				<html:textarea property="theItem.observacao" rows="5" cols="100"/>
+			</td>
 		</tr>
 		<tr>
-			<td colspan="3"><html:submit value="Adicionar"></html:submit></td>
+			<td colspan="4"><html:submit value="Adicionar"></html:submit></td>
 		</tr>
 
 	</table>
@@ -64,22 +64,21 @@
 
 <hr>
 
-<table width="98%">
+<table width="98%" cellpadding="2" cellspacing="2">
 <tr bgcolor="#c1c1c1">
 	<th>Data Envio</th>
 	<th>Data Recebimento</th>
 	<th>Divisão</th>
-	<th>Unidade de Produção</th>
+	<th>UPD</th>
 	<th>Observação</th>
 </tr>
-
 <c:forEach items="${listAPD}" var="apd" varStatus="status"> 
 <tr bgcolor="#f1f1f1">
 	<td width="10%">${apd.dataEnvio}</td>
 	<td width="10%">${apd.dataRecebimento}</td>
 	<td width="10%">${apd.nomeDivisao}</td>
 	<td width="10%">${apd.nomeLaboratorio}</td>
-	<td width="70%">${apd.observacao}</td>
+	<td width="70%"><div style="font-size:10px">${apd.observacao}</div></td>
 </tr>
 </c:forEach>
 </table>
