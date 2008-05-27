@@ -6,6 +6,12 @@
 
 <h3 style="color: red;"><html:errors property="failSave"/></h3>
 
+		<script>
+			window.onload = function() {
+				//makeRequest('/ajax','prefix','${notaFiscalForm.theItem.idCliente}', 'cliente','clientesTeste');
+			}
+		</script>
+
 <html:form action="notaFiscal">
 <table width="99%" cellpadding="2" cellspacing="2">
 	<tr bgcolor="#f1f1f1">
@@ -14,17 +20,10 @@
 	<tr bgcolor="#f1f1f1" height="25">
 		<td>
 		
-		<script>
-			window.onload = function() {
-				alert('teste');
-				makeRequest('/ajax','prefix','${notaFiscalForm.theItem.idCliente}', 'cliente','clientes');
-			}
-		</script>
-		
 		CGCPF:
 		<input id="cgcpf" type="text" value="${notaFiscalForm.theItem.idCliente}" onkeyup="javascript:makeRequest('/ajax','prefix',this.value, 'cliente','clientes')"/>
-		<html:select styleId="clientes" property="theItem.idCliente" style="width: 50%;">
-			<html:option value=""></html:option>
+		<html:select property="theItem.idCliente" style="width: 50%;">
+			<div id="clientes"></div>
 		</html:select>
 		</td>
 	</tr>
