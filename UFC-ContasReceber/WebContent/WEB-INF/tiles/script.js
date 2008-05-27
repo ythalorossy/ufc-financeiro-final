@@ -131,7 +131,99 @@
 	}
 	
 
+	/*
+	* Inicia com false a variavel que receberá
+	* o valor do XMLHttpRequest nas solicitaçoes AJAX
+	*/
+    var http_request = false;
+	
+	/*
+	* MAKEREQUEST()
+	* Responsavel por requisiçoes AJAX
+	* Observação: A página WEB-INF/tiles/template.jsp contém um script
+	* que mantem a variavel urlSistema atualizada com a URL Absoluta do Sistema,
+	* esta urlSistema será usada para as requisiçoes AJAX
+	*
+	* @param url Url da requisiçao
+	* @param paramentro Nome do parametro que será usado para efetuar a busca
+	* @param valor Valor que será setado na variavel parametro
+	* @param tipoRetorno Controle da função que tratará o retorno
+	* @param alvo Elemento que receberá o resultado da requisiçao
+	*/    
+    function makeRequest(url, parametro, valor, tipoRetorno, alvo) {
+    
+        http_request = false;
+		
+		/*
+			Como o Ajax trabalha por requisicões locais foi
+			necessário criar um variavel global que guarda a URL(IP/DNS)
+			padrao do sistema. Abaixo a urlPadrao é concatenada com a url
+			passada na requisiçao, criando uma url absoluta.
+		*/
+		url = urlSistema + url;
+		
+		// Adiciona valor do indice selecionado
+        url+="?"+parametro+"="+valor
+        
+        url+="&tipoRetorno="+tipoRetorno;
+        
+        // Numero Randomico para quebrar o cache do navegador
+        var meuRandom=parseInt(Math.random()*99999999);
+        url+="&r="+meuRandom;
+        
+		alert(url);
+		
+        if (window.XMLHttpRequest) { // Mozilla, Safari,...
+            http_request = new XMLHttpRequest();
+            if (http_request.overrideMimeType) {
+                http_request.overrideMimeType('text/xml');
+                
+                alert("Mozila: " + http_request)
+                
+            }
+        } else if (window.ActiveXObject) { // IE
+            try {
+                http_request = new ActiveXObject("Msxml2.XMLHTTP");
+                alert("Msxml2: " + http_request)
+            } catch (e) {
+                try {
+                    http_request = new ActiveXObject("Microsoft.XMLHTTP");
+                    alert("XMLHTTP: " + http_request)
+                } catch (e) {
+                	try {
+                	http_request = new ActiveXObject("MSXML2.XMLHTTP.3.0")
+                	} catch(e) {}
+                }
+            }
+        } 
+        
+        if (!http_request) {
+            alert('Error :( Não foi possível criar uma instancia de XMLHTTP');
+            return false;
+        }
+        
+        /**
+        	Funcão responsavel por tratar o retorno das requisiçoes
+        */
+        http_request.onreadystatechange = function() {
+        
+        	alert('Funcao ativada')
+        
+			if (http_request.readyState == 4) {
+            	if (http_request.status == 200) {
+            		
+            		var elem = document.getElementById(alvo);
+            		elem.innerHTML = ""+http_request.responseText;
+                	
+            	} else {
+                	alert('Problemas com a requisição.');
+            	}
+        	}
+        };
+		
+        http_request.open('GET', url, true);
+        http_request.send(null);
 
-
+    }
 
 </script>

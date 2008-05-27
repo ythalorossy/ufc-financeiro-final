@@ -6,13 +6,14 @@ import java.util.List;
 import org.hibernate.Query;
 
 import com.Auxiliar.Clientes;
+import com.Auxiliar.Divisao;
 import com.Auxiliar.Laboratorio;
 import com.hibernate.HibernateHelperGlobal;
 
 public class LaboratorioDAO {
-	
+
 	private HibernateHelperGlobal hg = HibernateHelperGlobal.getInstance();
-	private Laboratorio laboratorio = new Laboratorio(); 
+	private Laboratorio laboratorio = new Laboratorio();
 	private List<Laboratorio> listLaboratorio = new ArrayList<Laboratorio>();
 
 	private boolean result = false;
@@ -28,7 +29,6 @@ public class LaboratorioDAO {
 	public void closeSession() {
 		hg.getSession().clear();
 	}
-	
 
 	public Laboratorio findById(int id) {
 		startTransaction();
@@ -46,7 +46,8 @@ public class LaboratorioDAO {
 	@SuppressWarnings("unchecked")
 	public List<Laboratorio> findAll() {
 		startTransaction();
-		listLaboratorio = (List<Laboratorio>) hg.getSession().createQuery("From Laboratorio").list();
+		listLaboratorio = (List<Laboratorio>) hg.getSession().createQuery(
+				"From Laboratorio").list();
 		commitTransaction();
 		closeSession();
 		return listLaboratorio;
@@ -78,7 +79,8 @@ public class LaboratorioDAO {
 	@SuppressWarnings("unchecked")
 	public Laboratorio findByName(String nomeLaboratorio) {
 		startTransaction();
-		Query query = hg.getSession().createQuery("From Laboratorio where nome = ?");
+		Query query = hg.getSession().createQuery(
+				"From Laboratorio where nome = ?");
 		query.setParameter(0, nomeLaboratorio);
 		listLaboratorio = query.list();
 		commitTransaction();
@@ -89,6 +91,25 @@ public class LaboratorioDAO {
 	public Clientes findByObject(Laboratorio e) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * Pesquisa todos os Laboratorios de uma divisao
+	 * 
+	 * @param divisao
+	 *            Divisão usada para pesquisar os laboratorios
+	 * @return Lista de laboratorios
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Laboratorio> findByIdDivisao(Divisao divisao) {
+		startTransaction();
+		Query query = hg.getSession().createQuery(
+				"From Laboratorio where key = ?");
+		query.setParameter(0, divisao.getId());
+		listLaboratorio = query.list();
+		commitTransaction();
+		closeSession();
+		return listLaboratorio;
 	}
 
 }
