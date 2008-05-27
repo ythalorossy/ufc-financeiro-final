@@ -178,17 +178,13 @@
             if (http_request.overrideMimeType) {
                 http_request.overrideMimeType('text/xml');
                 
-                alert("Mozila: " + http_request)
-                
             }
         } else if (window.ActiveXObject) { // IE
             try {
                 http_request = new ActiveXObject("Msxml2.XMLHTTP");
-                alert("Msxml2: " + http_request)
             } catch (e) {
                 try {
                     http_request = new ActiveXObject("Microsoft.XMLHTTP");
-                    alert("XMLHTTP: " + http_request)
                 } catch (e) {
                 	try {
                 	http_request = new ActiveXObject("MSXML2.XMLHTTP.3.0")
@@ -207,12 +203,10 @@
         */
         http_request.onreadystatechange = function() {
         
-        	alert('Funcao ativada')
-        
 			if (http_request.readyState == 4) {
             	if (http_request.status == 200) {
             		
-            		var elem = document.getElementById(alvo);
+            		var elem = document.getElementById("clientesTeste");
             		elem.innerHTML = ""+http_request.responseText;
                 	
             	} else {
