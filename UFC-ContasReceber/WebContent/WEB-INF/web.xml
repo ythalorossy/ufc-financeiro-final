@@ -1,92 +1,47 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-	<display-name>UFC-ContasReceber</display-name>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns="http://java.sun.com/xml/ns/j2ee" 
+	xmlns:javaee="http://java.sun.com/xml/ns/javaee" 
+	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"	 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">
 
-	<!-- Action Servlet Configuration -->
-	<servlet>
-		<servlet-name>action</servlet-name>
-		<servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
-		<init-param>
-			<param-name>config</param-name>
-			<param-value>/WEB-INF/struts-config.xml</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	
-	<!-- Filtros -->
-	<filter>
-		<filter-name>ValidaLogin</filter-name>
-		<filter-class>br.ufc.filters.ValidaLoginFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>ValidaLogin</filter-name>
-		<url-pattern>*.do</url-pattern>
-	</filter-mapping>
-
-
-	<!-- Action Servlet Mapping -->
-	<servlet-mapping>
-		<servlet-name>action</servlet-name>
-		<url-pattern>*.do</url-pattern>
-	</servlet-mapping>
-
-	<!-- The Usual Welcome File List -->
-	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
-	</welcome-file-list>
-	<jsp-config>
-		<taglib>
-			<taglib-uri>/WEB-INF/struts-bean</taglib-uri>
-			<taglib-location>/WEB-INF/struts-bean.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/WEB-INF/struts-logic</taglib-uri>
-			<taglib-location>/WEB-INF/struts-logic.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/WEB-INF/struts-html</taglib-uri>
-			<taglib-location>/WEB-INF/struts-html.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/WEB-INF/fmt</taglib-uri>
-			<taglib-location>/WEB-INF/fmt.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/WEB-INF/c</taglib-uri>
-			<taglib-location>/WEB-INF/c.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/WEB-INF/struts-tiles</taglib-uri>
-			<taglib-location>/WEB-INF/struts-tiles.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/WEB-INF/struts-nested</taglib-uri>
-			<taglib-location>
-				/WEB-INF/struts-nested.tld
-			</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/WEB-INF/x</taglib-uri>
-			<taglib-location>/WEB-INF/x.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/WEB-INF/sql</taglib-uri>
-			<taglib-location>/WEB-INF/sql.tld</taglib-location>
-		</taglib>
-	</jsp-config>
-	<login-config>
-		<auth-method>BASIC</auth-method>
-	</login-config>
-	<!-- 
-		<resource-ref>
-		<description>DefaultDS</description>
-		<res-ref-name>evaDS</res-ref-name>
-		<res-type> javax.sql.DataSource</res-type>
-		<res-auth>Container</res-auth>
-		</resource-ref>
-	-->
-
-
+  <display-name>UFC-ContasReceber</display-name>
+  <servlet>
+    <servlet-name>action</servlet-name>
+    <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
+    <init-param>
+      <param-name>config</param-name>
+      <param-value>/WEB-INF/struts-config.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <filter>
+    <filter-name>ValidaLogin</filter-name>
+    <filter-class>br.ufc.filters.ValidaLoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>ValidaLogin</filter-name>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+  <servlet-mapping>
+    <servlet-name>action</servlet-name>
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  <jsp-config/>
+  <login-config>
+    <auth-method>BASIC</auth-method>
+  </login-config>
+  <servlet>
+    <description></description>
+    <display-name>AjaxUteis</display-name>
+    <servlet-name>AjaxUteis</servlet-name>
+    <servlet-class>br.ufc.uteis.AjaxUteis</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AjaxUteis</servlet-name>
+    <url-pattern>/ajax</url-pattern>
+  </servlet-mapping>
 </web-app>
