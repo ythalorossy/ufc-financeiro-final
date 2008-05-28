@@ -1,52 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<jsp:include page="/WEB-INF/tiles/style.css" />
-<jsp:include page="/WEB-INF/tiles/script.js" />
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 
 
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+<tiles:insert page="/WEB-INF/tiles/template.jsp">
 
-<br>
-<table width="20%" border="0" cellpadding="0" cellspacing="0"
-	align="center">
-	<tr>
-		<td>
-		<fieldset>
-		<legend><span class="tituloInterno">Sistema Financeiro</span></legend>
-		<html:form action="/logon">
-			<input type="hidden" name="operacao" value="login">
-			<table>
-				<tr>
-					<td>Usuario:</td>
-					<td><input type="text" name="username"></td>
-				<tr>
-				<tr>
-					<td>Senha:</td>
-					<td><input type="password" name="password" /></td>
-				</tr>
-				<tr>
-					<td colspan="2" align="right"><input type="submit"
-						value="Acessar"></td>
-				</tr>
-				<tr>
-				<td>
-					<c:out value="${errorLogin}"></c:out>
-				</td>
-				</tr>
-			</table>
-		</html:form></fieldset>
+	<!-- String com titulo da Página -->
+	<tiles:put name="titulo" value="Controle Financeiro NUTEC" />
 
-		</td>
-	</tr>
+	<!-- Pagina com Topo -->
+	<tiles:put name="topo" value="/WEB-INF/tiles/topo.jsp" />
 
+	<!-- Pagina com Menu -->
+	<tiles:put name="menu" value="" />
 
-</table>
+	<tiles:put name="conteudo" value="/login.jsp" />
+	
+	<tiles:put name="rodape" value="" />
 
+</tiles:insert>

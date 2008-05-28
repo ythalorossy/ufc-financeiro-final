@@ -171,7 +171,7 @@
         var meuRandom=parseInt(Math.random()*99999999);
         url+="&r="+meuRandom;
         
-		alert(url);
+		//alert(url);
 		
         if (window.XMLHttpRequest) { // Mozilla, Safari,...
             http_request = new XMLHttpRequest();
@@ -201,23 +201,79 @@
         /**
         	Funcão responsavel por tratar o retorno das requisiçoes
         */
-        http_request.onreadystatechange = function() {
+        http_request.onreadystatechange = function () {
         
 			if (http_request.readyState == 4) {
-            	if (http_request.status == 200) {
-            		
-            		var elem = document.getElementById("clientesTeste");
-            		elem.innerHTML = ""+http_request.responseText;
-                	
-            	} else {
-                	alert('Problemas com a requisição.');
-            	}
-        	}
-        };
-		
+	           	if (http_request.status == 200) {
+	           		
+	           		/*
+	           		* Remove todos os elementos filho do elemento Alvo
+	           		*/
+					var al = document.getElementById(alvo);
+					var qtde = al.childNodes.length;
+					for (i=0; i <= qtde; i++) {
+						al.remove(i);
+						al.remove(i);					
+					}
+	           		/* 
+	           		* O Resultado da requisiçao é uma String que contém
+	           		* todos elementos encontrados concatenados por uma separador(---).
+	           		* A função split usa o separador(---) quebrar a String em um array,
+	           		* a cada (---) um indice é criado dentro do array
+	           		*/
+	           		var arrayAuxiliar = http_request.responseText.split("---");
+					
+					/*
+					* Navega dentro do array resultado do split e cria uma elemento
+					* <option> para cara indice. O elemento option é inserido dentro
+					* do alvo definido quando a funçao makeRequest é disparada.
+					*/				
+					for (i=0; i < arrayAuxiliar.length-1; i++) {
+						var arrayAuxilarInterno = arrayAuxiliar[i].split(":");
+						
+						/*
+						* Cria elemento <option>
+						*/
+						var option = document.createElement('option');
+						
+						/*
+						* Seta valor para o <option>
+						*/
+						option.value = arrayAuxilarInterno[0];
+						
+						/*
+						* Seta texto para o <option>
+						*/
+						option.text = arrayAuxilarInterno[1];
+						
+						/*
+						* Seleciona o elemento alvo ao qual o <option> será adicionado
+						*/
+						var x = document.getElementById(alvo);
+						
+						/*
+						* Adiciona elemento <option> ao alvo(x), trantando
+						* os casos IE
+						*/
+						try {
+							x.add(option,null); // compilação padrão
+						} catch(ex){
+							x.add(option); // apenas para IE Òó
+						}
+						
+						//alert("Valor:" + option.value + " - Texto: " + option.text)
+						
+					}	
+						           		
+	           	} else {
+	               	alert('Problemas com a requisição.');
+	           	}
+	        }
+	};
+         
         http_request.open('GET', url, true);
         http_request.send(null);
-
     }
+    
 
 </script>

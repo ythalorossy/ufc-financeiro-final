@@ -64,7 +64,7 @@ public class AjaxUteis extends javax.servlet.http.HttpServlet implements
 			PrintWriter out = response.getWriter();
 
 			for (Clientes l : list) {
-				out.print("<option value=\"" + l.getId() + "\">" + l.getNome()+ "</option>");
+				out.print(l.getId()+":"+l.getNome()+"---" );
 			}
 			out.flush();
 		}
@@ -86,7 +86,7 @@ public class AjaxUteis extends javax.servlet.http.HttpServlet implements
 			PrintWriter out = response.getWriter();
 
 			for (Laboratorio l : list) {
-				out.print("<option value=\"" + l.getId() + "\">" + l.getNome()+ "</option>");
+				out.print(l.getId()+":"+l.getNome()+"---" );
 			}
 			out.flush();
 		}
