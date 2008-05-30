@@ -86,9 +86,9 @@ public class NotaFiscalAction extends DispatchAction implements Serializable {
 		final ClientesDAO clientesDao = new ClientesDAO();
 		
 		// Recuperado todos os clientes
-		final List<Clientes> listClientes = clientesDao.findAll();
+		//final List<Clientes> listClientes = clientesDao.findAll();
 		
-		request.setAttribute("clientes", listClientes);
+		//request.setAttribute("clientes", listClientes);
 		request.setAttribute("operacao", "save");
 
 		request.setAttribute(LOAD_PAGE, PREPARE_SAVE);

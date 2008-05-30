@@ -152,6 +152,17 @@
 	*/    
     function makeRequest(url, parametro, valor, tipoRetorno, alvo) {
     
+    	/*
+    		Delimitador de quantidade de caracteres aceitavel para efetuar um consulta
+    		iguais a Cliente
+    	*/
+    	var qtdeMaxCaracterForSearch = 8;
+    	if (parametro == "prefix") {
+    		if (qtdeMaxCaracterForSearch > valor.length) {
+    			return false;
+    		}
+    	}
+    
         http_request = false;
 		
 		/*
@@ -271,7 +282,7 @@
 	        }
 	};
          
-        http_request.open('GET', url, true);
+        http_request.open('GET', url, false);
         http_request.send(null);
     }
     

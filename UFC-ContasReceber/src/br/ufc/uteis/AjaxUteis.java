@@ -74,8 +74,7 @@ public class AjaxUteis extends javax.servlet.http.HttpServlet implements
 	private void requisitaLaboratorio(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 
-		final int idDivisao = Integer.parseInt(request
-				.getParameter("idDivisao"));
+		final int idDivisao = Integer.parseInt(request.getParameter("idDivisao"));
 		final Divisao divisao = new DivisaoDAO().findById(idDivisao);
 
 		List<Laboratorio> list = new LaboratorioDAO().findByIdDivisao(divisao);
