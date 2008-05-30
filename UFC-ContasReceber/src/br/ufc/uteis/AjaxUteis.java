@@ -60,7 +60,7 @@ public class AjaxUteis extends javax.servlet.http.HttpServlet implements
 
 		if (!list.isEmpty()) {
 
-			response.setContentType("text/plain");
+			response.setContentType("text/plain; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 
 			for (Clientes l : list) {
@@ -81,7 +81,7 @@ public class AjaxUteis extends javax.servlet.http.HttpServlet implements
 
 		if (!list.isEmpty()) {
 
-			response.setContentType("text/plain");
+			response.setContentType("text/plain; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 
 			for (Laboratorio l : list) {
