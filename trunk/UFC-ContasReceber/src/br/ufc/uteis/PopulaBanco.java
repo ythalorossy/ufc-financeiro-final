@@ -8,6 +8,8 @@ public class PopulaBanco {
 	private String nome;
 
 	private String id;
+	
+	private HibernateHelperCliente hc = HibernateHelperCliente.getInstance();
 
 	public String getNome() {
 		return nome;
@@ -31,10 +33,7 @@ public class PopulaBanco {
 
 	private void gerar() {
 
-		HibernateHelperCliente hc = HibernateHelperCliente.getInstance();
-
-		String[] alfa = new String[] { "a", "b", "c", "d", "e", "f", "g", "h",
-				"i", "j", "l", "m", "n", "o", "p", "q", "r" };
+		String[] alfa = new String[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "l", "m", "n", "o", "p", "q", "r" };
 
 		hc.getSession().beginTransaction();
 
