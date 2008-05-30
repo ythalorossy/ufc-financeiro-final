@@ -3,6 +3,7 @@ package br.ufc.DAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
@@ -21,6 +22,11 @@ public class ClientesDAO {
 	public void commitTransaction() {
 		hg.getSession().getTransaction().commit();
 	}
+	
+	public void rollbackTransaction() {
+		hg.getSession().getTransaction().rollback();
+	}
+
 
 	public void startTransaction() {
 		hg.getSession().beginTransaction();
@@ -37,13 +43,16 @@ public class ClientesDAO {
 	 */
 	public Clientes findById(String id) {
 		startTransaction();
-
-		org.hibernate.Query query = hg.getSession().createQuery(
-				"from Clientes Where id = ?");
-		query.setParameter(0, id);
-		cliente = (Clientes) query.uniqueResult();
-		commitTransaction();
-		closeSession();
+		try {
+			Query query = hg.getSession().createQuery("from Clientes Where id = ?");
+			query.setParameter(0, id);
+			cliente = (Clientes) query.uniqueResult();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
 		return cliente;
 	}
 
@@ -54,10 +63,14 @@ public class ClientesDAO {
 	 */
 	public List<Clientes> findAll() {
 		startTransaction();
-		listClientes = (List<Clientes>) hg.getSession().createQuery(
-				"From Clientes").list();
-		commitTransaction();
-		closeSession();
+		try {
+			listClientes = (List<Clientes>) hg.getSession().createQuery("From Clientes").list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
 		return listClientes;
 	}
 
@@ -66,8 +79,9 @@ public class ClientesDAO {
 			startTransaction();
 			hg.save(e);
 			commitTransaction();
-			closeSession();
 		} catch (Exception ex) {
+		} finally {
+			closeSession();
 		}
 
 		return result;
@@ -85,10 +99,15 @@ public class ClientesDAO {
 
 	public Clientes findByName(String nomeCliente) {
 		startTransaction();
-		listClientes = (List<Clientes>) hg.getSession().createQuery(
-				"From Clientes where nome ='" + nomeCliente + "'").list();
-		commitTransaction();
-		closeSession();
+		try {
+			listClientes = (List<Clientes>) hg.getSession().createQuery("From Clientes where nome ='" 
+							+ nomeCliente + "'").list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
 		return listClientes.get(0);
 	}
 
@@ -101,12 +120,15 @@ public class ClientesDAO {
 	 */
 	public List<Clientes> findByPrefixCGCPF(String prefixCGCPF) {
 		startTransaction();
-
-		List<Clientes> listClientes = hg.getSession().createCriteria(
-				Clientes.class).add(Restrictions.like("id", prefixCGCPF + "%"))
-				.addOrder(Order.asc("nome")).list();
-		commitTransaction();
-		closeSession();
+		try {
+		listClientes = hg.getSession().createCriteria(Clientes.class).add(Restrictions.like("id", prefixCGCPF + "%"))
+					.addOrder(Order.asc("nome")).list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
 		return listClientes;
 	}
 

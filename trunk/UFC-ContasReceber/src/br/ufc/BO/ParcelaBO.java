@@ -25,7 +25,7 @@ public class ParcelaBO implements BO<Parcela> {
 		// Recuperando a nota fiscal
 		final NotaFiscal notaFiscal = NotaFiscalBO.getInstance().findById(e.getIdNotaFiscal().getId());
 		// recuperando o valor total de parcelas cadastrados no banco para aquela parcela
-		final List<Parcela> listParcela = ((ParcelaBO)ParcelaBO.getInstance()).findAllByNf(notaFiscal.getId());
+		final List<Parcela> listParcela = ((ParcelaBO)ParcelaBO.getInstance()).findAllByNf(notaFiscal);
 		int numeroParcela = listParcela.size()+1;
 		if (listParcela.size() >0){
 			for (int i = 0; i < listParcela.size(); i++) {
@@ -127,7 +127,7 @@ public class ParcelaBO implements BO<Parcela> {
 	}
 
 	
-	public List<Parcela> findAllByNf(int id) {
+	public List<Parcela> findAllByNf(NotaFiscal id) {
 		return ((ParcelaDAO)dao).findByIdNf(id);
 	}
 	
@@ -155,7 +155,7 @@ public class ParcelaBO implements BO<Parcela> {
 	public boolean delete(List<Parcela> parcela2Delete) {
 		final List<Parcela> parcelasPaga = new ArrayList<Parcela>();
 		for (int i = 0; i < parcela2Delete.size(); i++){
-			 parcelasPaga.addAll(verificaParcelaPaga(parcela2Delete.get(i).getIdNotaFiscal().getId()));
+			 parcelasPaga.addAll(verificaParcelaPaga(parcela2Delete.get(i).getIdNotaFiscal()));
 		}
 		if (parcelasPaga.isEmpty()){
 			final List<ContasReceber> contasReceber2Delete = new ArrayList<ContasReceber>();
@@ -171,8 +171,8 @@ public class ParcelaBO implements BO<Parcela> {
 		return retorno;
 	}
 	
-	public List<Parcela> verificaParcelaPaga(int nf){
-		return new ParcelaDAO().findByIdNfPaga(nf,Status.PAGO); 
+	public List<Parcela> verificaParcelaPaga(NotaFiscal nf){
+		return new ParcelaDAO().findByIdNfPaga(nf, Status.PAGO); 
 	}
 
 

@@ -21,6 +21,10 @@ public class LaboratorioDAO {
 	public void commitTransaction() {
 		hg.getSession().getTransaction().commit();
 	}
+	
+	public void rollbackTransaction() {
+		hg.getSession().getTransaction().rollback();
+	}
 
 	public void startTransaction() {
 		hg.getSession().beginTransaction();
@@ -32,9 +36,15 @@ public class LaboratorioDAO {
 
 	public Laboratorio findById(int id) {
 		startTransaction();
-		laboratorio = (Laboratorio) hg.getSession().get(Laboratorio.class, id);
-		commitTransaction();
-		closeSession();
+		try {
+
+			laboratorio = (Laboratorio) hg.getSession().get(Laboratorio.class, id);
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally{
+			closeSession();
+		}
 		return laboratorio;
 	}
 
@@ -46,10 +56,15 @@ public class LaboratorioDAO {
 	@SuppressWarnings("unchecked")
 	public List<Laboratorio> findAll() {
 		startTransaction();
-		listLaboratorio = (List<Laboratorio>) hg.getSession().createQuery(
-				"From Laboratorio").list();
-		commitTransaction();
-		closeSession();
+		try {
+			listLaboratorio = (List<Laboratorio>) hg.getSession().createQuery(
+					"From Laboratorio").list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
 		return listLaboratorio;
 	}
 
@@ -58,8 +73,10 @@ public class LaboratorioDAO {
 			startTransaction();
 			hg.save(e);
 			commitTransaction();
-			closeSession();
 		} catch (Exception ex) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
 		}
 
 		return result;
@@ -79,12 +96,16 @@ public class LaboratorioDAO {
 	@SuppressWarnings("unchecked")
 	public Laboratorio findByName(String nomeLaboratorio) {
 		startTransaction();
-		Query query = hg.getSession().createQuery(
-				"From Laboratorio where nome = ?");
-		query.setParameter(0, nomeLaboratorio);
-		listLaboratorio = query.list();
-		commitTransaction();
-		closeSession();
+		try {
+			Query query = hg.getSession().createQuery("From Laboratorio where nome = ?");
+			query.setParameter(0, nomeLaboratorio);
+			listLaboratorio = query.list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
 		return listLaboratorio.get(0);
 	}
 
@@ -103,12 +124,16 @@ public class LaboratorioDAO {
 	@SuppressWarnings("unchecked")
 	public List<Laboratorio> findByIdDivisao(Divisao divisao) {
 		startTransaction();
-		Query query = hg.getSession().createQuery(
-				"From Laboratorio where key = ?");
-		query.setParameter(0, divisao.getId());
-		listLaboratorio = query.list();
-		commitTransaction();
-		closeSession();
+		try {
+			Query query = hg.getSession().createQuery("From Laboratorio where key = ?");
+			query.setParameter(0, divisao.getId());
+			listLaboratorio = query.list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
 		return listLaboratorio;
 	}
 

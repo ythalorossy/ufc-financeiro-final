@@ -71,7 +71,7 @@ public class ItensNotaFiscalBO implements BO<ItensNotaFiscal> {
 	public boolean delete(List<ItensNotaFiscal> list) {
 		final NotaFiscal notaFiscal = list.get(0).getIdNotaFiscal();
 		final ParcelaDAO parcelaDao = new ParcelaDAO();
-		final List<Parcela> parcela = parcelaDao.findByIdNf(notaFiscal.getId());
+		final List<Parcela> parcela = parcelaDao.findByIdNf(notaFiscal);
 		if (!parcela.isEmpty()){
 			retorno = ParcelaBO.getInstance().delete(parcela);
 		} 

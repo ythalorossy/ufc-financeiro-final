@@ -1,5 +1,6 @@
 package br.ufc.DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -49,18 +50,30 @@ public class ItensPedidoDespesaDAO implements DAO<ItensPedidoDespesa> {
 	@Override
 	public List<ItensPedidoDespesa> findAll() {
 		startTransaction();
-		final List<ItensPedidoDespesa> list = hh.getSession().createQuery("From ItensPedidoDespesa").list();
-		commitTransaction();
-		closeSession();
+		List<ItensPedidoDespesa> list = new ArrayList<ItensPedidoDespesa>();
+		try {
+			list = hh.getSession().createQuery("From ItensPedidoDespesa").list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollBackTransaction();
+		} finally {
+			closeSession();
+		}
 		return list;
 	}
 
 	@Override
 	public ItensPedidoDespesa findById(int id) {
 		startTransaction();
-		final ItensPedidoDespesa itensPedidoDespesa = (ItensPedidoDespesa) hh.getSession().get(ItensPedidoDespesa.class, id);
-		commitTransaction();
-		closeSession();
+		ItensPedidoDespesa itensPedidoDespesa = new ItensPedidoDespesa();
+		try {
+			itensPedidoDespesa = (ItensPedidoDespesa) hh.getSession().get(ItensPedidoDespesa.class, id);
+			commitTransaction();
+		} catch (Exception e) {
+			rollBackTransaction();
+		} finally {
+			closeSession();
+		}
 		return itensPedidoDespesa;
 	}
 
@@ -102,9 +115,15 @@ public class ItensPedidoDespesaDAO implements DAO<ItensPedidoDespesa> {
 
 	public List<ItensPedidoDespesa> findAllItensByNumeroPD(PedidoDespesa e) {
 		startTransaction();
-		final List<ItensPedidoDespesa> list = hh.getSession().createQuery("From ItensPedidoDespesa where idPedidoDespesa = "+e.getId()).list();
-		commitTransaction();
-		closeSession();
+		List<ItensPedidoDespesa> list  = new ArrayList<ItensPedidoDespesa>();
+		try {
+			list = hh.getSession().createQuery("From ItensPedidoDespesa where idPedidoDespesa = "+e.getId()).list();
+			commitTransaction();
+		} catch (Exception ex) {
+			rollBackTransaction();
+		} finally {
+			closeSession();
+		}
 		return list;
 	}
 

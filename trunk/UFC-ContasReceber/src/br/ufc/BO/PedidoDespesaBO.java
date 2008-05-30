@@ -132,4 +132,8 @@ public class PedidoDespesaBO implements BO<PedidoDespesa> {
 		return ((PedidoDespesaDAO)pedidoDespesaDao).findAllAguardando();
 	}
 
+	public List<PedidoDespesa> findByPD(String pd) {
+		return ((PedidoDespesaDAO)pedidoDespesaDao).findByPD(pd);
+	}
+
 }

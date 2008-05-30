@@ -77,9 +77,17 @@ public class ContasReceberAction extends DispatchAction implements Serializable 
 			ContasReceberForm contasReceberForm = (ContasReceberForm) form;
 			ContasReceberTO contasReceberTO = contasReceberForm.getTheItem();
 			ContasReceber contasReceber = ContasReceberAssembler.getInstance().entityTO2Entity(contasReceberTO);
+
+			//Verificação e Segurança para garantir que uma Conta só possa ser baixada uma unica vez
+			ContasReceber contasReceber2Test = ContasReceberBO.getInstance().findById(contasReceber.getId());
 			
-			if (!((ContasReceberBO)ContasReceberBO.getInstance()).baixarContasReceber(contasReceber, jurosDesconto, calendar)){
-				errors.add("erroSalvar", new ActionMessage("erro.salvar"));
+			if(contasReceber2Test.getStatus()==Status.PAGO) {
+				errors.add("erroSalvar", new ActionMessage("erro.conta.pago"));
+			}
+			if (errors.isEmpty()){
+				if (!((ContasReceberBO)ContasReceberBO.getInstance()).baixarContasReceber(contasReceber, jurosDesconto, calendar)){
+					errors.add("erroSalvar", new ActionMessage("erro.salvar"));
+				}
 			}
 		}
 

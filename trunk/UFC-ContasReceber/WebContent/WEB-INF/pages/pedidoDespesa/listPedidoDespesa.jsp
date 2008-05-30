@@ -45,6 +45,27 @@
 		</table>
 	<input type="hidden" name="operacao" value = "findByDay">
 	</html:form>
+	
+	<html:form action="pedidoDespesa">
+		<table>
+			<tr>
+				<td>
+					Pesquisar por Número
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="text" name="pd"/>
+				</td>
+				<td>
+					<input type="submit" value="Pesquisar">
+				</td>
+			</tr>
+		</table>
+	<input type="hidden" name="operacao" value = "findByPD">
+	</html:form>
 
 </fieldset>
 

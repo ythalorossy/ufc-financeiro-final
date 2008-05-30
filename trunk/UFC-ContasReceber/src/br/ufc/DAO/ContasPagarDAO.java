@@ -21,6 +21,8 @@ public class ContasPagarDAO implements DAO<ContasPagar> {
 	private HibernateHelper hh = HibernateHelper.getInstance();
 	// Lista de notas fiscais
 	private List<ContasPagar> listContasPagar = new ArrayList<ContasPagar>();
+	
+	private ContasPagar contasPagar = new ContasPagar();
 
 	// Retorno padrão
 	private boolean retorno = false;
@@ -49,6 +51,8 @@ public class ContasPagarDAO implements DAO<ContasPagar> {
 			listContasPagar = hh.getSession().createQuery(
 					"from ContasPagar where status=" + Status.ABERTO + " order by dataPrevista").list();
 			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
 		} finally {
 			closeSession();
 		}
@@ -65,6 +69,8 @@ public class ContasPagarDAO implements DAO<ContasPagar> {
 			query.setParameter(1, calendar);
 			listContasPagar = query.list();
 			commitTransaction();
+		}catch (Exception e) {
+			rollbackTransaction();
 		} finally {
 			closeSession();
 		}
@@ -76,9 +82,14 @@ public class ContasPagarDAO implements DAO<ContasPagar> {
 	@Override
 	public ContasPagar findById(int id) {
 		startTransaction();
-		final ContasPagar contasPagar = (ContasPagar) hh.getSession().get(ContasPagar.class, id);
-		commitTransaction();
-		closeSession();
+		try {
+			contasPagar = (ContasPagar) hh.getSession().get(ContasPagar.class, id);
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
 		return contasPagar;
 	}
 
@@ -125,6 +136,8 @@ public class ContasPagarDAO implements DAO<ContasPagar> {
 			query.setParameter(0, calendar);
 			listContasPagar = query.list();
 			commitTransaction();
+		}catch (Exception e) {
+			rollbackTransaction();
 		} finally {
 			closeSession();
 		}
@@ -140,20 +153,29 @@ public class ContasPagarDAO implements DAO<ContasPagar> {
 
 	public List<ContasPagar> findAllContasByNf(int id) {
 		startTransaction();
-		final List<ContasPagar> list = hh.getSession().createQuery(
-				"From ContasPagar where idNotaFiscal = " + id).list();
-		commitTransaction();
-		closeSession();
-		return list;
+		try {
+			listContasPagar = hh.getSession().createQuery("From ContasPagar where idNotaFiscal = " + id).list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
+		return listContasPagar;
 	}
 
 	public ContasPagar findAllByIParcela(int id) {
 		startTransaction();
-		final ContasPagar contasPagar = (ContasPagar) hh.getSession()
-				.createQuery("From ContasReceber where idParcela = " + id)
-				.uniqueResult();
-		commitTransaction();
-		closeSession();
+		try {
+			contasPagar = (ContasPagar) hh.getSession()
+			.createQuery("From ContasReceber where idParcela = " + id)
+			.uniqueResult();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
 		return contasPagar;
 	}
 
@@ -196,10 +218,15 @@ public class ContasPagarDAO implements DAO<ContasPagar> {
 
 	public List<ContasPagar> findfindByIdPD(int id) {
 		startTransaction();
-		final List<ContasPagar> list = hh.getSession().createQuery("From ContasPagar where idPedidoDespesa = "+id).list();
-		commitTransaction();
-		closeSession();
-		return list;
+		try {
+			listContasPagar = hh.getSession().createQuery("From ContasPagar where idPedidoDespesa = "+id).list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
+		return listContasPagar;
 	}
 
 	public boolean delete(List<ContasPagar> list) {

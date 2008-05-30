@@ -1,5 +1,6 @@
 package br.ufc.DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -12,6 +13,9 @@ import com.hibernate.HibernateHelper;
 public class CaixaEntradaSaidaDAO implements DAO<CaixaEntradaSaida> {
 
 	private HibernateHelper hh = HibernateHelper.getInstance();
+	private List<CaixaEntradaSaida> caixaEntradaSaidaList = new ArrayList<CaixaEntradaSaida>();
+	private CaixaEntradaSaida caixaEntradaSaida = new CaixaEntradaSaida();
+	
 	@SuppressWarnings("unused")
 	private boolean result = false;
 
@@ -33,19 +37,29 @@ public class CaixaEntradaSaidaDAO implements DAO<CaixaEntradaSaida> {
 
 	public List<CaixaEntradaSaida> findAll() {
 		startTransaction();
-		final List<CaixaEntradaSaida> caixaEntradaSaidaList = (List<CaixaEntradaSaida>) hh.getSession()
-				.createQuery("from CaixaEntradaSaida").list();
-		commitTransaction();
-		closeSession();
+		try {
+			caixaEntradaSaidaList = hh.getSession().createQuery("from CaixaEntradaSaida").list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
+
 		return caixaEntradaSaidaList;
 	}
 
 	public CaixaEntradaSaida findById(int id) {
 		startTransaction();
-		final CaixaEntradaSaida caixaEntradaSaida = (CaixaEntradaSaida) hh.getSession().get(
-				CaixaEntradaSaida.class, id);
-		commitTransaction();
-		closeSession();
+		try {
+			caixaEntradaSaida = (CaixaEntradaSaida) hh.getSession().get(CaixaEntradaSaida.class, id);
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
+		
 		return caixaEntradaSaida;
 	}
 
@@ -54,10 +68,11 @@ public class CaixaEntradaSaidaDAO implements DAO<CaixaEntradaSaida> {
 			startTransaction();
 			hh.getSession().save(e);
 			commitTransaction();
-			closeSession();
 			result = true;
 		} catch (Exception ex) {
 			rollbackTransaction();
+		} finally {
+			closeSession();
 		}
 		return result;
 	}
@@ -67,10 +82,11 @@ public class CaixaEntradaSaidaDAO implements DAO<CaixaEntradaSaida> {
 			startTransaction();
 			hh.getSession().save(e);
 			commitTransaction();
-			closeSession();
 			result = true;
 		} catch (Exception ex) {
 			rollbackTransaction();
+		} finally {
+			closeSession();
 		}
 		
 		return e;
@@ -100,10 +116,12 @@ public class CaixaEntradaSaidaDAO implements DAO<CaixaEntradaSaida> {
 			ces = (CaixaEntradaSaida) query.uniqueResult();
 
 			commitTransaction();
-			closeSession();
+			
 
 		} catch (Exception ex) {
 			rollbackTransaction();
+		} finally {
+			closeSession();
 		}
 
 		return ces;

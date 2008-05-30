@@ -25,28 +25,49 @@ public class DivisaoDAO {
 		hg.getSession().clear();
 	}
 	
+	public void rollback (){
+		hg.getSession().getTransaction().rollback();
+	}
+	
 	public Divisao findById(int id){
 		startTransaction();
-		Divisao divisao = (Divisao) hg.getSession().get(Divisao.class, id);
-		commitTransaction();
-		closeSession();
+		try {
+			divisao = (Divisao) hg.getSession().get(Divisao.class, id);
+			commitTransaction();
+		} catch (Exception e) {
+			rollback();
+		} finally {
+			closeSession();
+		}
 		return divisao;
 	}
 	
 	public List<Divisao> findAll(){
 		startTransaction();
-		listDivisao = (List<Divisao>) hg.getSession().createQuery("From Divisao").list();
-		commitTransaction();
-		closeSession();
+		try {
+
+			listDivisao = (List<Divisao>) hg.getSession().createQuery("From Divisao").list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollback();
+		} finally {
+			closeSession();
+		}
 		return listDivisao;
 	}
 	public Divisao findByName(String nomeDivisao) {
 		startTransaction();
-		Query query = hg.getSession().createQuery("From Divisao where nome = ?");
-		query.setParameter(0, nomeDivisao);
-		divisao = (Divisao) query.uniqueResult();
-		commitTransaction();
-		closeSession();
+		try {
+
+			Query query = hg.getSession().createQuery("From Divisao where nome = ?");
+			query.setParameter(0, nomeDivisao);
+			divisao = (Divisao) query.uniqueResult();
+			commitTransaction();
+		} catch (Exception e) {
+			rollback();
+		}finally {
+			closeSession();
+		}
 		return divisao;
 	}
 	

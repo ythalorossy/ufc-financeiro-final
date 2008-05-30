@@ -40,7 +40,7 @@ public class NotaFiscalBO implements BO<NotaFiscal> {
 
 	public boolean update(NotaFiscal notaFiscal) {
 		// retorno de todas as parcelas pagas de uma dada Nota Fiscal
-		final List<Parcela> parcela = ((ParcelaBO)ParcelaBO.getInstance()).verificaParcelaPaga(notaFiscal.getId());
+		final List<Parcela> parcela = ((ParcelaBO)ParcelaBO.getInstance()).verificaParcelaPaga(notaFiscal);
 
 		//Se a lista estiver vazia
 		if (parcela.isEmpty()){
@@ -84,14 +84,14 @@ public class NotaFiscalBO implements BO<NotaFiscal> {
 		for (int i = 0; i < notaFiscal.size(); i++){
 
 			// retorno de todas as parcelas pagas de uma dada Nota Fiscal
-			final List<Parcela> parcelasPaga = ((ParcelaBO)ParcelaBO.getInstance()).verificaParcelaPaga(notaFiscal.get(i).getId());
+			final List<Parcela> parcelasPaga = ((ParcelaBO)ParcelaBO.getInstance()).verificaParcelaPaga(notaFiscal.get(i));
 			
 
 			//Se a lista estiver vazia
 			if (parcelasPaga.isEmpty()){
 				final List<ItensNotaFiscal> itens = ((ItensNotaFiscalBO)ItensNotaFiscalBO.getInstance()).
 													findAllItensByNF(notaFiscal.get(i).getId());
-				final List<Parcela> parcelas = ((ParcelaBO)ParcelaBO.getInstance()).findAllByNf(notaFiscal.get(i).getId());
+				final List<Parcela> parcelas = ((ParcelaBO)ParcelaBO.getInstance()).findAllByNf(notaFiscal.get(i));
 				final List<ContasReceber> contasReceber = contasDao.findAllContasByNf(notaFiscal.get(i).getId());
 				
 				for (int j = 0; j < parcelas.size(); j++){
@@ -110,6 +110,10 @@ public class NotaFiscalBO implements BO<NotaFiscal> {
 	}
 
 	public NotaFiscal findByNF(String notaFiscal) {
+		return ((NotaFiscalDAO)notaFiscalDao).findByNF(notaFiscal);
+	}
+	
+	public List<NotaFiscal> findByNF(NotaFiscal notaFiscal) {
 		return ((NotaFiscalDAO)notaFiscalDao).findByNF(notaFiscal);
 	}
 	

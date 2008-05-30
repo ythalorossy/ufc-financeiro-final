@@ -44,6 +44,26 @@
 		</table>
 	<input type="hidden" name="operacao" value = "findByDay">
 	</html:form>
+	<html:form action="notaFiscal">
+		<table>
+			<tr>
+				<td>
+					Pesquisar por Nota Fiscal
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="text" name="nf"/>
+				</td>
+				<td>
+					<input type="submit" value="Pesquisar">
+				</td>
+			</tr>
+		</table>
+	<input type="hidden" name="operacao" value = "findByNF">
+	</html:form>
 
 </fieldset>
 

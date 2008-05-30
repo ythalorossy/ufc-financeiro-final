@@ -69,8 +69,14 @@ public class ContasPagarAction extends DispatchAction implements Serializable {
 		}
 		
 		if(result){
-			if (((ContasPagarBO)ContasPagarBO.getInstance()).baixarContasPagar(contasPagar, jurosDesconto, calendar)){
-				System.out.println("Baixada com sucesso!");
+			ContasPagar contasPagar2Test = ContasPagarBO.getInstance().findById(contasPagar.getId());
+			if (contasPagar2Test.getStatus()==Status.PAGO){
+				errors.add("erroSalvar", new ActionMessage("erro.conta.pago"));
+			}
+			if (errors.isEmpty()){
+				if (!((ContasPagarBO)ContasPagarBO.getInstance()).baixarContasPagar(contasPagar, jurosDesconto, calendar)){
+					errors.add("erroSalvar", new ActionMessage("erro.salvar"));
+				}
 			}
 		} 
 		

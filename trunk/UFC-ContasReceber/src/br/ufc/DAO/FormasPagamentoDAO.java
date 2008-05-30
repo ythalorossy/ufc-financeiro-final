@@ -18,6 +18,10 @@ public class FormasPagamentoDAO implements DAO<FormasPagamento> {
 	public void commitTransaction() {
 		hh.getSession().getTransaction().commit();
 	}
+	
+	public void rollbackTransaction() {
+		hh.getSession().getTransaction().rollback();
+	}
 
 	public void startTransaction() {
 		hh.getSession().beginTransaction();
@@ -30,19 +34,31 @@ public class FormasPagamentoDAO implements DAO<FormasPagamento> {
 	public List<FormasPagamento> findAll() {
 
 		startTransaction();
-		formasPagamento = (List<FormasPagamento>) hh.getSession().createQuery(
-				"from FormasPagamento").list();
-		commitTransaction();
-		closeSession();
+		try {
+
+			formasPagamento = (List<FormasPagamento>) hh.getSession().createQuery(
+					"from FormasPagamento").list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
 		return formasPagamento;
 	}
 
 	public FormasPagamento findById(int id) {
 		startTransaction();
-		formaPagamento = (FormasPagamento) hh.getSession().get(
-				FormasPagamento.class, id);
-		commitTransaction();
-		closeSession();
+		try {
+
+			formaPagamento = (FormasPagamento) hh.getSession().get(
+					FormasPagamento.class, id);
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
 		return formaPagamento;
 	}
 
@@ -52,9 +68,11 @@ public class FormasPagamentoDAO implements DAO<FormasPagamento> {
 			startTransaction();
 			hh.getSession().save(e);
 			commitTransaction();
-			closeSession();
 			result = true;
 		} catch (Exception ex) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
 		}
 
 		return result;
@@ -65,9 +83,11 @@ public class FormasPagamentoDAO implements DAO<FormasPagamento> {
 			startTransaction();
 			hh.getSession().update(e);
 			commitTransaction();
-			closeSession();
 			result = true;
 		} catch (Exception ex) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
 		}
 
 		return result;
@@ -80,9 +100,11 @@ public class FormasPagamentoDAO implements DAO<FormasPagamento> {
 			startTransaction();
 			hh.getSession().delete(e);
 			commitTransaction();
-			closeSession();
 			result = true;
 		} catch (Exception ex) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
 		}
 
 		return result;
@@ -98,10 +120,10 @@ public class FormasPagamentoDAO implements DAO<FormasPagamento> {
 			commitTransaction();
 			result = true;
 		} catch (Exception e) {
-
+			rollbackTransaction();
+		} finally {
+			closeSession();
 		}
-		closeSession();
-
 		return result;
 	}
 
