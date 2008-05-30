@@ -63,9 +63,10 @@ public class ItensNotaFiscalDAO implements DAO<ItensNotaFiscal> {
 			retorno = true;
 			commitTransaction();
 		}catch (Exception ex) {
-			System.out.println(ex.getMessage());
+			rollBackTransaction();
+		} finally {
+			closeSession();
 		}
-		closeSession();
 		return retorno;
 	}
 
@@ -78,9 +79,14 @@ public class ItensNotaFiscalDAO implements DAO<ItensNotaFiscal> {
 	@SuppressWarnings("unchecked")
 	public List<ItensNotaFiscal> findAllItensByNf(int idNotaFiscal) {
 		startTransaction();
-		itensNotaFiscalList = hh.getSession().createQuery("From ItensNotaFiscal where idNotaFiscal = "+idNotaFiscal).list();
-		commitTransaction();
-		closeSession();
+		try {
+			itensNotaFiscalList = hh.getSession().createQuery("From ItensNotaFiscal where idNotaFiscal = "+idNotaFiscal).list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollBackTransaction();
+		} finally {
+			closeSession();
+		}
 		return itensNotaFiscalList;
 	}
 	

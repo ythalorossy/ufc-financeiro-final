@@ -59,7 +59,7 @@ public class ParcelaAction extends DispatchAction implements Serializable {
 		
 		
 		
-		final List<Parcela> listParcela = ((ParcelaBO)ParcelaBO.getInstance()).findAllByNf(notaFiscal.getId());
+		final List<Parcela> listParcela = ((ParcelaBO)ParcelaBO.getInstance()).findAllByNf(notaFiscal);
 		final List<ParcelaTO> listTO = ParcelaAssembler.getInstance().entity2EntityTO(listParcela);
 		parcelaForm.setItems(listTO);
 		

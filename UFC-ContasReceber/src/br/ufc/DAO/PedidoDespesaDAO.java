@@ -19,6 +19,7 @@ public class PedidoDespesaDAO implements DAO<PedidoDespesa> {
 	private HibernateHelper hh = HibernateHelper.getInstance();
 	//Lista de notas fiscais
 	private List<PedidoDespesa> list = new ArrayList<PedidoDespesa>();
+	private PedidoDespesa pd = new PedidoDespesa();
 	// Retorno padrão
 	private boolean retorno = false;
 	
@@ -39,18 +40,29 @@ public class PedidoDespesaDAO implements DAO<PedidoDespesa> {
 	
 	public List<PedidoDespesa> findAll() {
 		startTransaction();
-		Query query = hh.getSession().createQuery("From PedidoDespesa order by dataPD");
-		list = query.list();
-		commitTransaction();
-		closeSession();
+		try {
+			Query query = hh.getSession().createQuery(
+					"From PedidoDespesa order by dataPD");
+			list = query.list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
 		return list;
 	}
 
 	public PedidoDespesa findById(int id) {
 		startTransaction();
-		final PedidoDespesa pd = (PedidoDespesa) hh.getSession().get(PedidoDespesa.class, id);
-		commitTransaction();
-		closeSession();
+		try {
+			pd = (PedidoDespesa) hh.getSession().get(PedidoDespesa.class, id);
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
 		return pd;
 	}
 
@@ -103,11 +115,17 @@ public class PedidoDespesaDAO implements DAO<PedidoDespesa> {
 	
 	public List<PedidoDespesa> findByNumeroPD(String numeroPD) {
 		startTransaction();
-		final Query query= hh.getSession().createQuery("From PedidoDespesa where numeroPD = ?");
-		query.setParameter(0, numeroPD);
-		final List<PedidoDespesa> list = query.list();
-		commitTransaction();
-		closeSession();
+		try {
+			final Query query = hh.getSession().createQuery(
+					"From PedidoDespesa where numeroPD = ?");
+			query.setParameter(0, numeroPD);
+			list = query.list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
 		return list;
 	}
 	
@@ -132,33 +150,65 @@ public class PedidoDespesaDAO implements DAO<PedidoDespesa> {
 	
 	public List<PedidoDespesa> findPedido30(GregorianCalendar calendar) {
 		startTransaction();
-		final Query query = hh.getSession().createQuery("From PedidoDespesa where dataPD  >= ? and status = ? or status = ?");
-		query.setParameter(0, calendar);
-		query.setParameter(1, Status.AGUARDANDO);
-		query.setParameter(2, Status.COTADO);
-		final List<PedidoDespesa> list = query.list();
-		commitTransaction();
-		closeSession();
+		try {
+			final Query query = hh.getSession().createQuery(
+							"From PedidoDespesa where dataPD  >= ? and status = ? or status = ?");
+			query.setParameter(0, calendar);
+			query.setParameter(1, Status.AGUARDANDO);
+			query.setParameter(2, Status.COTADO);
+			list = query.list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
 		return list;
 	}
 	
 	public List<PedidoDespesa> findByDay(GregorianCalendar dataInicial,GregorianCalendar dataFinal) {
 		startTransaction();
-		final Query query = hh.getSession().createQuery("From PedidoDespesa where dataPD between ? and ? order by dataPD" );
-		query.setParameter(0, dataInicial);
-		query.setParameter(1, dataFinal);
-		final List<PedidoDespesa> list = query.list();
-		commitTransaction();
-		closeSession();
+		try {
+			final Query query = hh.getSession().createQuery(
+							"From PedidoDespesa where dataPD between ? and ? order by dataPD");
+			query.setParameter(0, dataInicial);
+			query.setParameter(1, dataFinal);
+			list = query.list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
 		return list;
 	}
 	public List<PedidoDespesa> findAllAguardando() {
 		startTransaction();
-		final Query query = hh.getSession().createQuery("From PedidoDespesa where status = ?" );
-		query.setParameter(0, Status.AGUARDANDO);
-		final List<PedidoDespesa> list = query.list();
-		commitTransaction();
-		closeSession();
+		try {
+			final Query query = hh.getSession().createQuery(
+					"From PedidoDespesa where status = ?");
+			query.setParameter(0, Status.AGUARDANDO);
+			list = query.list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
+		return list;
+	}
+	public List<PedidoDespesa> findByPD(String pd) {
+		startTransaction();
+		try {
+			Query query = hh.getSession().createQuery("from PedidoDespesa where numeroPD = ?");
+			query.setParameter(0, pd);
+			list = query.list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
 		return list;
 	}
 	

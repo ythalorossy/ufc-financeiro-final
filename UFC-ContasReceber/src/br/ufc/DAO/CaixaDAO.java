@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.persistence.RollbackException;
+
 import org.hibernate.Query;
 
 import br.com.Caixa;
@@ -32,6 +34,10 @@ public class CaixaDAO implements DAO<Caixa> {
 	public void closeSession() {
 		hh.getSession().clear();
 	}
+	
+	public void rollback(){
+		hh.getSession().getTransaction().rollback();
+	}
 
 	/**
 	 * Não implementado!!!!
@@ -39,10 +45,15 @@ public class CaixaDAO implements DAO<Caixa> {
 	@SuppressWarnings("unchecked")
 	public List<Caixa> findAll() {
 		startTransaction();
-		final List<Caixa> list = hh.getSession().createQuery("From Caixa").list();
-		commitTransaction();
-		closeSession();
-		return list;
+		try {
+			listCaixa = hh.getSession().createQuery("From Caixa").list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollback();
+		} finally{
+			closeSession();
+		}
+		return listCaixa;
 	}
 
 	/**
@@ -72,7 +83,9 @@ public class CaixaDAO implements DAO<Caixa> {
 			hh.save(e);
 			commitTransaction();
 			result = true;
-		} finally {
+		} catch (Exception ex) {
+			rollback();
+		}finally {
 			closeSession();
 		}
 
@@ -87,10 +100,11 @@ public class CaixaDAO implements DAO<Caixa> {
 			startTransaction();
 			hh.getSession().update(e);
 			commitTransaction();
-			closeSession();
 			result = true;
 		} catch (Exception ex) {
-
+			rollback();
+		} finally {
+			closeSession();
 		}
 		return result;
 	}
@@ -112,10 +126,12 @@ public class CaixaDAO implements DAO<Caixa> {
 				hh.getSession().update(c);
 			}
 			commitTransaction();
-			closeSession();
+			
 			result = true;
 		} catch (Exception ex) {
-
+			rollback();
+		} finally {
+			closeSession();
 		}
 
 		return result;
@@ -145,7 +161,7 @@ public class CaixaDAO implements DAO<Caixa> {
 			result = true;
 			
 		} catch (Exception ex){
-			hh.getSession().getTransaction().rollback();
+			rollback();
 		} finally {
 			closeSession();
 		}
@@ -163,10 +179,11 @@ public class CaixaDAO implements DAO<Caixa> {
 			startTransaction();
 			hh.getSession().delete(e);
 			commitTransaction();
-			closeSession();
 			result = true;
 		} catch (Exception ex) {
-
+			rollback();
+		} finally {
+			closeSession();
 		}
 
 		return result;
@@ -186,6 +203,8 @@ public class CaixaDAO implements DAO<Caixa> {
 			listCaixa = (List<Caixa>) query.list();
 			commitTransaction();
 		} catch (Exception ex) {
+			rollback();
+		} finally {
 			closeSession();
 		}
 
@@ -211,6 +230,8 @@ public class CaixaDAO implements DAO<Caixa> {
 			commitTransaction();
 			
 		} catch (Exception ex) {
+			rollback();
+		} finally{
 			closeSession();
 		}
 
@@ -244,7 +265,7 @@ public class CaixaDAO implements DAO<Caixa> {
 			
 			result = true;
 		} catch (Exception ex) {
-			hh.getSession().getTransaction().rollback();
+			rollback();
 		} finally {
 			hh.closeSession();
 		}
@@ -254,17 +275,29 @@ public class CaixaDAO implements DAO<Caixa> {
 
 	public Caixa findByIdContaPagar(int id) {
 		startTransaction();
-		final Caixa caixa = (Caixa) hh.getSession().createQuery("From Caixa where idContasPagar = "+id).uniqueResult();
-		commitTransaction();
-		closeSession();
+		try {
+			caixa = (Caixa) hh.getSession().createQuery("From Caixa where idContasPagar = "+id).uniqueResult();
+			commitTransaction();
+		} catch (Exception e) {
+			rollback();
+		} finally {
+			closeSession();
+		}
+		
 		return caixa;
 	}
 	
 	public Caixa findByIdContaReceber(int id) {
 		startTransaction();
-		final Caixa caixa = (Caixa) hh.getSession().createQuery("From Caixa where idContasReceber = "+id).uniqueResult();
-		commitTransaction();
-		closeSession();
+		try {
+			caixa = (Caixa) hh.getSession().createQuery("From Caixa where idContasReceber = "+id).uniqueResult();
+			commitTransaction();
+		} catch (Exception e) {
+			rollback();
+		} finally {
+			// TODO: handle exception
+		}
+
 		return caixa;
 	}
 

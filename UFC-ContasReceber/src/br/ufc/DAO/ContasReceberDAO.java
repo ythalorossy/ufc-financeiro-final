@@ -19,6 +19,8 @@ public class ContasReceberDAO implements DAO<ContasReceber> {
 
 	// criação do objeto hibernate
 	private HibernateHelper hh = HibernateHelper.getInstance();
+	private ContasReceber contasReceber = new ContasReceber();
+	private List<ContasReceber> list = new ArrayList<ContasReceber>();
 	
 	// Retorno padrão
 	private boolean retorno = false;
@@ -73,9 +75,14 @@ public class ContasReceberDAO implements DAO<ContasReceber> {
 	@Override
 	public ContasReceber findById(int id) {
 		startTransaction();
-		final ContasReceber contasReceber = (ContasReceber)hh.getSession().get(ContasReceber.class, id);
-		commitTransaction();
-		closeSession();
+		try {
+			contasReceber = (ContasReceber)hh.getSession().get(ContasReceber.class, id);
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally{
+			closeSession();
+		}
 		return contasReceber;
 	}
 
@@ -135,20 +142,30 @@ public class ContasReceberDAO implements DAO<ContasReceber> {
 
 	public List<ContasReceber> findAllContasByNf(int id) {
 		startTransaction();
-		final List<ContasReceber> list = hh.getSession().createQuery(
-				"From ContasReceber where idNotaFiscal = " + id).list();
-		commitTransaction();
-		closeSession();
+		try {
+			list = hh.getSession().createQuery(
+					"From ContasReceber where idNotaFiscal = " + id).list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
 		return list;
 	}
 
 	public ContasReceber findAllByIParcela(int id) {
 		startTransaction();
-		final ContasReceber contasReceber = (ContasReceber) hh.getSession()
-				.createQuery("From ContasReceber where idParcela = " + id)
-				.uniqueResult();
-		commitTransaction();
-		closeSession();
+		try {
+			contasReceber = (ContasReceber) hh.getSession()
+			.createQuery("From ContasReceber where idParcela = " + id)
+			.uniqueResult();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
 		return contasReceber;
 	}
 

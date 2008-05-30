@@ -169,7 +169,7 @@ public class NotaFiscalAction extends DispatchAction implements Serializable {
 		
 						// Testando se existe algum pagamento efetuado de alguma parcela para o id da nota fiscal
 						// Listagem de erros que irá comportar tal teste caso aja algum erro
-		final List<Parcela> parcelasPagas = ((ParcelaBO)ParcelaBO.getInstance()).verificaParcelaPaga(nf.getId());
+		final List<Parcela> parcelasPagas = ((ParcelaBO)ParcelaBO.getInstance()).verificaParcelaPaga(nf);
 						// Caso a listagem de erros seja vazia
 		if(parcelasPagas.isEmpty()){
 
@@ -338,7 +338,7 @@ public class NotaFiscalAction extends DispatchAction implements Serializable {
 		final List<ItensNotaFiscal> itensNotaFiscal = ((ItensNotaFiscalBO)ItensNotaFiscalBO.getInstance()).
 														findAllItensByNF(notaFiscal.getId());
 						// Recuperando todas as parcelas da nota fiscal
-		final List<Parcela> parcelas = ((ParcelaBO)ParcelaBO.getInstance()).findAllByNf(notaFiscal.getId());
+		final List<Parcela> parcelas = ((ParcelaBO)ParcelaBO.getInstance()).findAllByNf(notaFiscal);
 		
 						// Criando a listagem de objetos transientes: ItensNotaFiscalTO, ParcelaTO, NotaFiscalTO
 		final List<ItensNotaFiscalTO> itensNotaFiscalTO = new ItensNotaFiscalAssembler().entity2EntityTO(itensNotaFiscal);
@@ -382,7 +382,7 @@ public class NotaFiscalAction extends DispatchAction implements Serializable {
 		final List<ItensNotaFiscal> itensNotaFiscal = ((ItensNotaFiscalBO)ItensNotaFiscalBO.getInstance()).
 														findAllItensByNF(notaFiscal.getId());
 						// Recuperando todas as parcelas da nota fiscal
-		final List<Parcela> parcelas = ((ParcelaBO)ParcelaBO.getInstance()).findAllByNf(notaFiscal.getId());
+		final List<Parcela> parcelas = ((ParcelaBO)ParcelaBO.getInstance()).findAllByNf(notaFiscal);
 		
 						// Tentativa de atualização dos dados
 		if (((NotaFiscalBO)NotaFiscalBO.getInstance()).reabrirNota(notaFiscal, itensNotaFiscal, parcelas)){
@@ -510,6 +510,43 @@ public class NotaFiscalAction extends DispatchAction implements Serializable {
 			final NotaFiscalForm notaFiscalForm = (NotaFiscalForm) form;
 			// Criação da listagem de notas fiscais
 			final List<NotaFiscal> notaFiscal = ((NotaFiscalBO)NotaFiscalBO.getInstance()).findNotas30();
+			// Criação da listagem de objetos transientes
+			final List<NotaFiscalTO> notaFiscalTO = new NotaFiscalAssembler().entity2EntityTO(notaFiscal);
+			// Setado estes objetos TO no formulario
+			notaFiscalForm.setItems(notaFiscalTO);
+		}
+		
+		saveErrors(request, errors);
+						// forward para a pagina de listagem
+		request.setAttribute(LOAD_PAGE, LIST_ALL);
+		return mapping.findForward("index");
+	}
+	
+	public ActionForward findByNF(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		final ActionMessages errors = new ActionMessages();
+		final String nf = request.getParameter("nf");
+		
+		if (!GenericValidator.isBlankOrNull(nf)){
+			if (errors.isEmpty()){
+				
+				// Recuperando o formulario
+				final NotaFiscalForm notaFiscalForm = (NotaFiscalForm) form;
+				
+				final NotaFiscal notaFiscal = ((NotaFiscalBO)NotaFiscalBO.getInstance()).findByNF(nf);
+				// Criação da listagem de notas fiscais
+				final List<NotaFiscal> notaFiscalList = ((NotaFiscalBO)NotaFiscalBO.getInstance()).findByNF(notaFiscal);
+				// Criação da listagem de objetos transientes
+				final List<NotaFiscalTO> notaFiscalTO = new NotaFiscalAssembler().entity2EntityTO(notaFiscalList);
+				// Setado estes objetos TO no formulario
+				notaFiscalForm.setItems(notaFiscalTO);
+			}
+		}else {
+			// Recuperando o formulario
+			final NotaFiscalForm notaFiscalForm = (NotaFiscalForm) form;
+			// Criação da listagem de notas fiscais
+			final List<NotaFiscal> notaFiscal = ((NotaFiscalBO)NotaFiscalBO.getInstance()).findAll();
 			// Criação da listagem de objetos transientes
 			final List<NotaFiscalTO> notaFiscalTO = new NotaFiscalAssembler().entity2EntityTO(notaFiscal);
 			// Setado estes objetos TO no formulario

@@ -10,7 +10,7 @@
 			window.onload = function() {
 				makeRequest('/ajax','prefix','${notaFiscalForm.theItem.idCliente}', 'cliente','clientes');
 			}
-		</script>
+</script>
 
 <html:form action="notaFiscal">
 	<table width="99%" cellpadding="2" cellspacing="2">
@@ -18,13 +18,15 @@
 			<td>Cliente</td>
 		</tr>
 		<tr bgcolor="#f1f1f1" height="25">
-			<td>CGCPF: <input id="cgcpf" type="text"
-				value="${notaFiscalForm.theItem.idCliente}"
-				onkeyup="javascript:makeRequest('/ajax','prefix',this.value, 'cliente','clientes')" />
-			
+			<td>		
 			<!-- Select Clientes -->	
 			<html:select styleId="clientes" property="theItem.idCliente" style="width: 50%;">
-			</html:select></td>
+			</html:select>
+			CGCPF: <input id="cgcpf" type="text"
+				value="${notaFiscalForm.theItem.idCliente}"
+				onkeyup="javascript:makeRequest('/ajax','prefix',this.value, 'cliente','clientes')" />
+			</td>
+			
 			<!--  -->
 		</tr>
 		<tr bgcolor="#f1f1f1">

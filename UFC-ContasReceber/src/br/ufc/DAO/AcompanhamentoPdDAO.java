@@ -1,5 +1,6 @@
 package br.ufc.DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -13,6 +14,7 @@ import com.hibernate.HibernateHelper;
 public class AcompanhamentoPdDAO {
 
 	private HibernateHelper hh = HibernateHelper.getInstance();
+	private List<AcompanhamentoPD> listAPD = new ArrayList<AcompanhamentoPD>();
 
 	private boolean result = false;
 
@@ -35,11 +37,16 @@ public class AcompanhamentoPdDAO {
 	
 	public List<AcompanhamentoPD> findByPD(PedidoDespesa pedidoDespesa) {
 		startTransaction();
-		Query query = hh.getSession().createQuery("from AcompanhamentoPD where pd = ?");
-		query.setParameter(0, pedidoDespesa);
-		final List<AcompanhamentoPD> listAPD = query.list();
-		commitTransaction();
-		closeSession();
+		try {
+			Query query = hh.getSession().createQuery("from AcompanhamentoPD where pd = ?");
+			query.setParameter(0, pedidoDespesa);
+			listAPD = query.list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollback();
+		} finally {
+			closeSession();
+		}
 		return listAPD;
 	}
 

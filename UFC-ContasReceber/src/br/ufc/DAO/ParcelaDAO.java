@@ -1,5 +1,6 @@
 package br.ufc.DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -19,6 +20,7 @@ public class ParcelaDAO implements DAO<Parcela> {
 	private boolean retorno = false;
 
 	private Parcela parcela = new Parcela();
+	private List<Parcela> list = new ArrayList<Parcela>();
 	
 	
 	// Métodos que startam a transação, comitam e fecham a sessão
@@ -61,6 +63,8 @@ public class ParcelaDAO implements DAO<Parcela> {
 			parcela = (Parcela) hh.getSession().get(Parcela.class, id);
 			commitTransaction();
 
+		}catch (Exception e) {
+			rollBackTransaction();
 		} finally {
 			closeSession();
 		}
@@ -77,8 +81,9 @@ public class ParcelaDAO implements DAO<Parcela> {
 			retorno = true;
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
+		}finally {
+			closeSession();
 		}
-		closeSession();
 		return retorno;
 	}
 
@@ -89,6 +94,8 @@ public class ParcelaDAO implements DAO<Parcela> {
 			hh.getSession().update(e);
 			commitTransaction();
 			retorno = true;
+		}catch (Exception ex) {
+			rollBackTransaction();
 		} finally {
 			closeSession();
 		}
@@ -96,15 +103,20 @@ public class ParcelaDAO implements DAO<Parcela> {
 		return retorno;
 	}
 
-	public List<Parcela> findByIdNfPaga(int id, int status) {
+	public List<Parcela> findByIdNfPaga(NotaFiscal id, int status) {
 		startTransaction();
-		final List<Parcela> parcela = (List<Parcela>) hh.getSession()
-				.createQuery(
-						"From Parcela where status = " + status
-								+ " and idNotaFiscal = " + id).list();
-		commitTransaction();
-		closeSession();
-		return parcela;
+		try {
+			Query query = hh.getSession().createQuery("From Parcela where status = ? and idNotaFiscal = ?");
+			query.setParameter(0, status);
+			query.setParameter(1, id);
+			list = query.list(); 
+			commitTransaction();
+		} catch (Exception e) {
+			rollBackTransaction();
+		} finally {
+			closeSession();
+		}
+		return list;
 	}
 
 	public double findSumParcelasByNF(NotaFiscal idNotaFiscal) {
@@ -129,15 +141,21 @@ public class ParcelaDAO implements DAO<Parcela> {
 		return soma;
 	}
 
-	public List<Parcela> findByIdNf(int id) {
+	public List<Parcela> findByIdNf(NotaFiscal id) {
 		startTransaction();
-		final List<Parcela> parcela = (List<Parcela>) hh.getSession()
-				.createQuery(
-						"From Parcela where idNotaFiscal = " + id
-								+ " order by numeroParcela, dataPagamento").list();
-		commitTransaction();
-		closeSession();
-		return parcela;
+		try {
+			Query query = hh.getSession().createQuery(
+							"From Parcela where idNotaFiscal = ? order by numeroParcela, dataPagamento");
+			query.setParameter(0, id);
+			list = query.list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollBackTransaction();
+		} finally {
+			closeSession();
+		}
+			
+		return list;
 	}
 
 	public boolean delete(List<Parcela> parcela) {

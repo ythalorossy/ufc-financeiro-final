@@ -25,7 +25,6 @@ public class PedidoDespesaAssembler implements
 		 to.setFonteRecurso(entity.getFonteRecurso());
 		 to.setId(String.valueOf(entity.getId()));
 		 to.setIdDivisao(String.valueOf(entity.getIdDivisao()));
-		 to.setNomeDivisao(new DivisaoDAO().findById(entity.getIdDivisao()).getNome());
 		 to.setJustificativa(entity.getJustificativa());
 		 to.setNumeroPD(entity.getNumeroPD());
 		 to.setOrcamento(entity.getOrcamento());
@@ -34,7 +33,13 @@ public class PedidoDespesaAssembler implements
 		 to.setIdLaboratorio(String.valueOf(entity.getIdLaboratorio()));
 		 to.setValorCotado(ConverteNumero.converteNumero(entity.getValorCotado()));
 		 to.setValorPrevisto(ConverteNumero.converteNumero(entity.getValorPrevisto()));
-		 to.setNomeLaboratorio(new LaboratorioDAO().findById(entity.getIdLaboratorio()).getNome());
+		 try {
+			 to.setNomeLaboratorio(new LaboratorioDAO().findById(entity.getIdLaboratorio()).getNome());
+			 to.setNomeDivisao(new DivisaoDAO().findById(entity.getIdDivisao()).getNome());
+		 } catch (Exception e) {
+			 // TODO: handle exception
+		 }
+		 
 		 to.setProjeto(Status.retornaTipo(entity.getProjeto()));
 		 try {
 			 to.setAnexo(Status.retornaTipo(entity.getAnexos()));
@@ -89,7 +94,12 @@ public class PedidoDespesaAssembler implements
 		entity.setJustificativa(to.getJustificativa());
 		entity.setNumeroPD(to.getNumeroPD());
 		entity.setOrcamento(to.getOrcamento());
-		entity.setProjeto(Status.retornaTipo(to.getProjeto()));
+		try {
+			entity.setProjeto(Status.retornaTipo(to.getProjeto()));
+		} catch (Exception e) {
+			entity.setProjeto(0);
+		}
+		
 		entity.setAnexos(Status.retornaTipo(to.getAnexo()));
 		
 		try {

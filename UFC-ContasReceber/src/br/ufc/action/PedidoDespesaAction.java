@@ -321,6 +321,30 @@ public class PedidoDespesaAction extends DispatchAction implements Serializable 
 		return mapping.findForward("index");
 	}
 	
+	public ActionForward findByPD(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		final ActionMessages errors = new ActionMessages();
+		final String pd = request.getParameter("pd");
+		if (!GenericValidator.isBlankOrNull(pd)){
+			if (errors.isEmpty()){
+				
+				final PedidoDespesaForm pedidoDespesaForm = (PedidoDespesaForm) form;
+				final List<PedidoDespesa> pedidoDespesa = ((PedidoDespesaBO)PedidoDespesaBO.getInstance()).findByPD(pd);
+				final List<PedidoDespesaTO> pedidoDespesaTO = new PedidoDespesaAssembler().entity2EntityTO(pedidoDespesa);
+				pedidoDespesaForm.setItems(pedidoDespesaTO);
+			}
+		} else {
+			final PedidoDespesaForm pedidoDespesaForm = (PedidoDespesaForm) form;
+			final List<PedidoDespesa> pedidoDespesa = PedidoDespesaBO.getInstance().findAll();
+			final List<PedidoDespesaTO> pedidoDespesaTO = new PedidoDespesaAssembler().entity2EntityTO(pedidoDespesa);
+			pedidoDespesaForm.setItems(pedidoDespesaTO);
+		}
+		saveErrors(request, errors);
+		request.setAttribute(LOAD_PAGE, LIST_ALL);
+		return mapping.findForward("index");
+	}
+	
 	
 	public ActionForward confirmaPD(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)	throws Exception {

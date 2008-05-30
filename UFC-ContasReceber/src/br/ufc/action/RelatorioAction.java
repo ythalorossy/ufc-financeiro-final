@@ -1020,6 +1020,14 @@ public class RelatorioAction extends DispatchAction{
 			String saida = getServlet().getServletContext().getRealPath("/relatorio/PD.pdf");
 
 			final List<PedidoDespesaTO> to = PedidoDespesaAssembler.getInstance().entity2EntityTO(pd);
+			for (int i = 0; i < to.size(); i++) {
+				final int idDivisao = Integer.parseInt(to.get(i).getIdDivisao());
+				to.get(i).setIdDivisao(new DivisaoDAO().findById(idDivisao).getNome());
+				
+				final int idUPD = Integer.parseInt(to.get(i).getIdLaboratorio());
+				to.get(i).setIdLaboratorio(new LaboratorioDAO().findById(idUPD).getNome());
+				
+			}
 
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("subConnection", getSubConnection());
