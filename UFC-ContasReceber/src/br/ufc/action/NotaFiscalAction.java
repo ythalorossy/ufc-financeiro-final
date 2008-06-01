@@ -20,6 +20,7 @@ import br.com.ContasReceber;
 import br.com.ItensNotaFiscal;
 import br.com.NotaFiscal;
 import br.com.Parcela;
+import br.com.ConverteNumero.ConverteNumero;
 import br.ufc.BO.BO;
 import br.ufc.BO.ContasReceberBO;
 import br.ufc.BO.ItensNotaFiscalBO;
@@ -37,7 +38,6 @@ import br.ufc.uteis.Status;
 
 import com.Auxiliar.Clientes;
 import com.converte.ConverteData;
-import com.fdr.ConverteNumero.ConverteNumero;
 
 
 public class NotaFiscalAction extends DispatchAction implements Serializable {
@@ -86,9 +86,9 @@ public class NotaFiscalAction extends DispatchAction implements Serializable {
 		final ClientesDAO clientesDao = new ClientesDAO();
 		
 		// Recuperado todos os clientes
-		//final List<Clientes> listClientes = clientesDao.findAll();
+		final List<Clientes> listClientes = clientesDao.findAll();
 		
-		//request.setAttribute("clientes", listClientes);
+		request.setAttribute("clientes", listClientes);
 		request.setAttribute("operacao", "save");
 
 		request.setAttribute(LOAD_PAGE, PREPARE_SAVE);

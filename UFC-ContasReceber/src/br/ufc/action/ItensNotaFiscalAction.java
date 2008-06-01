@@ -17,6 +17,7 @@ import org.apache.struts.actions.DispatchAction;
 
 import br.com.ItensNotaFiscal;
 import br.com.NotaFiscal;
+import br.com.ConverteNumero.ConverteNumero;
 import br.ufc.BO.BO;
 import br.ufc.BO.ItensNotaFiscalBO;
 import br.ufc.BO.NotaFiscalBO;
@@ -32,7 +33,6 @@ import com.Auxiliar.Clientes;
 import com.Auxiliar.Divisao;
 import com.Auxiliar.Laboratorio;
 import com.converte.ConverteData;
-import com.fdr.ConverteNumero.ConverteNumero;
 
 @SuppressWarnings("serial")
 public class ItensNotaFiscalAction extends DispatchAction implements Serializable {

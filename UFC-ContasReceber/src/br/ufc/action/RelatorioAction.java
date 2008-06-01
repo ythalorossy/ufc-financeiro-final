@@ -28,6 +28,7 @@ import br.com.ContasReceber;
 import br.com.ItensNotaFiscal;
 import br.com.NotaFiscal;
 import br.com.PedidoDespesa;
+import br.com.ConverteNumero.ConverteNumero;
 import br.ufc.BO.CaixaBO;
 import br.ufc.BO.NotaFiscalBO;
 import br.ufc.BO.PedidoDespesaBO;
@@ -53,7 +54,6 @@ import com.Auxiliar.Clientes;
 import com.Auxiliar.Divisao;
 import com.Auxiliar.Laboratorio;
 import com.converte.ConverteData;
-import com.fdr.ConverteNumero.ConverteNumero;
 
 public class RelatorioAction extends DispatchAction{
 	

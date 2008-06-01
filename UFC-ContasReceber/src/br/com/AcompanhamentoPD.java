@@ -24,7 +24,11 @@ public class AcompanhamentoPD implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6916530393516694891L;
+	private static final long serialVersionUID = -136775364844764799L;
+	/**
+	 * 
+	 */
+	
 	
 	private int id;
 	private PedidoDespesa pd;

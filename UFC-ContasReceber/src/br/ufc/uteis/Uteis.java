@@ -7,10 +7,10 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.actions.DispatchAction;
 
+import br.com.ConverteNumero.ConverteNumero;
 import br.ufc.form.CaixaEntradaSaidaForm;
 
 import com.converte.ConverteData;
-import com.fdr.ConverteNumero.ConverteNumero;
 
 public class Uteis extends DispatchAction {
 

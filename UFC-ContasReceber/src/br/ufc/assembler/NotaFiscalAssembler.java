@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.NotaFiscal;
+import br.com.ConverteNumero.ConverteNumero;
 import br.ufc.BO.NotaFiscalBO;
 import br.ufc.DAO.ClientesDAO;
 import br.ufc.TO.NotaFiscalTO;
@@ -11,7 +12,6 @@ import br.ufc.uteis.Status;
 
 import com.Auxiliar.Clientes;
 import com.converte.ConverteData;
-import com.fdr.ConverteNumero.ConverteNumero;
 
 public class NotaFiscalAssembler implements ASSEMBLER<NotaFiscal, NotaFiscalTO> {
 

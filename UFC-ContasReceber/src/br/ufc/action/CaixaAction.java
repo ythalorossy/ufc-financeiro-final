@@ -15,6 +15,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.actions.DispatchAction;
 
 import br.com.Caixa;
+import br.com.ConverteNumero.ConverteNumero;
 import br.ufc.BO.CaixaBO;
 import br.ufc.TO.CaixaTO;
 import br.ufc.assembler.CaixaAssembler;
@@ -22,7 +23,6 @@ import br.ufc.form.CaixaForm;
 import br.ufc.uteis.Status;
 
 import com.converte.ConverteData;
-import com.fdr.ConverteNumero.ConverteNumero;
 
 @SuppressWarnings("serial")
 public class CaixaAction extends DispatchAction implements Serializable {
