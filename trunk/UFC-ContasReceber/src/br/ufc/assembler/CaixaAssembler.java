@@ -7,6 +7,7 @@ import br.com.Caixa;
 import br.com.CaixaEntradaSaida;
 import br.com.ContasPagar;
 import br.com.ContasReceber;
+import br.com.ConverteNumero.ConverteNumero;
 import br.ufc.BO.CaixaEntradaSaidaBO;
 import br.ufc.BO.ContasPagarBO;
 import br.ufc.BO.ContasReceberBO;
@@ -14,7 +15,6 @@ import br.ufc.TO.CaixaTO;
 import br.ufc.uteis.Status;
 
 import com.converte.ConverteData;
-import com.fdr.ConverteNumero.ConverteNumero;
 
 public class CaixaAssembler implements ASSEMBLER<Caixa, CaixaTO> {
 	

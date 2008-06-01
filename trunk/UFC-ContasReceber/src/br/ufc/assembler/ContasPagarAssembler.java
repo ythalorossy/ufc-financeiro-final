@@ -8,6 +8,7 @@ import br.com.FormasPagamento;
 import br.com.NotaFiscal;
 import br.com.Parcela;
 import br.com.PedidoDespesa;
+import br.com.ConverteNumero.ConverteNumero;
 import br.ufc.BO.FormasPagamentoBO;
 import br.ufc.BO.NotaFiscalBO;
 import br.ufc.BO.ParcelaBO;
@@ -17,7 +18,6 @@ import br.ufc.TO.ContasPagarTO;
 import br.ufc.uteis.Status;
 
 import com.converte.ConverteData;
-import com.fdr.ConverteNumero.ConverteNumero;
 
 public class ContasPagarAssembler implements ASSEMBLER<ContasPagar, ContasPagarTO> {
 

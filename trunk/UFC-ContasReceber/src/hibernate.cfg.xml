@@ -4,21 +4,19 @@
 		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory name="sessionFactory">
- 
+ <!--
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.password">masterkey</property>
         <property name="hibernate.connection.url">jdbc:postgresql://192.168.1.7:5432/nutec</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         <property name="hibernate.default_schema">financeiro</property>
-
-<!--
+-->
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.password">1234</property>
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/nutec</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         <property name="hibernate.default_schema">financeiro</property>
-        -->
     </session-factory>
 </hibernate-configuration>

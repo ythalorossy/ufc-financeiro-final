@@ -16,6 +16,7 @@ import org.apache.struts.actions.DispatchAction;
 
 import br.com.ItensPedidoDespesa;
 import br.com.PedidoDespesa;
+import br.com.ConverteNumero.ConverteNumero;
 import br.ufc.BO.ItensPedidoDespesaBO;
 import br.ufc.BO.PedidoDespesaBO;
 import br.ufc.DAO.DivisaoDAO;
@@ -30,7 +31,6 @@ import br.ufc.uteis.Status;
 import com.Auxiliar.Divisao;
 import com.Auxiliar.Laboratorio;
 import com.converte.ConverteData;
-import com.fdr.ConverteNumero.ConverteNumero;
 
 public class ItensPedidoDespesaAction extends DispatchAction{
 	

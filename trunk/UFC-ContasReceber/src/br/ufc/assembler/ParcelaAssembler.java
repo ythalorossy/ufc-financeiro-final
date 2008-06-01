@@ -5,13 +5,13 @@ import java.util.List;
 
 import br.com.NotaFiscal;
 import br.com.Parcela;
+import br.com.ConverteNumero.ConverteNumero;
 import br.ufc.BO.NotaFiscalBO;
 import br.ufc.DAO.ClientesDAO;
 import br.ufc.TO.ParcelaTO;
 
 import com.Auxiliar.Clientes;
 import com.converte.ConverteData;
-import com.fdr.ConverteNumero.ConverteNumero;
 
 public class ParcelaAssembler implements ASSEMBLER<Parcela, ParcelaTO> {
 	
