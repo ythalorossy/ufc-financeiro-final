@@ -217,6 +217,7 @@
 			if (http_request.readyState == 4) {
 	           	if (http_request.status == 200) {
 	           		
+	           		
 	           		/*
 	           		* Remove todos os elementos filho do elemento Alvo
 	           		*/

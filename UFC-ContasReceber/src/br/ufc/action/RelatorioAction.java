@@ -134,8 +134,8 @@ public class RelatorioAction extends DispatchAction{
 		/*
 		 * Preparando o relatório para listar os clientes
 		 */
-		final List<Clientes> clientesList = new ClientesDAO().findAll();
-		request.setAttribute("clientes", clientesList);
+		//final List<Clientes> clientesList = new ClientesDAO().findAll();
+		//request.setAttribute("clientes", clientesList);
 		
 		final List<Divisao> divisaoList = new DivisaoDAO().findAll();
 		request.setAttribute("divisao", divisaoList);

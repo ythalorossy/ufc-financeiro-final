@@ -4,86 +4,106 @@
 
 <span class="tituloInterno">Relatórios</span>
 
+<script>
+	window.onload = function() {
+		makeRequest('/ajax','prefix','', 'cliente', 'clientes');
+	}
+</script>
+
 <fieldset>
 <legend>Nota Fiscal</legend>
+
 <table width="99%" border="0" cellspacing="2" cellpadding="5">
-	<tr bgcolor="#f1f1f1" height="40">
-		<td width="1%">&nbsp;</td>
-		<td width="11%"><span class="labelForm">Por Número</span></td>
-		<td>
-		<html:form action="relatorio" target="_blank">
-			<input type="hidden" name="operacao" value="relatorioNotaFiscalUnica">
-			<select name="idNotaFiscal" style="width: 200px;">
-				<c:forEach var="notaFiscal" items="${notaFiscalTO}" >
-					<option value="${notaFiscal.id}">${notaFiscal.notaFiscal}</option>
-				</c:forEach>
-			</select>
-			<input type="submit" value="Gerar">
-			<html:errors prefix="image.error"/>
-		</html:form>
-		</td>
-	</tr>
-	<tr bgcolor="#f1f1f1" height="40">
-		<td width="1%">&nbsp;</td>
-		<td width="11%"><span class="labelForm">Por Cliente</span></td>
-		<td>
-			<html:form action="relatorio" target="_blank">
-				<input type="hidden" name="operacao" value="relatorioNotaFiscalAnaliticaCliente">
-				<select name="idCliente" style="width: 200px;">
-					<c:forEach var="clientes" items="${clientes}" >
-						<option value="${clientes.id}">${clientes.nome}</option>
+	
+	<!-- Por Numero -->
+	<html:form action="relatorio" target="_blank">
+		<tr bgcolor="#f1f1f1" height="40">
+			<td width="1%">&nbsp;</td>
+			<td width="11%"><span class="labelForm">Por Número</span></td>
+			<td>
+				<input type="hidden" name="operacao" value="relatorioNotaFiscalUnica">
+				<select name="idNotaFiscal" style="width: 200px;">
+					<c:forEach var="notaFiscal" items="${notaFiscalTO}" >
+						<option value="${notaFiscal.id}">${notaFiscal.notaFiscal}</option>
 					</c:forEach>
 				</select>
-				<input type="submit" value="Gerar">
 				<html:errors prefix="image.error"/>
-			</html:form>
-		</td>
-	</tr>
-	<tr bgcolor="#f1f1f1" height="40">
-		<td width="1%">&nbsp;</td>
-		<td width="11%"><span class="labelForm">Sintético</span></td>
-		<td>
-			<html:form action="relatorio" target="_blank">
+			</td>
+			<td width="5%"><input type="submit" value="Gerar"></td>
+		</tr>
+	</html:form>
+	
+	<!-- Por Cliente -->
+	<html:form action="relatorio" target="_blank">
+		<tr bgcolor="#f1f1f1" height="40">
+			<td width="1%">&nbsp;</td>
+			<td width="11%"><span class="labelForm">CGCPF</span></td>
+			<td>
+				<input type="hidden" name="operacao" value="relatorioNotaFiscalAnaliticaCliente">
+				<input id="cgcpf" type="text"value="${notaFiscalForm.theItem.idCliente}"	onkeyup="javascript:makeRequest('/ajax','prefix',this.value, 'cliente','clientes')" />		
+				<select id="clientes" name="idCliente" style="width: 200px;"></select>
+				<html:errors prefix="image.error"/>
+			</td>
+			<td width="5%"><input type="submit" value="Gerar"></td>
+		</tr>
+	</html:form>
+	
+	<!-- Por Sintetico -->
+	<html:form action="relatorio" target="_blank">
+		<tr bgcolor="#f1f1f1" height="40">
+			<td width="1%">&nbsp;</td>
+			<td width="11%"><span class="labelForm">Sintético</span></td>
+			<td>
 				<input type="hidden" name="operacao" value="relatorioNotaFiscalSinteticoCliente">
 				<select name="idCliente" style="width: 200px;">
 					<c:forEach var="clientes" items="${clientes}" >
 						<option value="${clientes.id}">${clientes.nome}</option>
 					</c:forEach>
 				</select>
-				<input type="submit" value="Gerar">
 				<html:errors prefix="image.error"/>
-			</html:form>
+			</td>
+			<td width="5%"><input type="submit" value="Gerar"></td>
+		</tr>
+	</html:form>
+
+	<html:form action="relatorio" target="_blank">
+	<tr bgcolor="#f1f1f1" height="40">
+		<td width="1%">&nbsp;</td>
+		<td width="11%"><span class="labelForm">UPD</span></td>
+		<td>
+			<table>
+				<tr>
+					<td><input type="hidden" name="operacao" value="relatorioLaboratorio"></td>
+					<td>
+						<select name="idLaboratorio" style="width: 200px;">
+							<c:forEach var="laboratorio" items="${laboratorio}" >
+								<option value="${laboratorio.id}">${laboratorio.nome}</option>
+							</c:forEach>
+						</select>
+					</td>
+					<td width="3%"></td>
+					<td>
+						Data Inicial<br/> 
+						<input type="text" name="dataInicial" onkeyup="javascript:formatFieldData(this)">
+					</td>
+					<td>
+						Data Final<br/>
+						<input type="text" name="dataFinal" onkeyup="javascript:formatFieldData(this)">
+					</td>
+				</tr>
+			</table>
+		</td>
+		<td width="5%">
+			<input type="submit" value="Gerar"><html:errors prefix="image.error" />			
 		</td>
 	</tr>
+	</html:form>
+	
+	<html:form action="relatorio" target="_blank">
 	<tr bgcolor="#f1f1f1" height="40">
 		<td width="1%">&nbsp;</td>
-		<td width="11%"><span class="labelForm">Por Unidade de Produção</span></td>
-			<html:form action="relatorio" target="_blank">
-			<td>
-				<input type="hidden" name="operacao" value="relatorioLaboratorio">
-				<select name="idLaboratorio" style="width: 200px;">
-					<c:forEach var="laboratorio" items="${laboratorio}" >
-						<option value="${laboratorio.id}">${laboratorio.nome}</option>
-					</c:forEach>
-				</select>
-			</td>
-			<td>Data Inicial <br />
-				<input type="text" name="dataInicial" onkeyup="javascript:formatFieldData(this)">
-			</td>
-			<td>Data Final <br />
-				<input type="text" name="dataFinal" onkeyup="javascript:formatFieldData(this)">
-			</td>
-			<td>
-				<input type="submit" value="Gerar"><html:errors prefix="image.error" />
-			</td>
-		</html:form>
-	</tr>
-	<tr bgcolor="#f1f1f1" height="40">
-		<td width="1%">&nbsp;</td>
-		<td width="11%"><span class="labelForm">Por Período</span></td>
+		<td width="11%"><span class="labelForm">Período</span></td>
 		<td>
-			
-			<html:form action="relatorio" target="_blank">
 			<input type="hidden" name="operacao" value="relatorioNotaFiscalSinteticoPeriodo">
 				<table>
 					<tr>
@@ -96,14 +116,14 @@
 							<input type="text" name="dataFinal" onkeyup="javascript:formatFieldData(this)">
 						</td>
 						<td>
-							<input type="submit" value="Gerar">
 							<html:errors property="dataInvalida" prefix="image.error"/>
 						</td>
 					</tr>
 				</table>
-			</html:form>
 		</td>
+		<td width="5%"><input type="submit" value="Gerar"></td>
 	</tr>
+	</html:form>
 </table>
 </fieldset>
 
@@ -111,202 +131,174 @@
 
 <fieldset>
 <legend>Contas a Receber</legend>
-<div >
 <table width="99%" border="0" cellspacing="2" cellpadding="2">
+	
+	<html:form action="relatorio" target="_blank">
 	<tr bgcolor="#f1f1f1" height="40">
 		<td width="1%">&nbsp;</td>
 		<td width="11%"><span class="labelForm">Inadimplentes</span></td>
 		<td>
-		<html:form action="relatorio" target="_blank">
 			<input type="hidden" name="operacao" value="relatorioContasReceberInadimplentes">
 			Data Prevista de Pagamento<br/>
 			<input type="text" name="dataPrevista" onkeyup="javascript:formatFieldData(this)">
-			<input type="submit" value="Gerar">
 			<html:errors property="dataContaInvalida" prefix="image.error"/>
-		</html:form>
 		</td>
+		<td width="5%"><input type="submit" value="Gerar"></td>
 	</tr>
-</table>
-
-
-<br/>
-<div style="padding-left: 20px">
-<fieldset>
-<legend>Intervalo de Datas Analítico</legend>
-
-<table width="99%" border="0" cellspacing="2" cellpadding="5">
+	</html:form>
+	
+	<html:form action="relatorio" target="_blank">
 	<tr bgcolor="#f1f1f1" height="40">
 		<td width="1%">&nbsp;</td>
-		<td width="11%"><span class="labelForm">Contas a Receber</span></td>
+		<td width="11%"><span class="labelForm">Intervalo de Datas Analítico</span></td>
 		<td>
-			<html:form action="relatorio" target="_blank">
-				<input type="hidden" name="operacao" value="relatorioContasReceberAnalitico">
-				<table>
-					<tr>
-						<td>
-							Data Inicial <br/>
-							<input type="text" name="dataInicial" onkeyup="javascript:formatFieldData(this)">
-						</td>
-						<td>
-							Data Final <br/>
-							<input type="text" name="dataFinal" onkeyup="javascript:formatFieldData(this)">
-						</td>
-						<td>
-							<input type="submit" value="Gerar">
-							<html:errors property="dataContaAnaliticoInvalida" prefix="image.error"/>
-							<html:errors property="dataInvalida" prefix="image.error"/>
-						</td>
-					</tr>
-				</table>
-			</html:form>
+			<input type="hidden" name="operacao" value="relatorioContasReceberAnalitico">
+			<table>
+				<tr>
+					<td>
+						Data Inicial <br/>
+						<input type="text" name="dataInicial" onkeyup="javascript:formatFieldData(this)">
+					</td>
+					<td>
+						Data Final <br/>
+						<input type="text" name="dataFinal" onkeyup="javascript:formatFieldData(this)">
+					</td>
+					<td>
+						<html:errors property="dataContaAnaliticoInvalida" prefix="image.error"/>
+						<html:errors property="dataInvalida" prefix="image.error"/>
+					</td>
+				</tr>
+			</table>
 		</td>
+		<td width="5%"><input type="submit" value="Gerar"></td>
 	</tr>
-</table>
-</fieldset>
-
-<br/>
-
-<fieldset>
-<legend>Intervalo de Datas Sintético</legend>
-
-<table width="99%" border="0" cellspacing="2" cellpadding="5">
+	</html:form>
+	
+	<html:form action="relatorio" target="_blank">
 	<tr bgcolor="#f1f1f1" height="40">
 		<td width="1%">&nbsp;</td>
-		<td width="11%"><span class="labelForm">Contas a Receber</span></td>
+		<td width="11%"><span class="labelForm">Intervalo de Datas Sintético</span></td>
 		<td>
-			<html:form action="relatorio" target="_blank">
-				<input type="hidden" name="operacao" value="relatorioContasReceberSintetico">
-				<table>
-					<tr>
-						<td>
-							Data Inicial <br/>
-							<input type="text" name="dataInicial" onkeyup="javascript:formatFieldData(this)">
-						</td>
-						<td>
-							Data Final <br/>
-							<input type="text" name="dataFinal" onkeyup="javascript:formatFieldData(this)">
-						</td>
-						<td>
-							<input type="submit" value="Gerar">
-							<html:errors property="dataContaAnaliticoInvalida" prefix="image.error"/>
-							<html:errors property="dataInvalida" prefix="image.error"/>
-						</td>
-					</tr>
-				</table>
-			</html:form>
+			<input type="hidden" name="operacao" value="relatorioContasReceberSintetico">
+			<table>
+				<tr>
+					<td>
+						Data Inicial <br/>
+						<input type="text" name="dataInicial" onkeyup="javascript:formatFieldData(this)">
+					</td>
+					<td>
+						Data Final <br/>
+						<input type="text" name="dataFinal" onkeyup="javascript:formatFieldData(this)">
+					</td>
+					<td>
+						<html:errors property="dataContaAnaliticoInvalida" prefix="image.error"/>
+						<html:errors property="dataInvalida" prefix="image.error"/>
+					</td>
+				</tr>
+			</table>
 		</td>
+		<td width="5%"><input type="submit" value="Gerar"></td>
 	</tr>
-</table>
-</fieldset>
-
-<br/>
-
-<fieldset>
-<legend>Cliente</legend>
-<table width="99%" border="0" cellspacing="2" cellpadding="5">
+	</html:form>
+		
+	<html:form action="relatorio" target="_blank">	
 	<tr bgcolor="#f1f1f1" height="40">
 		<td width="1%">&nbsp;</td>
-		<td width="11%"><span class="labelForm">Cliente</span></td>
+		<td width="11%"><span class="labelForm">CGCPF</span></td>
 		<td>
-		<html:form action="relatorio" target="_blank">
-			<select name="idCliente" style="width: 200px;">
+			<input id="cgcpf" type="text" value="${notaFiscalForm.theItem.idCliente}" onkeyup="javascript:makeRequest('/ajax','prefix',this.value, 'cliente','clientes1')" />
+				
+			<select id="clientes1" name="idCliente" style="width: 200px;">
 				<c:forEach var="clientes" items="${clientes}" >
 					<option value="${clientes.id}">${clientes.nome}</option>
 				</c:forEach>
 			</select>
-			<input type="submit" value="Gerar">
-			<html:errors  prefix="image.error"/>
-		<input type="hidden" name="operacao" value="relatorioContasReceberClienteSintetico">
-		</html:form>
+			<input type="hidden" name="operacao" value="relatorioContasReceberClienteSintetico">
 		</td>
+		<td><input type="submit" value="Gerar"><html:errors  prefix="image.error"/></td>
 	</tr>
+	</html:form>		
 </table>
-</fieldset>
-
-</div>
 
 </fieldset>
+
 <br/>
-
 
 <fieldset>
 <legend>Contas a Pagar</legend>
 
 <table width="99%" border="0" cellspacing="2" cellpadding="5">
+
+	<html:form action="relatorio" target="_blank">
 	<tr bgcolor="#f1f1f1" height="40">
 		<td width="1%">&nbsp;</td>
 		<td width="14%"><span class="labelForm">Intervalo de Datas Analítico</span></td>
 		<td>
-			<html:form action="relatorio" target="_blank">
-				<input type="hidden" name="operacao" value="relatorioContasPagarAnalitico">
-				<table>
-					<tr>
-						<td>
-							Data Inicial <br/>
-							<input type="text" name="dataInicial" onkeyup="javascript:formatFieldData(this)">
-						</td>
-						<td>
-							Data Final <br/>
-							<input type="text" name="dataFinal" onkeyup="javascript:formatFieldData(this)">
-						</td>
-						<td>
-							<input type="submit" value="Gerar">
-							<html:errors property="dataContaAnaliticoInvalida" prefix="image.error"/>
-							<html:errors property="dataInvalida" prefix="image.error"/>
-						</td>
-					</tr>
-				</table>
-			</html:form>
-		</td>
+			<input type="hidden" name="operacao" value="relatorioContasPagarAnalitico">
+			<table>
+				<tr>
+					<td>
+						Data Inicial <br/>
+						<input type="text" name="dataInicial" onkeyup="javascript:formatFieldData(this)">
+					</td>
+					<td>
+						Data Final <br/>
+						<input type="text" name="dataFinal" onkeyup="javascript:formatFieldData(this)">
+					</td>
+					<td>
+						<html:errors property="dataContaAnaliticoInvalida" prefix="image.error"/>
+						<html:errors property="dataInvalida" prefix="image.error"/>
+					</td>
+				</tr>
+			</table>
+		</td><td width="5%"><input type="submit" value="Gerar"></td>
 	</tr>
-</table>
-<table width="99%" border="0" cellspacing="2" cellpadding="5">
+	</html:form>
+	
+	<html:form action="relatorio" target="_blank">
 	<tr bgcolor="#f1f1f1" height="40">
 		<td width="1%">&nbsp;</td>
 		<td width="14%"><span class="labelForm">Intervalo de Datas Sintético</span></td>
 		<td>
-			<html:form action="relatorio" target="_blank">
-				<input type="hidden" name="operacao" value="relatorioContasPagarSintetico">
-				<table>
-					<tr>
-						<td>
-							Data Inicial <br/>
-							<input type="text" name="dataInicial" onkeyup="javascript:formatFieldData(this)">
-						</td>
-						<td>
-							Data Final <br/>
-							<input type="text" name="dataFinal" onkeyup="javascript:formatFieldData(this)">
-						</td>
-						<td>
-							<input type="submit" value="Gerar">
-							<html:errors property="dataContaAnaliticoInvalida" prefix="image.error"/>
-							<html:errors property="dataInvalida" prefix="image.error"/>
-						</td>
-					</tr>
-				</table>
-			</html:form>
+			<input type="hidden" name="operacao" value="relatorioContasPagarSintetico">
+			<table>
+				<tr>
+					<td>
+						Data Inicial <br/>
+						<input type="text" name="dataInicial" onkeyup="javascript:formatFieldData(this)">
+					</td>
+					<td>
+						Data Final <br/>
+						<input type="text" name="dataFinal" onkeyup="javascript:formatFieldData(this)">
+					</td>
+					<td>
+						<html:errors property="dataContaAnaliticoInvalida" prefix="image.error"/>
+						<html:errors property="dataInvalida" prefix="image.error"/>
+					</td>
+				</tr>
+			</table>
 		</td>
-	</tr>
-</table>
-<table width="99%" border="0" cellspacing="2" cellpadding="5">
+		<td><input type="submit" value="Gerar"></td>
+	</tr>	
+	</html:form>	
+	
+	<html:form action="relatorio" target="_blank">
 	<tr bgcolor="#f1f1f1" height="40">
 		<td width="1%">&nbsp;</td>
 		<td width="11%"><span class="labelForm">Divisão</span></td>
 		<td>
-		<html:form action="relatorio" target="_blank">
 			<select name="idDivisao" style="width: 200px;">
 				<c:forEach var="divisao" items="${divisao}" >
 					<option value="${divisao.id}">${divisao.nome}</option>
 				</c:forEach>
 			</select>
-			<input type="submit" value="Gerar">
 			<html:errors  prefix="image.error"/>
-		<input type="hidden" name="operacao" value="relatorioContasPagarDivisaoSintetico">
-		</html:form>
+			<input type="hidden" name="operacao" value="relatorioContasPagarDivisaoSintetico">
 		</td>
+		<td width="5%"><input type="submit" value="Gerar"></td>
 	</tr>
+	</html:form>	
 </table>
-</fieldset>
 
 <br/>
 
@@ -331,13 +323,13 @@
 							<input type="text" name="dataFinal" onkeyup="javascript:formatFieldData(this)">
 						</td>
 						<td>
-							<input type="submit" value="Gerar">
 							<html:errors property="dataInvalida" prefix="image.error"/>
 						</td>
 					</tr>
 				</table>
 			</html:form>
 		</td>
+		<td width="5%"><input type="submit" value="Gerar"></td>
 	</tr>
 </table>
 </fieldset>
@@ -355,10 +347,10 @@
 					<option value="${pd.id}">${pd.numeroPD}</option>
 				</c:forEach>
 			</select>
-			<input type="submit" value="Gerar">
 			<html:errors prefix="image.error"/>
 		</html:form>
 		</td>
+		<td width="5%"><input type="submit" value="Gerar"></td>
 	</tr>
 </table>
 </fieldset>
