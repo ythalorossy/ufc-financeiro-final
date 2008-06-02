@@ -8,9 +8,9 @@
 <h3 style="color: red;"><html:errors property="failSave" /></h3>
 
 <script>
-			window.onload = function() {
-				makeRequest('/ajax','prefix','${notaFiscalForm.theItem.idCliente}', 'cliente','clientes');
-			}
+	window.onload = function() {
+		makeRequest('/ajax','prefix','${notaFiscalForm.theItem.idCliente}', 'cliente','clientes');
+	}
 </script>
 
 <html:form action="notaFiscal">
@@ -20,12 +20,12 @@
 		</tr>
 		<tr bgcolor="#f1f1f1" height="25">
 			<td>		
-			<!-- Select Clientes -->	
-			<html:select styleId="clientes" property="theItem.idCliente" style="width: 50%;">
-			</html:select>
 			CGCPF: <input id="cgcpf" type="text"
 				value="${notaFiscalForm.theItem.idCliente}"
 				onkeyup="javascript:makeRequest('/ajax','prefix',this.value, 'cliente','clientes')" />
+				<!-- Select Clientes -->	
+				<html:select styleId="clientes" property="theItem.idCliente" style="width: 50%;">
+				</html:select>
 			</td>
 			
 			<!--  -->
