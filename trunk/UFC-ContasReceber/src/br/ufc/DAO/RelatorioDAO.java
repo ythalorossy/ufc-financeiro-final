@@ -96,7 +96,7 @@ public class RelatorioDAO {
 			Query query = hh
 			.getSession()
 			.createQuery(
-					"From NotaFiscal where dataSaida between ? and ? order by dataSaida");
+					"From NotaFiscal where dataSaida between ? and ? order by notaFiscal");
 			query.setParameter(0, dataInicial);
 			query.setParameter(1, dataFinal);
 			list = query.list();
