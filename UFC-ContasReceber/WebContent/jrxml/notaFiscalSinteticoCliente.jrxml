@@ -31,12 +31,6 @@
 	</style>
 
 	<parameter name="imagem" isForPrompting="false" class="java.lang.Object"/>
-	<parameter name="SUBREPORT_DIR" isForPrompting="true" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["H:\\UFC - JRXML\\"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="itensConexao" isForPrompting="false" class="java.sql.Connection">
-		<defaultValueExpression ><![CDATA[java.sql.DriverManager.getConnection("jdbc:postgresql://localhost:5432/UFCFinanceiro","postgres", "1234")]]></defaultValueExpression>
-	</parameter>
 	<parameter name="total" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="imagem1" isForPrompting="false" class="java.lang.Object"/>
 	<queryString><![CDATA[SELECT
