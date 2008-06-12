@@ -350,8 +350,12 @@ public class RelatorioAction extends DispatchAction{
 			// Criação do Objeto nota fiscal baseado em um cliente
 			final List<NotaFiscal> nf = RelatorioDAO.getInstance().relatorioNotaFiscalUnicaPeriodo(dateInit, dateEnd);
 			for (NotaFiscal notaFiscal : nf) {
-				// Criação do valor total das notas fiscais por um cliente
-				valorTotal += notaFiscal.getValorNota();
+				if(notaFiscal.getStatus() != Status.CANCELADO){
+					//Criação do valor total das notas fiscais por um cliente
+					valorTotal += notaFiscal.getValorNota();
+				} else {
+					notaFiscal.setTipoNota(Status.CANCELADO);
+				}
 			}
 
 			// Criação do objeto view
