@@ -75,7 +75,7 @@
 			<td>Número do Processo</td>
 			<td>Número do Contrato</td>
 			<td>Cliente</td>
-			<td>Data de Saída</td>
+			<td>Data de Vencimento</td>
 			<td>Valor da Nota</td>
 			<td>Status da Nota Fiscal</td>
 			<td align="center">

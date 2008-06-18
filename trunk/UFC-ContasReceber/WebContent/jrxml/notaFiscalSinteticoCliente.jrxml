@@ -175,10 +175,10 @@ FROM
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement>
+					<textElement textAlignment="Center">
 						<font pdfFontName="Helvetica-Bold" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Data de Saída]]></text>
+				<text><![CDATA[Data de Vencimento]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -201,7 +201,7 @@ FROM
 				<staticText>
 					<reportElement
 						style="Arial"
-						x="456"
+						x="481"
 						y="2"
 						width="43"
 						height="18"
@@ -241,7 +241,7 @@ FROM
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						style="Arial"
-						x="301"
+						x="302"
 						y="4"
 						width="69"
 						height="18"
