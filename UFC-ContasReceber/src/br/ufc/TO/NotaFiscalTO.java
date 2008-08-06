@@ -18,8 +18,17 @@ public class NotaFiscalTO implements Serializable {
 	private boolean checked;
 	private String desconto;
 	private String cancelamento;
+	private String observacao;
 
 	
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
 
 	public String getId() {
 		return id;

@@ -114,7 +114,6 @@ public class HibernateHelper {
 	/**
 	 * @generated
 	 */
-	@SuppressWarnings("deprecation")
 	public org.hibernate.Session openSession()
 			throws org.hibernate.HibernateException {
 		org.hibernate.Session session = getFactory().openSession();

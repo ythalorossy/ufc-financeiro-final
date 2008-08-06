@@ -55,7 +55,6 @@ public class NotaFiscalBO implements BO<NotaFiscal> {
 		return notaFiscalDao.findAll();
 	}
 	
-	@SuppressWarnings("deprecation")
 	public List<NotaFiscal> findNotas30() {
 		final GregorianCalendar calendar = new GregorianCalendar();
 		calendar.add(GregorianCalendar.DAY_OF_MONTH, -30);

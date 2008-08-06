@@ -1,4 +1,4 @@
-<%@page contentType="text/html; charset=ISO-8859-1" %>
+<%@page contentType="text/html; charset=ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@taglib uri="http://jakarta.apache.org/struts/tags-html" prefix="html"%>
@@ -9,7 +9,8 @@
 
 <script>
 	window.onload = function() {
-		makeRequest('/ajax','prefix','${notaFiscalForm.theItem.idCliente}', 'cliente','clientes');
+		makeRequest('/ajax', 'prefix', '${notaFiscalForm.theItem.idCliente}',
+				'cliente', 'clientes');
 	}
 </script>
 
@@ -19,15 +20,13 @@
 			<td>Cliente</td>
 		</tr>
 		<tr bgcolor="#f1f1f1" height="25">
-			<td>		
-			CGCPF: <input id="cgcpf" type="text"
+			<td>CGCPF: <input id="cgcpf" type="text"
 				value="${notaFiscalForm.theItem.idCliente}"
 				onkeyup="javascript:makeRequest('/ajax','prefix',this.value, 'cliente','clientes')" />
-				<!-- Select Clientes -->	
-				<html:select styleId="clientes" property="theItem.idCliente" style="width: 50%;">
-				</html:select>
-			</td>
-			
+			<!-- Select Clientes --> <html:select styleId="clientes"
+				property="theItem.idCliente" style="width: 50%;">
+			</html:select></td>
+
 			<!--  -->
 		</tr>
 		<tr bgcolor="#f1f1f1">
@@ -63,9 +62,19 @@
 			<td>Tipo nota Fiscal</td>
 		<tr />
 		<tr bgcolor="#f1f1f1">
-			<td><input type="radio" name="theItem.tipoNota" value="50"
-				checked="checked">Contabilizada <input type="radio"
-				name="theItem.tipoNota" value="51">Não Contabilizada</td>
+			<td>
+			<html:radio property="theItem.tipoNota" value="50">Contabilizada </html:radio> 
+			<html:radio property="theItem.tipoNota" value="51">Não Contabilizada </html:radio>
+			</td>
+		</tr>
+
+		<tr bgcolor="#f1f1f1">
+			<td>Desconto</td>
+		<tr />
+		<tr bgcolor="#f1f1f1">
+			<td>
+				<html:textarea property="theItem.observacao" rows="5" cols="50"></html:textarea>
+			</td>
 		</tr>
 
 		<tr bgcolor="#f1f1f1">

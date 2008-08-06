@@ -42,7 +42,6 @@ public class ContasPagarAction extends DispatchAction implements Serializable {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
-		@SuppressWarnings("unused")
 		final String jurosDesconto = request.getParameter("jurosDesconto");
 		final String dataPagamento = request.getParameter("dataPagamento");
 		final ActionMessages errors = new ActionMessages();
