@@ -32,6 +32,7 @@ public class NotaFiscalAssembler implements ASSEMBLER<NotaFiscal, NotaFiscalTO> 
 		to.setStatus(Status.retornaTipo(entity.getStatus()));
 		to.setNumeroContrato(entity.getNumeroContrato());
 		to.setCancelamento(entity.getCancelamento());
+		to.setObservacao(entity.getObservacao());
 		try {
 			to.setDesconto(ConverteNumero.converteNumero(entity.getDesconto()));
 		} catch (Exception e) {
@@ -100,6 +101,12 @@ public class NotaFiscalAssembler implements ASSEMBLER<NotaFiscal, NotaFiscalTO> 
 			entity.setCancelamento(to.getCancelamento());
 		} catch (Exception e) {
 			entity.setCancelamento("");
+		}
+		
+		try {
+			entity.setObservacao(to.getObservacao());
+		} catch (Exception e) {
+			entity.setObservacao("");
 		}
 		
 		

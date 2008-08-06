@@ -32,7 +32,15 @@ public class NotaFiscal implements Serializable{
 	private int status; //Nota ativa ou cancelada
 	private String cancelamento;
 	private Double desconto;
+	private String observacao;
 	
+	@Column(name = "NFS_OBS")
+	public String getObservacao() {
+		return observacao;
+	}
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="NFS_ID")

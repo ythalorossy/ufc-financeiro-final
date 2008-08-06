@@ -452,6 +452,20 @@ public class NotaFiscalAction extends DispatchAction implements Serializable {
 			// Verificando se a nota fiscal veio em branco
 		if (GenericValidator.isBlankOrNull(notaFiscal)){
 			errors.add("notaFiscal", new ActionMessage("image.error"));
+		} else {
+			try {
+				Integer numero = Integer.parseInt(notaFiscal);
+				if(numero > 1){
+					numero = numero -1;
+					final NotaFiscal nf = new NotaFiscalBO().findByNF(String.valueOf(numero));
+					if(nf == null){
+						errors.add("notaFiscal", new ActionMessage("notaFiscal.numeroSequencial.erro"));
+					}
+				}
+				
+			} catch (Exception e) {
+				errors.add("notaFiscal", new ActionMessage("notaFiscal.numero.erro"));
+			}
 		}
 			// Verificando se o tipo de nota fiscal veio em branco
 		if (GenericValidator.isBlankOrNull(tipoNota)){
