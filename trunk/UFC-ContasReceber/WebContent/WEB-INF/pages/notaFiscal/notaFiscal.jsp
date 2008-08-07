@@ -69,7 +69,7 @@
 		</tr>
 
 		<tr bgcolor="#f1f1f1">
-			<td>Desconto</td>
+			<td>Observação</td>
 		<tr />
 		<tr bgcolor="#f1f1f1">
 			<td>
