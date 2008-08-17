@@ -55,12 +55,18 @@ public class ContasReceberAction extends DispatchAction implements Serializable 
 		final List<Caixa> caixaList = ((CaixaBO)CaixaBO.getInstance()).findAllByDia(calendar);
 		boolean resultado = true;
 		
+		if(dataPagamento.length() <10){
+			errors.add("dataLenghtErro", new ActionMessage("data.lenght.erro"));
+			resultado = false;
+		}
+		
 		if (GregorianCalendar.getInstance().before(calendar)){
 			errors.add("dataBaixaMaior", new ActionMessage("data.baixa.maior"));
 			resultado = false;
 		}
 
-		// testando se existe alguma tupla do caixa com o status de batido, se houver alguma tupla é setado um valor true para a variavel buleana
+		// testando se existe alguma tupla do caixa com o status de batido, se houver alguma tupla é setado 
+		// um valor true para a variavel boleana
 		if (resultado)
 		for (Caixa caixa : caixaList) {
 			if (caixa.getStatus() == Status.BATIDO){

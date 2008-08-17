@@ -40,7 +40,9 @@
 			<td>${caixa.dataPagamento}</td>
 			<td align="right">${caixa.valor}</td>
 			<td align="center">${caixa.status}</td>
-			<td align="center"><html:form action="caixa">
+			<td align="center">
+			
+			<html:form action="caixa">
 				<html:hidden property="operacao" value="extornarCaixa" />
 				<html:hidden property="theItem.id" value="${caixa.id}" />
 				<html:hidden property="theItem.idContasReceber" value="${caixa.idContasReceber}" />
@@ -48,6 +50,7 @@
 				<html:hidden property="theItem.idCaixaEntradaSaida" value="${caixa.idCaixaEntradaSaida}" />
 				<html:hidden property="theItem.id" value="${caixa.id}" />
 				<html:hidden property="theItem.id" value="${caixa.status}" />
+			
 				<c:if test="${caixa.status!='Batido'}">
 					<html:image src="./imagens/delete_X.png" style="cursor: pointer" alt="Extornar" border="0" title="Extornar" />
 				</c:if>

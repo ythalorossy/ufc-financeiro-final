@@ -40,6 +40,10 @@ public class Uteis extends DispatchAction {
 		} catch (Exception ex) {
 			errors.add("data", new ActionMessage(""));
 		}
+		
+		if(caixaEntradaSaidaForm.getTheItem().getDataTransacao().length()<10){
+			errors.add("dataLenghtErro", new ActionMessage("data.lenght.erro"));			
+		}
 
 		/*
 		 * Operacao
