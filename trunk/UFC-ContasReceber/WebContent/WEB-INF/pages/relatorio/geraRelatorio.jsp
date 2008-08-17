@@ -301,8 +301,9 @@
 	<tr bgcolor="#f1f1f1" height="40">
 		<td width="1%">&nbsp;</td>
 		<td width="11%"><span class="labelForm">Intervalo de Data</span></td>
+		<html:form action="relatorio" target="_blank">
 		<td>
-			<html:form action="relatorio" target="_blank">
+			
 				<input type="hidden" name="operacao" value="relatorioCaixa">
 				<table>
 					<tr>
@@ -318,9 +319,10 @@
 						</td>
 					</tr>
 				</table>
-			</html:form>
+			
 		</td>
 		<td width="5%"><input type="submit" value="Gerar"></td>
+		</html:form>
 	</tr>
 </table>
 </fieldset>
