@@ -42,7 +42,7 @@ public class CaixaEntradaSaidaAction extends DispatchAction implements
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
-		final ActionMessages errors = new ActionMessages();
+		ActionMessages errors = new ActionMessages();
 		
 		final CaixaEntradaSaidaForm caixaEntradaSaidaForm = (CaixaEntradaSaidaForm) form;
 		final CaixaEntradaSaidaTO caixaEntradaSaidaTO = caixaEntradaSaidaForm.getTheItem();
@@ -51,21 +51,16 @@ public class CaixaEntradaSaidaAction extends DispatchAction implements
 		/*
 		 * Verifica se ocorreu erro na validacão
 		 */
-		if (Uteis.getInstance().validateCES(caixaEntradaSaidaForm, request).isEmpty()) {
+		
+		errors = Uteis.getInstance().validateCES(caixaEntradaSaidaForm, request);
+		
+		if (errors.isEmpty()) {
 			if (!CaixaEntradaSaidaBO.getInstance().save(caixaEntradaSaida)) {
 				errors.add("save", new ActionMessage("SAVE.ERROR"));
 			}
 		}
 		
 		saveErrors(request, errors);
-		/*
-		 * Errors de validacao ou Save,
-		 * Retorna para o Formulario de Insercao
-		 */
-		if (errors.isEmpty()) {
-			request.setAttribute(LOAD_PAGE, "PAGINA QUE SERA CARREGADA");
-		}
-		
 		return prepareSave(mapping, form, request, response);
 	}
 

@@ -61,6 +61,7 @@ public class ContasReceberBO implements BO<ContasReceber> {
 			/*
 			 * Alterando o status do Contas a Receber para Aberto, da parcela para Aberto e excluindo o caixa do banco
 			 */
+			e.setDataEfetiva(null);
 			e.setStatus(Status.ABERTO);
 			Parcela parcela = ParcelaBO.getInstance().findById(e.getIdParcela());
 			parcela.setStatus(Status.ABERTO);

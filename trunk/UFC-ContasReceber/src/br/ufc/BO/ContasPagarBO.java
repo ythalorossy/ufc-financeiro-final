@@ -70,6 +70,7 @@ public class ContasPagarBO implements BO<ContasPagar> {
 			 * Alterando o status do Contas a Pagar para Aberto, da parcela para Aberto e excluindo o caixa do banco
 			 */
 			e.setStatus(Status.ABERTO);
+			e.setDataEfetiva(null);
 			if (e.getIdNotaFiscal() !=0){
 			
 				

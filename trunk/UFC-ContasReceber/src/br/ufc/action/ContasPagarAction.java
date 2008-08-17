@@ -46,6 +46,11 @@ public class ContasPagarAction extends DispatchAction implements Serializable {
 		final String dataPagamento = request.getParameter("dataPagamento");
 		final ActionMessages errors = new ActionMessages();
 		boolean result = true;
+		if(dataPagamento.length() <10){
+			errors.add("dataLenghtErro", new ActionMessage("data.lenght.erro"));
+			result = false;
+		}
+		
 		ContasPagarForm contasReceberForm = (ContasPagarForm) form;
 		ContasPagarTO contasPagarTO = contasReceberForm.getTheItem();
 		ContasPagar contasPagar = ContasPagarAssembler.getInstance().entityTO2Entity(contasPagarTO);
