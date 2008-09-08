@@ -267,6 +267,16 @@ public class PedidoDespesaAction extends DispatchAction implements Serializable 
 		final String dataSaida = pedidoDespesaForm.getTheItem().getDataPD();
 		final String numeroPD = pedidoDespesaForm.getTheItem().getNumeroPD();
 		final String tipoServico = pedidoDespesaForm.getTheItem().getTipoServico();
+		final String idDivisao = pedidoDespesaForm.getTheItem().getIdDivisao();
+		final String idLaboratorio = pedidoDespesaForm.getTheItem().getIdLaboratorio();
+		
+		if(GenericValidator.isBlankOrNull(idDivisao)){
+			errors.add("divisaoVazio", new ActionMessage("divisao.vazio.error" ));
+		}
+		
+		if(GenericValidator.isBlankOrNull(idLaboratorio)){
+			errors.add("laboratorioVazio", new ActionMessage("laboratorio.vazio.error"));
+		}
 
 		if (!GenericValidator.isBlankOrNull(dataSaida)){
 				
