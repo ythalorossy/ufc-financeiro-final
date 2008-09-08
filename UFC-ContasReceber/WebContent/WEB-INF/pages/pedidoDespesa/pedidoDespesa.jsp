@@ -23,6 +23,7 @@
 				<html:option value="${divisao.id}">${divisao.nome}</html:option>
 			</c:forEach>
 		</html:select>
+		<html:errors property="divisaoVazio"/>
 		</td>
 	</tr>
 	<tr bgcolor="#f1f1f1">
@@ -32,6 +33,7 @@
 			<html:select styleId="laboratorios" property="theItem.idLaboratorio">
 				<html:option value=""></html:option>
 			</html:select>
+			<html:errors property="laboratorioVazio"/>
 		</td>
 	</tr>
 	<tr bgcolor="#f1f1f1">
