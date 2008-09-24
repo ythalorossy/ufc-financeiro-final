@@ -271,6 +271,7 @@ public class NotaFiscalAction extends DispatchAction implements Serializable {
 		
 		final NotaFiscal notaFiscal = NotaFiscalBO.getInstance().findById(Integer.parseInt(notaFiscalTO.getId()));
 						// Iteração sobre a lista de objetos
+		notaFiscal.setCancelamento(notaFiscalTO.getCancelamento());
 		notaFiscal2Delete.add(notaFiscal);
 						// Verificação se a lista de objetos para deleção está preenchida
 		if (!notaFiscal2Delete.isEmpty()){
@@ -434,6 +435,12 @@ public class NotaFiscalAction extends DispatchAction implements Serializable {
 		final String processo = notaFiscalForm.getTheItem().getNumeroProcesso();
 		
 		final String desconto = notaFiscalForm.getTheItem().getDesconto();
+		
+		final String cliente = notaFiscalForm.getTheItem().getIdCliente();
+		
+		if(GenericValidator.isBlankOrNull(cliente)){
+			errors.add("clienteNull", new ActionMessage("image.error"));
+		}
 		
 			// testando se a data não veio em branco
 		if (!GenericValidator.isBlankOrNull(dataSaida)){
