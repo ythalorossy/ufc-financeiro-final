@@ -182,7 +182,7 @@
         var meuRandom=parseInt(Math.random()*99999999);
         url+="&r="+meuRandom;
         
-		//alert(url);
+	//	alert(url);
 		
         if (window.XMLHttpRequest) { // Mozilla, Safari,...
             http_request = new XMLHttpRequest();
@@ -222,6 +222,8 @@
 	           		* Remove todos os elementos filho do elemento Alvo
 	           		*/
 					var al = document.getElementById(alvo);
+				//	alert(alvo);
+				//	alert(al);
 					var qtde = al.childNodes.length;
 					for (i=0; i <= qtde; i++) {
 						al.remove(i);

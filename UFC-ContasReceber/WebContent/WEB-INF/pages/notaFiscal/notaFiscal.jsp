@@ -23,9 +23,11 @@
 			<td>CGCPF: <input id="cgcpf" type="text"
 				value="${notaFiscalForm.theItem.idCliente}"
 				onkeyup="javascript:makeRequest('/ajax','prefix',this.value, 'cliente','clientes')" />
-			<!-- Select Clientes --> <html:select styleId="clientes"
-				property="theItem.idCliente" style="width: 50%;">
-			</html:select></td>
+			<!-- Select Clientes --> 
+			<html:select styleId="clientes"	property="theItem.idCliente" style="width: 50%;">
+				</html:select>
+				<html:errors property="clienteNull" />
+			</td>
 
 			<!--  -->
 		</tr>
