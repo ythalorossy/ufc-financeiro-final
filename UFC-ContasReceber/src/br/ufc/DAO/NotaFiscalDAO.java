@@ -252,5 +252,20 @@ public class NotaFiscalDAO implements DAO<NotaFiscal> {
 		}
 		return list;
 	}
+	public List<NotaFiscal> findByNumeroProcesso(String numeroProcesso) {
+		List<NotaFiscal> list = new ArrayList<NotaFiscal>();
+		try {
+			startTransaction();
+			Query query = hh.getSession().createQuery("From NotaFiscal where numeroProcesso = ?");
+			query.setParameter(0, numeroProcesso);
+			list = query.list();
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+		}finally{
+			closeSession();
+		}
+		return list;
+	}
 
 }

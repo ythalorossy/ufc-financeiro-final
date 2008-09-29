@@ -126,4 +126,40 @@ public class ContasPagarAction extends DispatchAction implements Serializable {
 		return mapping.findForward("index");
 	}
 	
+	public ActionForward findByNF(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		
+		List<ContasPagar> listAllContasPagar = new ArrayList<ContasPagar>();
+		List<ContasPagarTO> listAllContasPagarTO = new ArrayList<ContasPagarTO>();
+		
+		/*
+		 * procura por data no request.
+		 * caso nao encontre, assume data atual.
+		 */
+		String pd = request.getParameter("pd");
+		if ((pd != null) && !(pd.equals(""))) {
+			
+			listAllContasPagar = ((ContasPagarBO)ContasPagarBO.getInstance()).findByNF(pd);
+			
+		} else {
+
+			listAllContasPagar = ((ContasPagarBO)ContasPagarBO.getInstance()).findAll();
+			
+		}
+
+		listAllContasPagarTO = ContasPagarAssembler.getInstance().entity2EntityTO(listAllContasPagar);
+		
+		
+		List<FormasPagamento> listAllFormasPagamento = FormasPagamentoBO.getInstance().findAll();
+		List<FormasPagamentoTO> listAllFormasPagamentoTO = FormasPagamentoAssembler.getInstance().entity2EntityTO(listAllFormasPagamento);
+		
+		request.setAttribute("listAllFormasPagamentoTO", listAllFormasPagamentoTO);
+		request.setAttribute("listAllContasPagar", listAllContasPagarTO);
+
+		request.setAttribute(LOAD_PAGE, MONTAR_CAIXA);
+		
+		return mapping.findForward("index");
+	}
+	
 }

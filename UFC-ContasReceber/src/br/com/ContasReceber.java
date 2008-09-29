@@ -32,8 +32,8 @@ public class ContasReceber implements Serializable{
 	private static final long serialVersionUID = -7108574080089624865L;
 	private int id;
 	private String idCliente;
-	private FormasPagamento idFormasPagamento;
-	private NotaFiscal idNotaFiscal;
+	private FormasPagamento idFormasPagamento = new FormasPagamento();
+	private NotaFiscal idNotaFiscal = new NotaFiscal();
 	private int idParcela;
 	private double valorPrevista;
 	private GregorianCalendar dataPrevista;

@@ -9,6 +9,13 @@
 
 <table width="99%" border="0">
 	<tr>
+		<td align="left">
+			<html:form action="/caixaContasPagar">
+				<html:hidden property="operacao" value="findByNF" />
+				Número do Pedido de Despesa: <input type="text" name="pd" />
+				<html:image src="./imagens/control_play_blue.png" style="cursor: pointer" alt="pesquisar" border="0" title="Pesquisar" />
+			</html:form>
+		</td>
 		<td align="right">
 			<html:form action="/caixaContasPagar">
 				<html:hidden property="operacao" value="montarCaixa" />

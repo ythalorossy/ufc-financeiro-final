@@ -197,4 +197,8 @@ public class ContasPagarBO implements BO<ContasPagar> {
 		return ((ContasPagarDAO) dao).findfindByIdPD(id);
 	}
 
+	public List<ContasPagar> findByNF(String pd) {
+		return ((ContasPagarDAO)dao).findByNF(pd);
+	}
+
 }
