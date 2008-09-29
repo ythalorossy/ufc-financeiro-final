@@ -28,7 +28,7 @@ public class ContasPagar implements Serializable{
 	private int id;
 	private int idDivisao;
 	private String fornecedor;
-	private FormasPagamento idFormasPagamento;
+	private FormasPagamento idFormasPagamento = new FormasPagamento();
 	private int idNotaFiscal;
 	private int idPedidoDespesa;
 	private int idParcela;

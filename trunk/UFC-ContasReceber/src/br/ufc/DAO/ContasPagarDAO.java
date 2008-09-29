@@ -267,4 +267,21 @@ public class ContasPagarDAO implements DAO<ContasPagar> {
 		return retorno;
 	}
 
+	public List<ContasPagar> findByNF(String pd) {
+		List<ContasPagar> cr = new ArrayList<ContasPagar>();
+		try {
+			startTransaction();
+			Query query = hh.getSession().createQuery("From ContasPagar where idPedidoDespesa = ?");
+			query.setParameter(0, pd);
+			cr = query.list();
+			commitTransaction();
+		} catch (Exception e) {
+			e.getMessage();
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
+		return cr;
+	}
+
 }

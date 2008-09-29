@@ -101,6 +101,42 @@ public class ContasReceberAction extends DispatchAction implements Serializable 
 		return montarCaixa(mapping, form, request, response);
 	}
 	
+	public ActionForward findByNF(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+		ContasReceberForm crForm = (ContasReceberForm) form;
+		List<ContasReceber> listAllContasReceber = new ArrayList<ContasReceber>();
+		List<ContasReceberTO> listAllContasReceberTO = new ArrayList<ContasReceberTO>();
+		
+		/*
+		 * procura por data no request.
+		 * caso nao encontre, assume data atual.
+		 */
+		String nf = request.getParameter("nf");
+		if ((nf != null) && !(nf.equals(""))) {
+			listAllContasReceber = ((ContasReceberBO)ContasReceberBO.getInstance()).findByNF(nf);
+			
+		} else {
+
+			listAllContasReceber = ((ContasReceberBO)ContasReceberBO.getInstance()).findAll();
+			
+		}
+
+		listAllContasReceberTO = ContasReceberAssembler.getInstance().entity2EntityTO(listAllContasReceber);
+		
+		
+		final List<FormasPagamento> listAllFormasPagamento = FormasPagamentoBO.getInstance().findAll();
+		final List<FormasPagamentoTO> listAllFormasPagamentoTO = FormasPagamentoAssembler.getInstance().entity2EntityTO(listAllFormasPagamento);
+		
+		crForm.setItems(listAllContasReceberTO);
+		request.setAttribute("listAllFormasPagamentoTO", listAllFormasPagamentoTO);
+		//request.setAttribute("listAllContasReceber", listAllContasReceberTO);
+
+		request.setAttribute(LOAD_PAGE, MONTAR_CAIXA);
+		return mapping.findForward("index");
+	}
+	
 	public ActionForward montarCaixa(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {

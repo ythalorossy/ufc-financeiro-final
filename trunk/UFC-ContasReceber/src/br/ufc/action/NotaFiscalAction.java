@@ -579,4 +579,28 @@ public class NotaFiscalAction extends DispatchAction implements Serializable {
 		request.setAttribute(LOAD_PAGE, LIST_ALL);
 		return mapping.findForward("index");
 	}
+	
+	public ActionForward findByNumeroProcesso(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		final String numeroProcesso = request.getParameter("numeroProcesso");
+		final NotaFiscalForm notaFiscalForm = (NotaFiscalForm) form;
+		List<NotaFiscal> listNotaFiscal = new ArrayList<NotaFiscal>();
+		
+		if (!GenericValidator.isBlankOrNull(numeroProcesso)){
+				listNotaFiscal = ((NotaFiscalBO)NotaFiscalBO.getInstance()).findByNumeroProcesso(numeroProcesso);
+		}else {
+			listNotaFiscal = ((NotaFiscalBO)NotaFiscalBO.getInstance()).findAll();
+		}
+
+		final List<NotaFiscalTO> notaFiscalTO = new NotaFiscalAssembler().entity2EntityTO(listNotaFiscal);
+		notaFiscalForm.setItems(notaFiscalTO);
+
+		request.setAttribute(LOAD_PAGE, LIST_ALL);
+		return mapping.findForward("index");
+	}
+	
 }
+
+
+

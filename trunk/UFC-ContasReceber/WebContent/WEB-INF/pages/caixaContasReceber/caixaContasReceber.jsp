@@ -6,6 +6,13 @@
 
 <table width="99%" border="0">
 	<tr>
+		<td align="left">
+			<html:form action="/caixaContasReceber">
+				<html:hidden property="operacao" value="findByNF" />
+				Nota Fiscal: <input type="text" name="nf"/> 
+							<html:image src="./imagens/control_play_blue.png" style="cursor: pointer" alt="pesquisar" border="0" title="Pesquisar" />
+			</html:form>
+		</td>
 		<td align="right">
 			<html:form action="/caixaContasReceber">
 				<html:hidden property="operacao" value="montarCaixa" />
@@ -13,6 +20,7 @@
 				<html:image src="./imagens/control_play_blue.png" style="cursor: pointer" alt="pesquisar" border="0" title="Pesquisar" />
 			</html:form>
 		</td>
+		
 	</tr>
 </table>
 <span style="color: red;">

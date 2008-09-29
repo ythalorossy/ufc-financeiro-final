@@ -136,4 +136,8 @@ public class NotaFiscalBO implements BO<NotaFiscal> {
 		return ((NotaFiscalDAO)notaFiscalDao).findByDay(dataInicial, dataFinal);
 	}
 
+	public List<NotaFiscal> findByNumeroProcesso(String numeroProcesso) {
+		return ((NotaFiscalDAO)notaFiscalDao).findByNumeroProcesso(numeroProcesso);
+	}
+
 }

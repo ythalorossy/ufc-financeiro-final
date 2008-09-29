@@ -236,4 +236,21 @@ public class ContasReceberDAO implements DAO<ContasReceber> {
 		return retorno;
 	}
 
+	public List<ContasReceber> findByNF(String nf) {
+		List<ContasReceber> cr = new ArrayList<ContasReceber>();
+		try {
+			startTransaction();
+			Query query = hh.getSession().createQuery("From ContasReceber where idNotaFiscal.notaFiscal = ?");
+			query.setParameter(0, nf);
+			cr = query.list();
+			commitTransaction();
+		} catch (Exception e) {
+			e.getMessage();
+			rollbackTransaction();
+		} finally {
+			closeSession();
+		}
+		return cr;
+	}
+
 }

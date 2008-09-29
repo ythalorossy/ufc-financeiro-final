@@ -146,4 +146,8 @@ public class ContasReceberBO implements BO<ContasReceber> {
 		
 	}
 
+	public List<ContasReceber> findByNF(String nf) {
+		return ((ContasReceberDAO)dao).findByNF(nf);
+	}
+
 }
