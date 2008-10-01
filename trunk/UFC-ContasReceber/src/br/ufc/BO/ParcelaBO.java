@@ -147,6 +147,7 @@ public class ParcelaBO implements BO<Parcela> {
 		contasReceber.setValorPrevista(parcela.getValor());
 		contasReceber.setStatus(Status.ABERTO);
 		contasReceber.setObservacao(new ArrayList<Observacao>());
+		contasReceber.setIdFormasPagamento(null);
 		
 		return contasReceber;
 		
