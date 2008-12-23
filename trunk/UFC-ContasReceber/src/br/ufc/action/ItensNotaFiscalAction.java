@@ -199,6 +199,9 @@ public class ItensNotaFiscalAction extends DispatchAction implements Serializabl
 		final String quantidade = itensForm.getTheItem().getQuantidade();
 		final String valor = itensForm.getTheItem().getValor();
 		final String servico = itensForm.getTheItem().getServico();
+		final String laboratorio = itensForm.getTheItem().getIdLaboratorio();
+		final String idDivisao = itensForm.getTheItem().getIdDivisao();
+		
 		if (!GenericValidator.isBlankOrNull(quantidade)){
 			// tentativa de conversão da quantidade, validando um número
 			try {
@@ -224,6 +227,13 @@ public class ItensNotaFiscalAction extends DispatchAction implements Serializabl
 		}
 		if (GenericValidator.isBlankOrNull(servico)){
 			errors.add("servico", new ActionMessage("image.error.noText"));
+		}
+		
+		if (GenericValidator.isBlankOrNull(laboratorio)){
+			errors.add("laboratorio", new ActionMessage("laboratorio.vazio.error"));
+		}
+		if (GenericValidator.isBlankOrNull(idDivisao)){
+			errors.add("divisao", new ActionMessage("divisao.vazio.error"));
 		}
 		saveErrors(request, errors);
 		return errors;
