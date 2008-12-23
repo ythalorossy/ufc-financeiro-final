@@ -39,8 +39,8 @@
 	<input type="hidden" name="operacao" value="${requestScope.operacao}" />
 	<table border=0 width="98%">
 		<tr bgcolor="#f1f1f1">
-			<td width="30%">Divisao</td>
-			<td width="30%" colspan="2">UPD <html:errors property="servico" /></td>
+			<td width="30%">Divisao <html:errors property="divisao" /></td>
+			<td width="30%" colspan="2">UPD <html:errors property="laboratorio" /></td>
 		</tr>
 		<tr bgcolor="#f1f1f1">
 			<td>
