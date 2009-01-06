@@ -1,6 +1,10 @@
 package br.ufc.action;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +13,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -48,6 +53,7 @@ import br.ufc.assembler.ContasReceberAssembler;
 import br.ufc.assembler.ItensNotaFiscalAssembler;
 import br.ufc.assembler.NotaFiscalAssembler;
 import br.ufc.assembler.PedidoDespesaAssembler;
+import br.ufc.exception.ListSizeException;
 import br.ufc.uteis.Status;
 
 import com.Auxiliar.Clientes;
@@ -86,6 +92,7 @@ public class RelatorioAction extends DispatchAction{
 	 */
 	private static final String LOAD_PAGINA = "loadPage";
 	private static final String RELATORIO = "relatorio";
+	private static Connection con;
 	
 	private String imagemNutec(){
 		final String imagem = getServlet().getServletContext().getRealPath("/imagens/Nutec.jpg");
@@ -104,7 +111,7 @@ public class RelatorioAction extends DispatchAction{
 	private Connection getSubConnection(){
 		Connection connection = null;
 		try {
-			connection = java.sql.DriverManager.getConnection("jdbc:postgresql://localhost:5432/nutec","postgres", "1234");
+			connection = java.sql.DriverManager.getConnection("jdbc:postgresql://192.168.1.7:5432/nutec","postgres", "masterkey");
 		} catch (Exception e) {
 			
 		}
@@ -190,6 +197,56 @@ public class RelatorioAction extends DispatchAction{
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+		}
+		saida = request.getContextPath()+("/relatorio/notaFiscalUnica.pdf");
+		request.setAttribute("saida", saida);
+		return mapping.findForward(RELATORIO);
+	}
+	
+	
+	public ActionForward relatorioNotaFiscalUnicaParcela(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		/*
+		 * Aqui é recuperado o id da nota fiscal, localizado a nota fiscal, localizado o nome do cliente e o tipo de nota fiscal
+		 * depois é setado os parametros necessarios para que o relatório seja exibido corretamente e é enviado para a pagina padrão do relatório
+		 */
+		final String notaFiscal = request.getParameter("notaFiscal");
+		final String jasper = getServlet().getServletContext().getRealPath("/jasper/notaFiscalUnicaParcela.jasper");
+		String saida = getServlet().getServletContext().getRealPath("/relatorio/notaFiscalUnica.pdf");
+		
+		String query = "SELECT DISTINCT nota_fiscal.nfs_numero_contrato AS nota_fiscal_nfs_numero_contrato, " +
+				"nota_fiscal.nfs_numero_processo AS nota_fiscal_nfs_numero_processo, " +
+				"nota_fiscal.nfs_nota_fiscal AS nota_fiscal_nfs_nota_fiscal, " +
+				"nota_fiscal.nfs_data_saida AS nota_fiscal_nfs_data_saida, " +
+				"parcela.par_numero_parcela AS parcela_par_numero_parcela, " +
+				"contas_receber.ctr_data_efetivo AS contas_receber_ctr_data_efetivo, " +
+				"contas_receber.ctr_data_prevista AS contas_receber_ctr_data_prevista, " +
+				"contas_receber.ctr_status AS contas_receber_ctr_status, " +
+				"contas_receber.ctr_valor_efetivo AS contas_receber_ctr_valor_efetivo, " +
+				"contas_receber.ctr_valor_monetario AS contas_receber_ctr_valor_monetario, " +
+				"contas_receber.ctr_valor_previsto AS contas_receber_ctr_valor_previsto " +
+				"FROM " +
+				"financeiro.nota_fiscal nota_fiscal INNER JOIN financeiro.parcela " +
+				"parcela ON nota_fiscal.nfs_id = parcela.par_id_nota_fiscal " +
+				"INNER JOIN financeiro.contas_receber contas_receber ON " +
+				"nota_fiscal.nfs_id = contas_receber.ctr_id_nota_fiscal " +
+				"WHERE contas_receber.ctr_parcela = parcela.par_id and nota_fiscal.nfs_nota_fiscal ='"+notaFiscal+"'";
+		
+		
+		// criação dos parametros
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("imagem", imagemNutec());
+		map.put("imagem1", imagemGoverno());
+		try {
+			JRResultSetDataSource rsDataSource = new JRResultSetDataSource(executaQuery(getNovaConexao(), query));
+			JasperPrint print = JasperFillManager.fillReport(jasper, map, rsDataSource);
+			JasperExportManager.exportReportToPdfFile(print, saida);
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		saida = request.getContextPath()+("/relatorio/notaFiscalUnica.pdf");
 		request.setAttribute("saida", saida);
@@ -1051,6 +1108,43 @@ public class RelatorioAction extends DispatchAction{
 		}
 		return mapping.findForward(RELATORIO);
 	}
+	
+	public static ResultSet executaQuery(Connection con, String query) throws SQLException, ListSizeException {
+		//TODO: Caso esteja lento, retirar esse tipo de cursor e estudar uma nova estratégia para testar se o ResultSet está vazio
+		Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		ResultSet rs = st.executeQuery(query);
+		
+		if (!rs.next())
+			throw new ListSizeException();
+		
+		rs.beforeFirst();
+		
+		return rs;
+	}
+	
+	public static Connection getNovaConexao() throws ClassNotFoundException, SQLException  {	
+		String driver = "org.postgresql.Driver";
+		String url = "jdbc:postgresql://192.168.1.7:5432/nutec";
+		String login = "postgres";
+		String senha = "masterkey";
+					
+		Class.forName(driver);
+		con = DriverManager.getConnection(url, login, senha);
+		
+		return con;
+	}
+	
+	public static void fechaConexao() {	
+		try {
+			if (con != null && !con.isClosed()) {
+				con.close();
+				con = null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 
 }

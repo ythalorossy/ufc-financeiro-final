@@ -33,6 +33,21 @@
 			</td>
 			<td width="5%"><input type="submit" value="Gerar"></td>
 		</tr>
+		</html:form>
+		<html:form action="relatorio" target="_blank">
+		<tr bgcolor="#f1f1f1" height="40">
+			<td width="1%">&nbsp;</td>
+			<td width="11%"><span class="labelForm">Por Número c/ Parcelas</span></td>
+			<td>
+				<input type="hidden" name="operacao" value="relatorioNotaFiscalUnicaParcela">
+				<select name="notaFiscal" style="width: 200px;">
+					<c:forEach var="notaFiscal" items="${notaFiscalTO}" >
+						<option value="${notaFiscal.notaFiscal}">${notaFiscal.notaFiscal}</option>
+					</c:forEach>
+				</select>
+			</td>
+			<td width="5%"><input type="submit" value="Gerar"></td>
+		</tr>
 	</html:form>
 	
 	<!-- Por Cliente -->
