@@ -54,6 +54,7 @@ import br.ufc.assembler.ItensNotaFiscalAssembler;
 import br.ufc.assembler.NotaFiscalAssembler;
 import br.ufc.assembler.PedidoDespesaAssembler;
 import br.ufc.exception.ListSizeException;
+import br.ufc.uteis.ClassLoaderProperties;
 import br.ufc.uteis.Status;
 
 import com.Auxiliar.Clientes;
@@ -95,25 +96,26 @@ public class RelatorioAction extends DispatchAction{
 	private static Connection con;
 	
 	private String imagemNutec(){
-		final String imagem = getServlet().getServletContext().getRealPath("/imagens/Nutec.jpg");
+		final String imagem = getServlet().getServletContext().getRealPath(getProperties("imagem.nutec"));
 		return imagem;
 	}
 	private String imagemGoverno(){
-		final String imagem = getServlet().getServletContext().getRealPath("/imagens/governo.jpg");
+		final String imagem = getServlet().getServletContext().getRealPath(getProperties("imagem.governo"));
 		return imagem;
 	}
 	
 	private String subDir(){
-		final String subDir = getServlet().getServletContext().getRealPath("/jasper/");
+		final String subDir = getServlet().getServletContext().getRealPath(getProperties("pasta.jasper"));
 		return subDir+"/";
 	}
 	
-	private Connection getSubConnection(){
+	private Connection getSubConnection() throws SQLException{
 		Connection connection = null;
 		try {
-			connection = java.sql.DriverManager.getConnection("jdbc:postgresql://192.168.1.7:5432/nutec","postgres", "masterkey");
+			connection = DriverManager.getConnection(getProperties("connection.url.producao"), getProperties("server.user"), getProperties("server.pass"));
 		} catch (Exception e) {
-			
+			e.printStackTrace();
+			connection = DriverManager.getConnection(getProperties("connection.url.local"), getProperties("local.user"), getProperties("local.pass"));
 		}
 		
 		return connection;
@@ -247,6 +249,8 @@ public class RelatorioAction extends DispatchAction{
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+		} finally {
+			fechaConexao();
 		}
 		saida = request.getContextPath()+("/relatorio/notaFiscalUnica.pdf");
 		request.setAttribute("saida", saida);
@@ -1122,19 +1126,17 @@ public class RelatorioAction extends DispatchAction{
 		return rs;
 	}
 	
-	public static Connection getNovaConexao() throws ClassNotFoundException, SQLException  {	
-		String driver = "org.postgresql.Driver";
-		String url = "jdbc:postgresql://192.168.1.7:5432/nutec";
-		String login = "postgres";
-		String senha = "masterkey";
-					
-		Class.forName(driver);
-		con = DriverManager.getConnection(url, login, senha);
-		
+	private Connection getNovaConexao() throws ClassNotFoundException, SQLException  {	
+		Class.forName(getProperties("driver.postgresql"));
+		try {
+			con = DriverManager.getConnection(getProperties("connection.url.producao"), getProperties("server.user"), getProperties("server.pass"));
+		} catch (Exception e) {
+			con = DriverManager.getConnection(getProperties("connection.url.local"), getProperties("local.user"), getProperties("local.pass"));
+		}
 		return con;
 	}
 	
-	public static void fechaConexao() {	
+	private void fechaConexao() {	
 		try {
 			if (con != null && !con.isClosed()) {
 				con.close();
@@ -1143,6 +1145,10 @@ public class RelatorioAction extends DispatchAction{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private String getProperties(String chave){
+		return ClassLoaderProperties.loader(getServlet().getServletContext(), chave);
 	}
 
 

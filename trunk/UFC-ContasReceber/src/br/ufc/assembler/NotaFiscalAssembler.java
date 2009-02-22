@@ -34,7 +34,8 @@ public class NotaFiscalAssembler implements ASSEMBLER<NotaFiscal, NotaFiscalTO> 
 		to.setCancelamento(entity.getCancelamento());
 		to.setObservacao(entity.getObservacao());
 		try {
-			to.setDesconto(ConverteNumero.converteNumero(entity.getDesconto()));
+			String desconto =ConverteNumero.converteNumero(entity.getDesconto()); 
+			to.setDesconto(desconto);
 		} catch (Exception e) {
 			to.setDesconto("");
 		}
@@ -124,8 +125,12 @@ public class NotaFiscalAssembler implements ASSEMBLER<NotaFiscal, NotaFiscalTO> 
 	}
 
 	public String retornaCliente(String idCliente) {
+		String nomeCliente = idCliente;
 		final Clientes cliente = new ClientesDAO().findById(idCliente);
-		return cliente.getNome();
+		if(cliente != null){
+			nomeCliente = cliente.getNome();
+		}
+		return nomeCliente;
 	}
 
 	public String retornaNF(int idNotaFiscal) {
