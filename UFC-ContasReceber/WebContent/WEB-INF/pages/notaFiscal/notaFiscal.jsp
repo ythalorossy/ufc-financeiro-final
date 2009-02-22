@@ -83,8 +83,8 @@
 			<td>Desconto</td>
 		<tr />
 		<tr bgcolor="#f1f1f1">
-			<td><input type="text" name="theItem.desconto" size="3"
-				maxlength="5">%</td>
+			<td><html:text property="theItem.desconto" size="3"
+				maxlength="5" />%</td>
 		</tr>
 		<html:hidden property="theItem.id" />
 		<tr>
