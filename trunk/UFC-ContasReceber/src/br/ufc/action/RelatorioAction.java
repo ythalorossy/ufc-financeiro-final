@@ -37,7 +37,6 @@ import br.com.ConverteNumero.ConverteNumero;
 import br.ufc.BO.CaixaBO;
 import br.ufc.BO.NotaFiscalBO;
 import br.ufc.BO.PedidoDespesaBO;
-import br.ufc.DAO.ClientesDAO;
 import br.ufc.DAO.DivisaoDAO;
 import br.ufc.DAO.LaboratorioDAO;
 import br.ufc.DAO.RelatorioDAO;
@@ -48,6 +47,7 @@ import br.ufc.TO.ItensNotaFiscalTO;
 import br.ufc.TO.NotaFiscalTO;
 import br.ufc.TO.PedidoDespesaTO;
 import br.ufc.assembler.CaixaAssembler;
+import br.ufc.assembler.ClienteAssembler;
 import br.ufc.assembler.ContasPagarAssembler;
 import br.ufc.assembler.ContasReceberAssembler;
 import br.ufc.assembler.ItensNotaFiscalAssembler;
@@ -57,7 +57,6 @@ import br.ufc.exception.ListSizeException;
 import br.ufc.uteis.ClassLoaderProperties;
 import br.ufc.uteis.Status;
 
-import com.Auxiliar.Clientes;
 import com.Auxiliar.Divisao;
 import com.Auxiliar.Laboratorio;
 import com.converte.ConverteData;
@@ -271,7 +270,10 @@ public class RelatorioAction extends DispatchAction{
 			throws Exception {
 		
 		// Recuperando o id do cliente
-		final String idCliente = request.getParameter("idCliente");
+		String idCliente = request.getParameter("idCliente");
+		if(idCliente == null){
+			idCliente = request.getParameter("cgcpf");
+		}
 		// Localizando os arquivos necessarios para geração do relatório
 		final String jasper = getServlet().getServletContext().getRealPath("/jasper/notaFiscalAnaliticaCliente.jasper");
 		String saida = getServlet().getServletContext().getRealPath("/relatorio/notaFiscalUnica.pdf");
@@ -300,7 +302,7 @@ public class RelatorioAction extends DispatchAction{
 		map.put("subConnection", getSubConnection());
 		map.put("imagem", imagemNutec());
 		map.put("imagem1", imagemGoverno());
-		map.put("total", ConverteNumero.converteNumero(valorTotal));
+		map.put("total", valorTotal);
 		map.put("SUBREPORT_DIR", subDir());
 		JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(to);
 		try {
@@ -512,12 +514,10 @@ public class RelatorioAction extends DispatchAction{
 			
 			final List<ContasReceberTO> to = new ContasReceberAssembler().entity2EntityTO(cr);
 			for (ContasReceberTO contasReceberTO : to) {
-				final Clientes cliente = new ClientesDAO().findById(contasReceberTO.getIdCliente());
-
 				contasReceberTO.setIdParcela(contasReceberTO.getNumeroParcela());
 				contasReceberTO.setStatus(Status.retornaTipo(Integer.parseInt(contasReceberTO.getStatus())));
+				contasReceberTO.setIdCliente(new ClienteAssembler().retornaCliente(contasReceberTO.getIdCliente()));
 
-				contasReceberTO.setIdCliente(cliente.getNome());
 				if (contasReceberTO.getValorEfetivo().equals("0,00")){
 					contasReceberTO.setDataEfetiva("");
 				}
@@ -578,12 +578,9 @@ public class RelatorioAction extends DispatchAction{
 			
 			final List<ContasReceberTO> to = new ContasReceberAssembler().entity2EntityTO(cr);
 			for (ContasReceberTO contasReceberTO : to) {
-				final Clientes cliente = new ClientesDAO().findById(contasReceberTO.getIdCliente());
-
 				contasReceberTO.setIdParcela(contasReceberTO.getNumeroParcela());
 				contasReceberTO.setStatus(Status.retornaTipo(Integer.parseInt(contasReceberTO.getStatus())));
-
-				contasReceberTO.setIdCliente(cliente.getNome());
+				contasReceberTO.setIdCliente(contasReceberTO.getNomeCliente());
 				if (contasReceberTO.getValorEfetivo().equals("0,00")){
 					contasReceberTO.setDataEfetiva("");
 				}
@@ -617,7 +614,10 @@ public class RelatorioAction extends DispatchAction{
 	public ActionForward relatorioContasReceberClienteSintetico(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		final String idCliente = request.getParameter("idCliente");
+		String idCliente = request.getParameter("idCliente");
+		if(idCliente == null){
+			idCliente = request.getParameter("cgcpf");
+		}
 		final String jasper = getServlet().getServletContext().getRealPath("/jasper/contasReceberSintetico.jasper");
 		String saida = getServlet().getServletContext().getRealPath("/relatorio/contasReceber.pdf");
 
@@ -636,12 +636,9 @@ public class RelatorioAction extends DispatchAction{
 
 		final List<ContasReceberTO> to = new ContasReceberAssembler().entity2EntityTO(cr);
 		for (ContasReceberTO contasReceberTO : to) {
-			final Clientes cliente = new ClientesDAO().findById(contasReceberTO.getIdCliente());
-
 			contasReceberTO.setIdParcela(contasReceberTO.getNumeroParcela());
 			contasReceberTO.setStatus(Status.retornaTipo(Integer.parseInt(contasReceberTO.getStatus())));
-
-			contasReceberTO.setIdCliente(cliente.getNome());
+			contasReceberTO.setIdCliente(contasReceberTO.getNomeCliente());
 			if (contasReceberTO.getValorEfetivo().equals("0,00")){
 				contasReceberTO.setDataEfetiva("");
 			}
@@ -693,12 +690,10 @@ public class RelatorioAction extends DispatchAction{
 		final List<ContasReceberTO> to = new ContasReceberAssembler().entity2EntityTO(cr);
 		
 		for (ContasReceberTO contasReceberTO : to) {
-			final Clientes cliente = new ClientesDAO().findById(contasReceberTO.getIdCliente());
 			contasReceberTO.setIdNotaFiscal(contasReceberTO.getNumeroNotaFiscal());
 			contasReceberTO.setIdParcela(contasReceberTO.getNumeroParcela());
 			contasReceberTO.setStatus(Status.retornaTipo(Integer.parseInt(contasReceberTO.getStatus())));
-			
-			contasReceberTO.setIdCliente(cliente.getNome());
+			contasReceberTO.setIdCliente(contasReceberTO.getNomeCliente());
 			if (contasReceberTO.getValorEfetivo().equals("0,00")){
 				contasReceberTO.setDataEfetiva("");
 			}
