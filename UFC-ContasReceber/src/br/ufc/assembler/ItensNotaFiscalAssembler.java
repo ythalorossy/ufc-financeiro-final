@@ -7,13 +7,12 @@ import br.com.ItensNotaFiscal;
 import br.com.NotaFiscal;
 import br.com.ConverteNumero.ConverteNumero;
 import br.ufc.BO.NotaFiscalBO;
-import br.ufc.DAO.ClientesDAO;
 import br.ufc.DAO.DivisaoDAO;
 import br.ufc.DAO.LaboratorioDAO;
 import br.ufc.TO.ItensNotaFiscalTO;
 
-import com.Auxiliar.Clientes;
 import com.Auxiliar.Divisao;
+import com.converte.ConverteData;
 
 public class ItensNotaFiscalAssembler implements
 		ASSEMBLER<ItensNotaFiscal, ItensNotaFiscalTO> {
@@ -43,6 +42,7 @@ public class ItensNotaFiscalAssembler implements
 		to.setValor(ConverteNumero.converteNumero(entity.getValor()));
 		to.setValorTotal(ConverteNumero.converteNumero(entity.getValorTotal()));
 		to.setStatus(String.valueOf(entity.getStatus()));
+		to.setData(ConverteData.retornaData(entity.getData()));
 		return to;
 
 	}
@@ -120,8 +120,7 @@ public class ItensNotaFiscalAssembler implements
 	}
 	
 	public String retornaCliente(String idCliente){
-		final Clientes cliente = new ClientesDAO().findById(idCliente);
-		return cliente.getNome();
+		return new ClienteAssembler().retornaCliente(idCliente);
 	}
 	
 	public String retornaNF(int idNotaFiscal){

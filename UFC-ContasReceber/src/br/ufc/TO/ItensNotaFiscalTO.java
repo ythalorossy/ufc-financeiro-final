@@ -19,6 +19,7 @@ public class ItensNotaFiscalTO implements Serializable{
 	private String valor;
 	private String valorTotal;
 	private String status;
+	private String data;
 	private boolean checked;
 	
 	public boolean isChecked() {
@@ -112,5 +113,12 @@ public class ItensNotaFiscalTO implements Serializable{
 	public void setNomeLaboratorio(String nomeLaboratorio) {
 		this.nomeLaboratorio = nomeLaboratorio;
 	}
+	public String getData() {
+		return data;
+	}
+	public void setData(String data) {
+		this.data = data;
+	}
+	
 
 }

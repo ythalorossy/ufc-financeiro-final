@@ -13,10 +13,8 @@ import br.ufc.BO.ContasReceberBO;
 import br.ufc.BO.FormasPagamentoBO;
 import br.ufc.BO.NotaFiscalBO;
 import br.ufc.BO.ParcelaBO;
-import br.ufc.DAO.ClientesDAO;
 import br.ufc.TO.ContasReceberTO;
 
-import com.Auxiliar.Clientes;
 import com.converte.ConverteData;
 
 public class ContasReceberAssembler implements
@@ -173,8 +171,7 @@ public class ContasReceberAssembler implements
 		return String.valueOf(parcela.getNumeroParcela());
 	}
 	public String retornaCliente(String idCliente){
-		final Clientes cliente = new ClientesDAO().findById(idCliente);
-		return cliente.getNome();
+		return new ClienteAssembler().retornaCliente(idCliente);
 	}
 	
 	public List<Observacao> returnObservacao(int idContasReceber){

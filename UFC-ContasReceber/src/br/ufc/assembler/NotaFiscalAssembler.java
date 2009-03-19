@@ -6,11 +6,9 @@ import java.util.List;
 import br.com.NotaFiscal;
 import br.com.ConverteNumero.ConverteNumero;
 import br.ufc.BO.NotaFiscalBO;
-import br.ufc.DAO.ClientesDAO;
 import br.ufc.TO.NotaFiscalTO;
 import br.ufc.uteis.Status;
 
-import com.Auxiliar.Clientes;
 import com.converte.ConverteData;
 
 public class NotaFiscalAssembler implements ASSEMBLER<NotaFiscal, NotaFiscalTO> {
@@ -124,13 +122,8 @@ public class NotaFiscalAssembler implements ASSEMBLER<NotaFiscal, NotaFiscalTO> 
 
 	}
 
-	public String retornaCliente(String idCliente) {
-		String nomeCliente = idCliente;
-		final Clientes cliente = new ClientesDAO().findById(idCliente);
-		if(cliente != null){
-			nomeCliente = cliente.getNome();
-		}
-		return nomeCliente;
+	public String retornaCliente(String idCliente){
+		return new ClienteAssembler().retornaCliente(idCliente);
 	}
 
 	public String retornaNF(int idNotaFiscal) {

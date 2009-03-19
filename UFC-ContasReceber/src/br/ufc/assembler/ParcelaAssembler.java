@@ -7,10 +7,8 @@ import br.com.NotaFiscal;
 import br.com.Parcela;
 import br.com.ConverteNumero.ConverteNumero;
 import br.ufc.BO.NotaFiscalBO;
-import br.ufc.DAO.ClientesDAO;
 import br.ufc.TO.ParcelaTO;
 
-import com.Auxiliar.Clientes;
 import com.converte.ConverteData;
 
 public class ParcelaAssembler implements ASSEMBLER<Parcela, ParcelaTO> {
@@ -101,8 +99,7 @@ public class ParcelaAssembler implements ASSEMBLER<Parcela, ParcelaTO> {
 	}
 	
 	public String retornaCliente(String idCliente){
-		final Clientes cliente = new ClientesDAO().findById(idCliente);
-		return cliente.getNome();
+		return new ClienteAssembler().retornaCliente(idCliente);
 	}
 
 }

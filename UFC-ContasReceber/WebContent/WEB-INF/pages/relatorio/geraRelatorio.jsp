@@ -57,7 +57,7 @@
 			<td width="11%"><span class="labelForm">CGC/CPF</span></td>
 			<td>
 				<input type="hidden" name="operacao" value="relatorioNotaFiscalAnaliticaCliente">
-				<input id="cgcpf" type="text"value="${notaFiscalForm.theItem.idCliente}" onkeyup="javascript:makeRequest('/ajax','prefix',this.value, 'cliente','clientes')" />		
+				<input id="cgcpf" name="cgcpf" type="text"value="${notaFiscalForm.theItem.idCliente}" onkeyup="javascript:makeRequest('/ajax','prefix',this.value, 'cliente','clientes')" />		
 				<select id="clientes" name="idCliente" style="width: 200px;"></select>
 			</td>
 			<td width="5%"><input type="submit" value="Gerar"></td>
@@ -218,7 +218,7 @@
 		<td width="1%">&nbsp;</td>
 		<td width="11%"><span class="labelForm">CGC/CPF</span></td>
 		<td>
-			<input id="cgcpf" type="text" value="${notaFiscalForm.theItem.idCliente}" onkeyup="javascript:makeRequest('/ajax','prefix',this.value, 'cliente','clientes2')" />
+			<input id="cgcpf" name="cgcpf" type="text" value="${notaFiscalForm.theItem.idCliente}" onkeyup="javascript:makeRequest('/ajax','prefix',this.value, 'cliente','clientes2')" />
 				
 			<select id="clientes2" name="idCliente" style="width: 200px;">
 				<c:forEach var="clientes" items="${clientes}" >
